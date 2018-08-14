@@ -13,12 +13,7 @@
 #define RANGE 30
 
 #include "___.h"
-/*
-#define MAX_CNT_LA 1000
-#define MAX_CNT_ST 500
-#define MAX_CNT_IN 1500
-#define MAX_CNT_CL 500
-*/
+
 
 enum d_stat {		sit, run, walk, eat, read_, die, rise, 	sleep_1, 	sleep_2, 	love, 	poop};
 I stat_time[11] = {	500, 500, 500, 	500, 500, 	500, 500, 	500, 		500, 		500, 	5000};
