@@ -69,8 +69,7 @@ typedef size_t sz;
 //	   if(D[s[i]]){if(in){in=0;tok=s+tok_pos;s[i]='\0';tok_len=i-tok_pos;{x;}}\
 //	   else tok_pos=i;}else if(!in){in=1;tok_pos=i;})}
 
-#define FCLR(file,r) {fclose(file);return(r);}
-
+#define FCLR(file,r) {fclose(file);R(r);}	
 
 //! less is more
 #define ZV Z V
