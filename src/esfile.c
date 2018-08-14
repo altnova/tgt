@@ -17,7 +17,6 @@ V desktop_path(S string, S name)								//<	inscribes /home/USERNAME/name into s
 	strcat(filename, "/Desktop/");
 	strcat(filename, name);
 	scpy(string, filename, 299);
-
 }
 
 V spit_file(S str)												//<	creates file with str in Desktop dir
