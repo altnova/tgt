@@ -3,13 +3,11 @@
 #include <string.h>
 #include <dos.h>
 #include <unistd.h>
-#include "h/draw.h"
-#include "h/esfile.h"
-#include "h/___.h"
-#include "h/struct.h"
-#include "h/cfg.h"
-
-
+#include "draw.h"
+#include "esfile.h"
+#include "___.h"
+#include "struct.h"
+#include "cfg.h"
 
 
 I main()
@@ -21,6 +19,7 @@ I main()
 
 
 	W(dt->action != rise && dt->action != die) {
+		
 		set_main_action(cnt, dt);
 		O("draw action %s\n", stat_name[dt->action]);			//<	draw action
 		cnt_upd(cnt, dt->action);								//<	increase timers
@@ -28,7 +27,7 @@ I main()
 		// event_check(cnt, dt);								//< eat event to update dat and timers
 		cnt_check(cnt, dt);										//< checking timers for updating dat
 
-		if (params_check(dt))									//<	conditions of death
+		if (death(dt))									//<	conditions of death
 			break;
 	}
 	
