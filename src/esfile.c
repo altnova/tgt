@@ -37,7 +37,6 @@ V spit_file(S str)												//<	creates file with str in Desktop dir
 	fclose(ptr);
 }
 
-
 V eat_file()													//< deletes first file in Desktop dir 
 {
 	C path[300];
