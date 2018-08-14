@@ -4,6 +4,9 @@
 #include "___.h"
 #include "mains.c"
 
+
+
+
 V cnt_upd(counter cnt, I act)										//< cnt++ for ex. after action
 {
 	cnt->last_act += stat_time[act];
