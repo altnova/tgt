@@ -72,3 +72,46 @@ C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)
 	R (IN(obj_1_x - RNG, obj_2_x, obj_1_x + RNG) && IN(obj_1_y - RNG, obj_2_y, obj_1_y + RNG)) ? 1 : 0;
 }
 
+
+I dec_digits(UJ num)
+{
+	I i;
+	if (!num)
+		R 1;
+	for (i = 0; num; num/= 10, i++);
+	R i;
+}
+
+UJ pow_(I basis, I exp_) 
+{
+	I i;
+	UJ result = 1;
+	if (!exp_)
+		R 1;
+
+	for (i = 0; i < exp_; i++) 
+		result *= basis;
+	R result;
+}
+
+S itoa(I num)
+{
+	I i, j;
+	UJ n;
+	S str = malloc(SZ(C) * 11);
+
+	j = dec_digits(num);
+	n = pow_(10, j - 1);
+
+	for (i = 0; i < j; i++) {
+		str[i] = (num / n) + '0';
+		num %= n;
+		n /= 10;
+	}
+	str[++i] = 0;
+	
+	R str;
+}
+
+
+
