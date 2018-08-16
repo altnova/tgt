@@ -1,4 +1,3 @@
-//! operations with files 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,39 +9,66 @@
 #define CONST_STR "\n\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n\n\n\n"
 #include "mains.c"
 
-V desktop_path(S string, S name)								//<	inscribes /home/USERNAME/name into string  
+S desktop_path()												//<	returns string with a path to Desktop dir 
 {
-	C filename[300];
-	scpy(filename, getenv("HOME"), 200);
+	S filename = malloc(SZ(C)* 300);
+	scpy(filename, getenv("HOME"), 290);
 	strcat(filename, "/Desktop/");
-	strcat(filename, name);
-	scpy(string, filename, 299);
+	R filename;
 }
 
-V spit_file(S str)												//<	creates file with str in Desktop dir
+S choose_name(S path, S filename)								//< unique enumerated file_name like path/to/dir/nnn_file_name
 {
-	C i, filename[300];
-	I len;
-	FILE *ptr;
+	I i, len, path_len, name_len, num_len;
+	S number, file_name;
 
-	desktop_path(filename, "spit__.txt");
-	len = scnt(filename) - 5;
+	name_len = scnt(filename);
+	path_len = scnt(path);
+	len = path_len + name_len + 2;
+	file_name = malloc(SZ(C) * len);
+	number = malloc(SZ(C) * 2);
 
-	for (i = 48; !(access(filename, F_OK) && i != '_'); filename[len] = i, 	i = (i == '9') 		? 'A' 	:
-																				(i == 'Z') 		? 'a' 	: 
-																				(i == 'z'+1)	? '_' 	: ++i);
-	ptr = fopen(filename, "w");
+
+	scpy(file_name, path, scnt(path));
+	strcat(file_name, filename);
+
+	for (i = 1; !(access(file_name, F_OK)); i++) {
+		num_len = dec_digits(i);
+		number = itoa(i);
+		number = realloc(number, SZ(C) * (num_len + 2));
+		number[num_len] = '_';
+		number[num_len + 1] = 0;
+
+		file_name = realloc(file_name, SZ(C) * (path_len + name_len + num_len + 2));
+		file_name[path_len] = 0;
+		strcat(file_name, number);
+		strcat(file_name, filename);
+	}
+
+	free(number);
+	R file_name;
+}
+
+V make_file(S path, S new_file, S str)							//< creates file with unique name and writes in str
+{																
+	FILE *ptr = fopen(choose_name(path, new_file), "w");
 	fwrite(str, 1, SZ(C) * scnt(str), ptr); 
-	fwrite(CONST_STR, 1, SZ(C)* scnt(CONST_STR), ptr);
 	fclose(ptr);
+}
+
+V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
+{
+	
+	str = realloc(str, scnt(str) + scnt(CONST_STR) + 1);
+	strcat(str, CONST_STR);
+	make_file(desktop_path, "spit.txt", str);
 }
 
 V eat_file()													//< deletes first file in Desktop dir 
 {
-	C path[300];
 	DIR *d;
  	struct dirent *dir;
-	desktop_path(path, "");
+	S path = desktop_path();
 
 	if ((d = opendir(path)) != NULL) { 
 		if ((dir = readdir(d)) != NULL) { 
@@ -52,4 +78,3 @@ V eat_file()													//< deletes first file in Desktop dir
 		closedir(d);
 	}
 }
-
