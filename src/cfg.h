@@ -52,5 +52,5 @@ typedef struct Coor 		//< coordinates of objects
 
 
 typedef pDat* dat;
-typedef pCounter* counter;
+typedef pCounter* tm_cnt
 typedef pCoor* coor;

@@ -4,10 +4,7 @@
 #include "___.h"
 #include "mains.c"
 
-
-
-
-V cnt_upd(counter cnt, I act)										//< cnt++ for ex. after action
+V cnt_upd(tm_cnt cnt, I act)										//< cnt++ for ex. after action
 {
 	cnt->last_act += stat_time[act];
 	cnt->satiety += stat_time[act];
@@ -22,7 +19,7 @@ C death(dat dt)														//<	conditions of exit
 	R 0;
 }
 
-V cnt_check(counter cnt, dat dt)									//<	conditions of modifing dt in case of appropriate cnt
+V cnt_check(tm_cnt cnt, dat dt)									//<	conditions of modifing dt in case of appropriate cnt
 {
 	if (cnt->satiety >= MAX_CNT_ST) {								//<	check for satiety
 		cnt->satiety = 0;
@@ -44,7 +41,7 @@ V cnt_check(counter cnt, dat dt)									//<	conditions of modifing dt in case o
 }
 
 
-C set_main_action(counter cnt, dat dt)								//< set main action if nothing special happens
+C set_main_action(tm_cnt cnt, dat dt)								//< set main action if nothing special happens
 {
 	X((cnt->last_act < MAX_CNT_LA), {
 		dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
@@ -54,8 +51,7 @@ C set_main_action(counter cnt, dat dt)								//< set main action if nothing spe
 }
 
 
-
-V event_check(counter cnt, dat dt)									//< user's commands 
+V event_check(tm_cnt cnt, dat dt)									//< user's commands 
 {
 	/* GET FILE */
 

@@ -28,7 +28,6 @@ S choose_name(S path, S filename)								//< unique enumerated file_name like pa
 	file_name = malloc(SZ(C) * len);
 	number = malloc(SZ(C) * 2);
 
-
 	scpy(file_name, path, scnt(path));
 	strcat(file_name, filename);
 
@@ -58,7 +57,6 @@ V make_file(S path, S new_file, S str)							//< creates file with unique name a
 
 V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
 {
-	
 	str = realloc(str, scnt(str) + scnt(CONST_STR) + 1);
 	strcat(str, CONST_STR);
 	make_file(desktop_path, "spit.txt", str);

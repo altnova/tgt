@@ -82,6 +82,7 @@ typedef size_t sz;
 #define R0 R 0
 #define R1 R 1
 
+
 //! error
 #define NIL 0xffffffffffffffff
 
