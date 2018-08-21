@@ -2,6 +2,7 @@
 #include "cfg.h"
 
 
+/*
 S strcasestr_(S str_1, S str_2)									//< на всякий пожарный
 {
 	S str_1_1 = malloc(SZ(C) * (scnt(str_1) + 1));
@@ -24,18 +25,17 @@ S strcasestr_(S str_1, S str_2)									//< на всякий пожарный
 	free(str_2_2);
 	R val;
 }
+*/
 
-
-C file_contains(FILE *ptr, S string)							//<	search for a substring in file
+C file_contains(FILE *ptr, S needle)							//<	search for a needle in file
 { 
-	I len = scnt(string);
-	S subs = malloc(SZ(C) * len * 2);
+	I len = scnt(needle);
+	S haystack = malloc(SZ(C) * len * 2 + 1);
 
-	W(fread(subs, 1, SZ(C) * len*2, ptr) == len*2) {
-		X((strcasestr_(subs, string) != NULL), {rewind(ptr);free(subs);}, 1);
-		fseek(ptr, -len, SEEK_CUR);
-	}
-	free(subs);
+	OMO(rewind(ptr), fread(haystack, 1, SZ(C)*len*2, ptr) == len*2, {	X(strcasestr(haystack, needle) != NULL ,{rewind(ptr);free(haystack);}, 1);
+																fseek(ptr, -(len-1), SEEK_CUR);});
+
+	free(haystack);
 	rewind(ptr);
 	R 0;
 }
