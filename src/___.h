@@ -56,6 +56,9 @@ typedef size_t sz;
 #define scpy(d,s,n) (S)mcpy((S)d,(S)s,1+MIN(scnt((S)s),n)) /*!< better strcpy \param d dest \param s source \param n limit */
 #define lcse(s,n) {DO(n,s[i]=tolower(s[i]))}
 
+#define OMO(x,y,z) {for((x);(y);(z));(z);}
+
+
 //! tokenize string \param s,n,d,r,x string,len,delims,reverse,exec
 #define stok(s,n,d,r,x) {ZC z=0,D[255];if(!z){z=1;DO(scnt(d),D[d[i]]='*');}\
 		J tok_len,tok_pos=0,j=n-1;S tok;C lst,end,in=0;\
