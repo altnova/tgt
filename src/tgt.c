@@ -12,7 +12,7 @@
 
 I main()
 {
-	pDat dt_main = {5, 5, 5, 2, 9, 0, 0};
+	pDat dt_main = {5, 5, 5, 2, 9};
 	pCounter cnt_main = {0, 0, 0, 0};
 	dat dt = &dt_main;
 	counter cnt = &cnt_main;
