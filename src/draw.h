@@ -1,2 +1,2 @@
 
-ext draw(S key, int obj);
+ext V draw(S key, int obj);

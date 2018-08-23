@@ -1,33 +1,29 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dos.h>
-#include <unistd.h>
-#include "draw.h"
-#include "esfile.h"
 #include "___.h"
 #include "struct.h"
 #include "cfg.h"
+#include "set.h"
+#include "draw.h"
 
+tm_cnt cnt;
+dat dt;
+coor crd;
 
 I main()
 {
-	pDat dt_main = {5, 5, 5, 2, 9};
-	pCounter cnt_main = {0, 0, 0, 0};
-	dat dt = &dt_main;
-	counter cnt = &cnt_main;
-
+	
+	set_start(dt, cnt, crd)
 
 	W(dt->action != rise && dt->action != die) {
 		
-		set_main_action(cnt, dt);
-		O("draw action %s\n", stat_name[dt->action]);			//<	draw action
-		cnt_upd(cnt, dt->action);								//<	increase timers
+		set_main_action();
+		draw("dog", dt->action);			//<	draw action
+		cnt_upd(dt->action);								//<	increase timers
 
-		// event_check(cnt, dt);								//< eat event to update dat and timers
-		cnt_check(cnt, dt);										//< checking timers for updating dat
+		// event_check();								//< eat event to update dat and timers
+		cnt_check();										//< checking timers for updating dat
 
-		if (death(dt))									//<	conditions of death
+		if (death())									//<	conditions of death
 			break;
 	}
 	

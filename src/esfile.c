@@ -6,8 +6,10 @@
 #include <pwd.h>
 #include <sys/types.h>
 #include <dirent.h>
-#define CONST_STR "\n\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n\n\n\n"
-#include "mains.c"
+#include "mains.h"
+
+#define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
+
 
 S desktop_path()												//<	returns string with a path to Desktop dir 
 {

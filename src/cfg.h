@@ -10,13 +10,23 @@
 #define SEC 1000
 #define MINT 60000
 #define HOUR 3600000
-#define RANGE 30
+#define RANGE 30			//< ???
+
+#define RIGHT 1
+#define LEFT 0
+
+#define R_LIM 30			//< ???
+#define L_LIM 250 			//< ???
+
+#define DIFRUN 15			//< ???
+#define DIFWALK 10			//< ???
+#define DIFY 10
 
 #include "___.h"
 
 
-enum d_stat {		sit, run, walk, eat, read_, die, rise, 	sleep_1, 	sleep_2, 	love, 	poop};
-I stat_time[11] = {	500, 500, 500, 	500, 500, 	500, 500, 	500, 		500, 		500, 	5000};
+enum d_stat {		sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop};
+I stat_time[11] = {	1000000, 1000000, 1000000, 	1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000};
 S stat_name[11] = {	"sit", "run", "walk", "eat", "read_", "die", "rise", "sleep_1", "sleep_2", 	"love", "wc"};
 
 
@@ -36,21 +46,30 @@ typedef struct Dt 			//< dog info
 	C cleanliness;
 	C colour;
 	C action;
-	I x;
-	I y;
 } pDat;
 
 typedef struct Coor 		//< coordinates of objects 
 {	
+	UH dir;					//< 1 --> RIGHT 	0 --> LEFT
 	UH kennel_x;
 	UH kennel_y;
 	UH kennel_rad;
 	UH dog_x;
 	UH dog_y;
 	UH dog_rad;
+	UH bar_x;
+	UH bar_y;
+	UH sat_x;
+	UH sat_y;
+	UH int_x;
+	UH int_y;
+	UH cle_x;
+	UH cle_y;
+	UH dog_in_kennel_x;
+	UH dog_in_kennel_y;
 } pCoor;
 
 
 typedef pDat* dat;
-typedef pCounter* tm_cnt
+typedef pCounter* tm_cnt;
 typedef pCoor* coor;

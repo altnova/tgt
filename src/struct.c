@@ -2,9 +2,14 @@
 #include "draw.h"
 #include "esfile.h"
 #include "___.h"
-#include "mains.c"
+#include "mains.h"
+#include <unistd.h>
 
-V cnt_upd(tm_cnt cnt, I act)										//< cnt++ for ex. after action
+ext tm_cnt cnt;
+ext dat dt;
+ext coor crd;
+
+V cnt_upd(I act)										//< cnt++ for ex. after action
 {
 	cnt->last_act += stat_time[act];
 	cnt->satiety += stat_time[act];
@@ -12,14 +17,14 @@ V cnt_upd(tm_cnt cnt, I act)										//< cnt++ for ex. after action
 	cnt->cleanliness += stat_time[act];
 }
 
-C death(dat dt)														//<	conditions of exit 	
+C death()														//<	conditions of exit 	
 {    
 	X(!dt->satiety || dt->satiety > MAX_ST, {dt->action = die;}, 1);							//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST        
 	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {dt->action = rise;}, 1);			//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
 	R 0;
 }
 
-V cnt_check(tm_cnt cnt, dat dt)									//<	conditions of modifing dt in case of appropriate cnt
+V cnt_check()										//<	conditions of modifing dt in case of appropriate cnt
 {
 	if (cnt->satiety >= MAX_CNT_ST) {								//<	check for satiety
 		cnt->satiety = 0;
@@ -41,23 +46,23 @@ V cnt_check(tm_cnt cnt, dat dt)									//<	conditions of modifing dt in case of
 }
 
 
-C set_main_action(tm_cnt cnt, dat dt)								//< set main action if nothing special happens
+C set_main_action()								//< set main action if nothing special happens
 {
 	X((cnt->last_act < MAX_CNT_LA), {
-		dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
+		dt->action = 	(ndt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
 						(dt->satiety > STLIM && dt->cleanliness <= CLLIM)	? walk	: sit;}, 0);
 	dt->action = (dt->satiety <= STLIM || dt->cleanliness <= CLLIM) ? sleep_2 : sleep_1;
 	cnt->last_act = MAX_CNT_LA;
 }
 
 
-V event_check(tm_cnt cnt, dat dt)									//< user's commands 
+V event_check()									//< user's commands 
 {
 	/* GET FILE */
 
 	if (GET_FILE && !access(file_input, F_OK)) {
 		cnt->last_act = 0;
-
+	
 		SW(input_type(file_input)) {
 			CS(1, { 
 				draw("dog", eat);
