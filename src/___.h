@@ -56,7 +56,6 @@ typedef size_t sz;
 #define scpy(d,s,n) (S)mcpy((S)d,(S)s,1+MIN(scnt((S)s),n)) /*!< better strcpy \param d dest \param s source \param n limit */
 #define lcse(s,n) {DO(n,s[i]=tolower(s[i]))}
 
-#define OMO(x,y,z) {for((x);(y);(z));(z);}
 
 
 //! tokenize string \param s,n,d,r,x string,len,delims,reverse,exec
@@ -72,7 +71,6 @@ typedef size_t sz;
 //	   if(D[s[i]]){if(in){in=0;tok=s+tok_pos;s[i]='\0';tok_len=i-tok_pos;{x;}}\
 //	   else tok_pos=i;}else if(!in){in=1;tok_pos=i;})}
 
-#define FCLR(file,r) {fclose(file);R(r);}	
 
 //! less is more
 #define ZV Z V
@@ -84,6 +82,10 @@ typedef size_t sz;
 #define ZJ Z J
 #define R0 R 0
 #define R1 R 1
+
+#define OMO(x,y,z) {for((x);(y);(z));(z);}
+#define FCLR(file,r) {fclose(file);R(r);}	
+#define SZFILE(ptr,x) {UJ cur = ftell(ptr);fseek(ptr,0,SEEK_END);x=ftell(ptr);fseek(ptr,-cur,SEEK_CUR);} //< sizeof file
 
 
 //! error
