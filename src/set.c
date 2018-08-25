@@ -6,19 +6,7 @@ ext dat dt;
 ext coor crd;
 
 
-
 /*
-w = 1440
-h = 900
-
-down = 835 		[ h - 65]
-
-l lim = 70		[w/20]	
-
-r lim = 1370  	[w - l]
-
-*/
-
 typedef struct Coor 		//< coordinates of objects 
 {	
 	UH dir;					//< 1 --> RIGHT 	0 --> LEFT
@@ -40,8 +28,7 @@ typedef struct Coor 		//< coordinates of objects
 	UH dog_in_kennel_x;
 	UH dog_in_kennel_y;
 } pCoor;
-
-
+*/
 
 V set_data()
 {
