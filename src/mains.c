@@ -66,7 +66,7 @@ UJ pow_(I basis, I exp_)
 	R1;
 }
 
-S itoa(I num)
+S itoa(I num)					//< int to string
 {
 	I i, j;
 	UJ n;
@@ -85,5 +85,20 @@ S itoa(I num)
 	R str;
 }
 
+S colour(S name, dat dt_)				//< 	dir/filename --> dir/n/filename, where n is colour num
+{
+	I len = scnt(name), i;
+	I len_2 = len + 2;
+	I col = dt_->colour;
+
+	S new_name = malloc(SZ(C) * len_2);
+	strcpy(new_name, name);
+
+	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
+
+	new_name[len_2 - i] = col + '0';
+
+	R new_name;
+}
 
 
