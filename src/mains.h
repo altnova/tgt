@@ -14,4 +14,4 @@ ext UJ pow_(I basis, I exp_);
 
 ext S itoa(I num);
 
-
+ext S colour(S name);
