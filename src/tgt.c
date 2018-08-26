@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "___.h"
+#include "base/___.h"
 #include "struct.h"
-#include "cfg.h"
+#include "base/cfg.h"
 #include "set.h"
 #include "draw.h"
 

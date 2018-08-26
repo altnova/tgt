@@ -1,8 +1,8 @@
-#include "cfg.h"
-#include "draw.h"
-#include "esfile.h"
-#include "___.h"
-#include "mains.h"
+#include "../base/cfg.h"
+#include "../draw.h"
+#include "../esfile.h"
+#include "../base/___.h"
+#include "../mains.h"
 #include <unistd.h>
 
 ext tm_cnt cnt;

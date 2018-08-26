@@ -1,5 +1,5 @@
-#include "del_s.h"
-#include "cfg.h"
+#include "../del_s.h"
+#include "../base/cfg.h"
 
 ext coor crd;
 
