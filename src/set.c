@@ -38,36 +38,35 @@ V set_data()
 	pDat dt_main = {5, 5, 5, 2, 9};
 	pCounter cnt_main = {0, 0, 0, 0};
 	pCoor crd_main;
-/*													//< set coordinates 
+
 	crd_main->dir = 1;
-	crd_main->kennel_x = width/20 - 10;
-	crd_main->kennel_y = down + 60;
 	crd_main->rad = 30;
-	crd_main->dog_x = width/20;
-	crd_main->dog_y = down;
 
-	crd_main->dog_in_kennel_x = crd_main->kennel_x + 20;
-	crd_main->dog_in_kennel_y = down + 30;
+		/*	x 	*/
+	crd_main->kennel_x 	= L_LIM/2;					//< L_LIM == WIDTH/10; R_LIM = WIDTH*9/10
+	crd_main->bowl_x 	= L_LIM/4;
+	crd_main->dog_x 	= 2 * L_LIM;
+	crd_main->bar_x 	= R_LIM;
+	crd_main->int_x 	= R_LIM + BAR_W - NOM_W;	//<	BAR_W ??? NOM_W ???
+	crd_main->cle_x 	= crd_main->int_x;
+	crd_main->sat_x 	= crd_main->int_x;
 
+		/*	y 	*/
+	crd_main->kennel_y 	= D_LIM - KENNEL_H;			//<	D_LIM ??? KENNEL_H		
+	crd_main->bowl_y 	= D_LIM - BOWL_H;			//< BOWL_H ???
+	crd_main->dog_y 	= D_LIM - DOG_H				//<	DOG_H ????
+	crd_main->bar_y 	= D_LIM - BAR_H;
+	crd_main->int_y 	= crd_main->bar_y;
+	crd_main->cle_y 	= crd_main->bar_y - NOM_H;
+	crd_main->sat_y 	= crd_main->int_x;
 
-
-	crd_main->bar_x = width/10;
-	crd_main->bar_y = down - 60
-	crd_main->sat_x = sat->bar_x + 30;
-	crd_main->sat_y = sat->bar_y;
-	crd_main->int_x = sat->bar_x + 30;
-	crd_main->int_y = sat->bar_y - 20;
-	crd_main->cle_x = sat->bar_x + 30;
-	crd_main->cle_y = sat->bar_y - 40;
-
-*/
 	crd = &crd_main;
 	dt = &dt_main;
 	cnt = &cnt_main;
 }
 
 
-V set_window();
+V set_window();			//< fullscreen, transparent, click-trough
 
 V set_objects();		//< kennel, board, empty_bowl;
 
