@@ -25,9 +25,9 @@
 #include "___.h"
 
 
-enum d_stat {		sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop};
-I stat_time[11] = {	1000000, 1000000, 1000000, 	1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000};
-S stat_name[11] = {	"sit", "run", "walk", "eat", "read_", "die", "rise", "sleep_1", "sleep_2", 	"love", "wc"};
+enum d_stat {		sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop, return_};
+I stat_time[12] = {	1000000, 1000000, 1000000, 	1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 0};
+S stat_name[12] = {	"sit", "run", "walk", "eat", "read_", "die", "rise", "sleep_1", "sleep_2", 	"love", "wc", "return"};
 
 
 typedef struct Cnt_tm		//< counters
