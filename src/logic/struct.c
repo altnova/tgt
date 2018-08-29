@@ -91,9 +91,16 @@ V event_check()									//< user's commands
 	
 	/*GET CLICK EVENT*/
 
-	if (click && dog_click) {
+	if (click) {
+		if (dog_click) {
 		cnt->last_act = 0;
 		draw("dog", love);
-		cnt_upd(cnt, love);
+		cnt_upd(cnt, love);	
+		}
+		else {
+			if (kennel_click)
+				draw("dog", return_);
+		}
+	
 	}
 }
