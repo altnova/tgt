@@ -6,7 +6,7 @@
 ext dat dt;
 ext coor crd;
 
-V depict(S filename, I x, I y)
+V depict(S filename, I x, I y)										//<!!! 	GTK+
 {
 	O("%s\t\tx-> %d y->%d", filename, x, y);
 }
@@ -52,6 +52,8 @@ V dog_walk(I pause)
 				this_way(pause, "../../pic/dog/walk_l_1.png", "../../pic/dog/walk_l_2.png", "walk", LEFT);	//<	walk LEFT
 }
 
+/*
+
 V dog_run_back()
 {
 	W(crd->dog_x > L_LIM) {
@@ -59,13 +61,23 @@ V dog_run_back()
 		cnt_upd(run);
 	}
 }
-
 V dog_walk_back()								
 {
 	W(crd->dog_x > L_LIM) {
 		dog_walk(walk);
 		cnt_upd(walk);
 	}
+}
+*/
+V dog_return()
+{
+	// (dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? dog_run_back() :  dog_walk_back();
+	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? 	W(crd->dog_x > L_LIM) {
+																dog_run(run);
+																cnt_upd(run);} 
+														:  	W(crd->dog_x > L_LIM) {
+																dog_walk(walk);
+																cnt_upd(walk);};
 }
 
 
@@ -79,7 +91,7 @@ V dog_sleep_1(I pause)
 
 V dog_sleep_2(I pause)
 {
-	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? dog_run_back() :  dog_walk_back();
+	dog_return();
 
 	depict(colour("../../pic/dog/sleep_2_1.png", dt), crd->dog_x, crd->dog_y);
 	usleep(pause/2);
@@ -91,7 +103,7 @@ V dog_eat(I pause)
 {
 	I i, p = pause/6;
 	depict("../../pic/obj/bowl_full.png", crd->bowl_x, crd->bowl_y);
-	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? dog_run_back() :  dog_walk_back();
+	dog_return();
 
 	DO(3, 	{  	depict(colour("../../pic/dog/eat_1.png", dt), crd->dog_x, crd->dog_y);
 				usleep(p);
