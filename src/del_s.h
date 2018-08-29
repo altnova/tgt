@@ -22,3 +22,5 @@ ext V dog_rise(I pause);
 ext V dog_love(I pause);
 
 ext V dog_poop(I pause);
+
+ext V dog_return();
