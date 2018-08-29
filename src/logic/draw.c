@@ -33,6 +33,7 @@ V dog_show(I obj)
 		CS(sleep_2, {dog_sleep_2(	stat_time		[obj]);			} );
 		CS(love, 	{dog_love(		stat_time		[obj]);			} );
 		CS(poop, 	{dog_poop(		stat_time		[obj]);			} );
+		CS(return_, {dog_go_back(						 );			} );
 	}
 }
 
