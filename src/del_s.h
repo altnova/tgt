@@ -1,4 +1,3 @@
-
 ext V depict(S filename, I x, I y);
 
 ext V dog_sit(I pause);

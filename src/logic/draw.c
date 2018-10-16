@@ -1,7 +1,15 @@
-#include "../del_s.h"
-#include "../base/cfg.h"
+#include "../___.h"
 
+#include "../visual/del_s.h"
+#include "../cfg.h"
+
+#include "../params.h"
 ext coor crd;
+
+/*ext D_STAT d_stat;
+ext I stat_time[12];
+ext S stat_name[12];
+*/
 
 V board_show(C key, I obj)
 {
@@ -33,7 +41,7 @@ V dog_show(I obj)
 		CS(sleep_2, {dog_sleep_2(	stat_time		[obj]);			} );
 		CS(love, 	{dog_love(		stat_time		[obj]);			} );
 		CS(poop, 	{dog_poop(		stat_time		[obj]);			} );
-		CS(return_, {dog_go_back(						 );			} );
+		CS(return_, {dog_return(						 );			} );
 	}
 }
 

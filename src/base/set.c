@@ -1,5 +1,6 @@
-#include "cfg.h"
-#include "___.h"
+#include "../cfg.h"
+#include "../___.h"
+// #include <gtk/gtk.h>
 
 ext tm_cnt cnt;
 ext dat dt;
@@ -9,7 +10,7 @@ ext coor crd;
 /*
 typedef struct Coor 		//< coordinates of objects 
 {	
-	UH dir;					//< 1 --> RIGHT 	0 --> LEFT
+	UH dir;					//< 1 -. RIGHT 	0 -. LEFT
 	UH rad;
 	UH kennel_x;
 	UH kennel_y;
@@ -30,6 +31,26 @@ typedef struct Coor 		//< coordinates of objects
 } pCoor;
 */
 
+//< !!!!!!!!!!!!!!!!!
+#define BAR_W 0 
+#define NOM_W 0
+#define D_LIM 0
+#define DOG_H 0
+#define NOM_H 0
+#define KENNEL_H 0
+#define BOWL_H 0
+#define BAR_H 0
+
+
+I height_()
+{
+
+}
+I width_()
+{
+
+}
+
 V set_data()
 {
 	I height = height_();
@@ -39,26 +60,26 @@ V set_data()
 	pCounter cnt_main = {0, 0, 0, 0};
 	pCoor crd_main;
 
-	crd_main->dir = 1;
-	crd_main->rad = 30;
+	crd_main.dir = RIGHT;
+	crd_main.rad = RANGE;
 
 		/*	x 	*/
-	crd_main->kennel_x 	= L_LIM/2;					//< L_LIM == WIDTH/10; R_LIM = WIDTH*9/10
-	crd_main->bowl_x 	= L_LIM/4;
-	crd_main->dog_x 	= 2 * L_LIM;
-	crd_main->bar_x 	= R_LIM;
-	crd_main->int_x 	= R_LIM + BAR_W - NOM_W;	//<	BAR_W ??? NOM_W ???
-	crd_main->cle_x 	= crd_main->int_x;
-	crd_main->sat_x 	= crd_main->int_x;
+	crd_main.kennel_x 	= L_LIM/2;					//< L_LIM == WIDTH/10; R_LIM = WIDTH*9/10
+	crd_main.bowl_x 	= L_LIM/4;
+	crd_main.dog_x 	= 2 * L_LIM;
+	crd_main.bar_x 	= R_LIM;
+	crd_main.int_x 	= R_LIM + BAR_W - NOM_W;	//<	BAR_W ??? NOM_W ???
+	crd_main.cle_x 	= crd_main.int_x;
+	crd_main.sat_x 	= crd_main.int_x;
 
 		/*	y 	*/
-	crd_main->kennel_y 	= D_LIM - KENNEL_H;			//<	D_LIM ??? KENNEL_H		
-	crd_main->bowl_y 	= D_LIM - BOWL_H;			//< BOWL_H ???
-	crd_main->dog_y 	= D_LIM - DOG_H				//<	DOG_H ????
-	crd_main->bar_y 	= D_LIM - BAR_H;
-	crd_main->int_y 	= crd_main->bar_y;
-	crd_main->cle_y 	= crd_main->bar_y - NOM_H;
-	crd_main->sat_y 	= crd_main->int_x;
+	crd_main.kennel_y 	= D_LIM - KENNEL_H;			//<	D_LIM ??? KENNEL_H		
+	crd_main.bowl_y 	= D_LIM - BOWL_H;			//< BOWL_H ???
+	crd_main.dog_y 	= D_LIM - DOG_H;				//<	DOG_H ????
+	crd_main.bar_y 	= D_LIM - BAR_H;
+	crd_main.int_y 	= crd_main.bar_y;
+	crd_main.cle_y 	= crd_main.bar_y - NOM_H;
+	crd_main.sat_y 	= crd_main.int_x;
 
 	crd = &crd_main;
 	dt = &dt_main;
@@ -66,9 +87,15 @@ V set_data()
 }
 
 
-V set_window();			//< fullscreen, transparent, click-trough
+V set_window()			//< fullscreen, transparent, click-trough
+{
 
-V set_objects();		//< kennel, board, empty_bowl;
+}
+																	//!!!!!<	GTK+
+V set_objects()		//< kennel, board, empty_bowl;
+{
+
+}
 
 V set_start()
 {

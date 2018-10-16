@@ -1,20 +1,26 @@
-#include "../base/cfg.h"
-#include "../draw.h"
-#include "../esfile.h"
-#include "../base/___.h"
-#include "../mains.h"
+#include "../cfg.h"
+#include "../params.h"
+#include "../logic/draw.h"
+#include "../file_edit/esfile.h"
+#include "../___.h"
+#include "../base/mains.h"
 #include <unistd.h>
 
 ext tm_cnt cnt;
 ext dat dt;
 ext coor crd;
 
-V cnt_upd(I act)										//< cnt++ for ex. after action
+
+
+
+
+
+V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 {
-	cnt->last_act += stat_time[act];
-	cnt->satiety += stat_time[act];
-	cnt->intellect += stat_time[act];
-	cnt->cleanliness += stat_time[act];
+	cnt_->last_act += stat_time[act];
+	cnt_->satiety += stat_time[act];
+	cnt_->intellect += stat_time[act];
+	cnt_->cleanliness += stat_time[act];
 }
 
 C death()														//<	conditions of exit 	
@@ -49,7 +55,7 @@ V cnt_check()										//<	conditions of modifing dt in case of appropriate cnt
 C set_main_action()								//< set main action if nothing special happens
 {
 	X((cnt->last_act < MAX_CNT_LA), {
-		dt->action = 	(ndt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
+		dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
 						(dt->satiety > STLIM && dt->cleanliness <= CLLIM)	? walk	: sit;}, 0);
 	dt->action = (dt->satiety <= STLIM || dt->cleanliness <= CLLIM) ? sleep_2 : sleep_1;
 	cnt->last_act = MAX_CNT_LA;
@@ -60,7 +66,9 @@ V event_check()									//< user's commands
 {
 	/* GET FILE */
 
-	if (GET_FILE && !access(file_input, F_OK)) {
+	S file_input = "filename";						//< for ex
+
+	if (1 && !access(file_input, F_OK)) {			//< GET_FILE instead of 1
 		cnt->last_act = 0;
 	
 		SW(input_type(file_input)) {
@@ -90,7 +98,7 @@ V event_check()									//< user's commands
 	}
 	
 	/*GET CLICK EVENT*/
-
+/*
 	if (click) {
 		if (dog_click) {
 		cnt->last_act = 0;
@@ -102,5 +110,6 @@ V event_check()									//< user's commands
 				draw("dog", return_);
 		}
 	
-	}
+	}*/
+
 }

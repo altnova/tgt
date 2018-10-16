@@ -1,6 +1,10 @@
 #include <stdio.h>
-#include "cfg.h"
-#include "___.h"
+#include <string.h>
+#include <stdlib.h>
+#include "../cfg.h"
+#include "../params.h"
+#include "../___.h"
+
 
 UJ szfile(FILE *ptr)
 {
@@ -11,12 +15,12 @@ UJ szfile(FILE *ptr)
 	R size;
 }
 
-C file_cont(FILE *ptr, S needle)							//<	search for a needle in file
+C file_cont(FILE *ptr, S needle)								//<	search for a needle in file
 { 
 	I len = scnt(needle);
 	S haystack = malloc(SZ(C) * len * 2 + 1);
 
-	OMO(rewind(ptr), fread(haystack, 1, SZ(C)*len*2, ptr) == len*2, {	X(strcasestr(haystack, needle) != NULL ,{rewind(ptr);free(haystack);}, 1);
+	OMO(rewind(ptr), fread(haystack,1,SZ(C)*len*2, ptr) == len*2, {	X(strcasestr(haystack, needle) != NULL ,{rewind(ptr);free(haystack);}, 1);
 																		fseek(ptr, -(len-1), SEEK_CUR);});
 
 	free(haystack);
@@ -33,7 +37,7 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	X(size>2000000, {fclose(ptr);},0);
 
 
-	if (file_cont(ptr, "asshole")) 
+	if (file_cont(ptr, "asshole") || file_cont(ptr, "bitch") || file_cont(ptr, "pidor")) 
 		FCLR(ptr, 4);
 
 	if (file_cont(ptr, "bone") || file_cont(ptr, "food")) 
@@ -47,7 +51,7 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 
 C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)
 {
-	R (IN(obj_1_x - RNG, obj_2_x, obj_1_x + RNG) && IN(obj_1_y - RNG, obj_2_y, obj_1_y + RNG)) ? 1 : 0;
+	R (IN(obj_1_x - RANGE, obj_2_x, obj_1_x + RANGE) && IN(obj_1_y - RANGE, obj_2_y, obj_1_y + RANGE)) ? 1 : 0;
 }
 
 
@@ -65,7 +69,7 @@ UJ pow_(I basis, I exp_)
 	X(exp_, {for (i = 0; i < exp_; i++) result *= basis;}, result);
 	R1;
 }
-
+/*
 S itoa(I num)					//< int to string
 {
 	I i, j;
@@ -84,12 +88,41 @@ S itoa(I num)					//< int to string
 	
 	R str;
 }
+*/
 
-S colour(S name, dat dt_)				//< 	dir/filename --> dir/n/filename, where n is colour num
+V reverse(S s)
+ {
+     I i, j;
+     C c;
+ 
+     for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
+         c = s[i];
+         s[i] = s[j];
+         s[j] = c;
+     }
+ }
+
+S itoa(I n)
+{
+	I i, max;
+	S str = malloc(SZ(C) * 12);
+	str[0] = n % 10 + '0';
+	for(i = 1;(n/=10) > 0;i++) 
+		str[i] = n % 10 + '0';
+	
+	str[i] = '\0';
+	reverse(str);
+	R str;
+}
+
+
+
+
+
+S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colour num
 {
 	I len = scnt(name), i;
 	I len_2 = len + 2;
-	I col = dt_->colour;
 
 	S new_name = malloc(SZ(C) * len_2);
 	strcpy(new_name, name);

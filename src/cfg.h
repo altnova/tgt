@@ -24,12 +24,6 @@
 
 #include "___.h"
 
-
-enum d_stat {		sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop, return_};
-I stat_time[12] = {	1000000, 1000000, 1000000, 	1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 1000000, 0};
-S stat_name[12] = {	"sit", "run", "walk", "eat", "read_", "die", "rise", "sleep_1", "sleep_2", 	"love", "wc", "return"};
-
-
 typedef struct Cnt_tm		//< counters
 {
 	I last_act;
@@ -51,6 +45,7 @@ typedef struct Dt 			//< dog info
 typedef struct Coor 		//< coordinates of objects 
 {	
 	UH dir;					//< 1 --> RIGHT 	0 --> LEFT
+	UH rad;
 	UH kennel_x;
 	UH kennel_y;
 	UH kennel_rad;
@@ -67,7 +62,11 @@ typedef struct Coor 		//< coordinates of objects
 	UH cle_y;
 	UH dog_in_kennel_x;
 	UH dog_in_kennel_y;
+	UH bowl_x;
+	UH bowl_y;
 } pCoor;
+
+typedef enum  	{	sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop, return_} D_STAT;
 
 
 typedef pDat* dat;

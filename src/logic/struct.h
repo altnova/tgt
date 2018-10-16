@@ -1,6 +1,6 @@
+// #include "base/cfg.h"
 
-
-ext V cnt_upd(I num);									//< cnt++ for ex. after action
+ext V cnt_upd(tm_cnt cnt_, I num);									//< cnt++ for ex. after action
 
 ext V cnt_check();										//<	conditions of modifing dt in case of appropriate  cnt
 

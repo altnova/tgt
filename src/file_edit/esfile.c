@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../base/___.h"
 #include <pwd.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include "../mains.h"
+
+#include "../___.h"
+
+#include "../base/mains.h"
+
 
 #define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
 
@@ -61,7 +64,7 @@ V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
 {
 	str = realloc(str, scnt(str) + scnt(CONST_STR) + 1);
 	strcat(str, CONST_STR);
-	make_file(desktop_path, "spit.txt", str);
+	make_file(desktop_path(), "spit.txt", str);
 }
 
 V eat_file()													//< deletes first file in Desktop dir 
