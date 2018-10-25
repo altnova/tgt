@@ -84,7 +84,7 @@ typedef size_t sz;
 #define R1 R 1
 
 #define OMO(x,y,z) {for((x);(y);(z));(z);}
-#define FCLR(file,r) {fclose(file);R(r);}	
+// #define FCLR(file,r) {fclose(file);R(r);}	
 #define SZFILE(ptr,x) {UJ cur = ftell(ptr);fseek(ptr,0,SEEK_END);x=ftell(ptr);fseek(ptr,-cur,SEEK_CUR);} //< sizeof file
 
 
