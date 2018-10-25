@@ -1,10 +1,13 @@
 #include "../___.h"
 
 #include "../visual/del_s.h"
+#include "../gui/win.h"
 #include "../cfg.h"
 
 #include "../params.h"
-ext coor crd;
+
+
+// ext coor crd;
 
 /*ext D_STAT d_stat;
 ext I stat_time[12];
@@ -14,7 +17,8 @@ ext S stat_name[12];
 V board_show(C key, I obj)
 {
 	UH x, y;
-	C filename[21] = { '.', '.', '/', 'p', 'i', 'c', '/', 'b', 'r', 'd', '/', 'n', 'o', 'm', '_', '0', '.', 'p', 'n', 'g', '\0'};
+	// C filename[21] = { '.', '.', '/', 'p', 'i', 'c', '/', 'b', 'r', 'd', '/', 'n', 'o', 'm', '_', '0', '.', 'p', 'n', 'g', '\0'};
+	C filename[21] = "../../pic/brd/nom_0.png";
 	filename[15] += obj;
 
 	SW(key)													//<	set filename and crd
@@ -24,7 +28,7 @@ V board_show(C key, I obj)
 		CS('c', {x = crd->cle_x; y = crd->cle_y;});
 	}
 
-	depict(filename, x, y);
+	depict(1, &filename, &x, &y);
 }
 
 V dog_show(I obj)
