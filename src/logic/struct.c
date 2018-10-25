@@ -6,14 +6,6 @@
 #include "../base/mains.h"
 #include <unistd.h>
 
-ext tm_cnt cnt;
-ext dat dt;
-ext coor crd;
-
-
-
-
-
 
 V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 {
