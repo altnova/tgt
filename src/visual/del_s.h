@@ -1,4 +1,4 @@
-extern V depict(S filename, I x, I y);
+// extern V depict(S filename, I x, I y);
 
 extern V dog_sit(I pause);
 
