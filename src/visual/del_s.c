@@ -1,12 +1,16 @@
 //<!!!	solve drawing few objects at a time
 //<```	free arg for colour 
 
+#include <stdlib.h>
+
 #include <unistd.h>
+#include <string.h>
 #include "../___.h"
 #include "../cfg.h"
 #include "../logic/struct.h"
 #include "../base/mains.h"
 #include "../params.h"
+#include "../gui/win.h"
 
 /*ext dat dt;
 ext coor crd;
@@ -17,12 +21,9 @@ ext I stat_time[12];
 ext S stat_name[12];
 */
 
-V depict(I am, S* filename, I *x, I *y);
+// V depict(I am, S* filename, I *x, I *y);
 
-V depict(I am, S *filename, I *x, I *y)										//<!!! 	GTK+
-{
-	O("%s\t\tx-> %d y->%d", filename, x, y);
-}
+
 
 V this_way(I pause, S file_1, S file_2, S act, I way)
 {
@@ -119,7 +120,8 @@ V dog_sleep_2(I pause)									//< in kennel
 												//<	both needs running back
 V dog_eat(I pause)
 {
-	I i, p = pause/7, x[2], y[2];
+	I i, p = pause/7;
+	UH x[2], y[2];
 	S str_1 = colour("../../pic/dog/eat_1.png", dt->colour);
 	S str_2 = colour("../../pic/dog/eat_2.png", dt->colour);
 
@@ -128,7 +130,7 @@ V dog_eat(I pause)
 	str[1] = malloc(SZ(C) * 50);
 
 	strcpy(str[0], colour("../../pic/dog/eat_1.png", dt->colour));
-	strcpy(str[1], "../../pic/obj/bowl_full.png")
+	strcpy(str[1], "../../pic/obj/bowl_full.png");
 
 	dog_return();
 	usleep(p);
@@ -155,7 +157,7 @@ V dog_eat(I pause)
 V dog_read(I pause)
 {
 	I i, p = pause/12;
-	S str = malloc(SZ(C) * 5-);
+	S str = malloc(SZ(C) * 50);
 
 	DO(3,  {	
 				strcpy(str, colour("../../pic/dog/read_1.png", dt->colour));
@@ -221,13 +223,13 @@ V dog_love(I pause)
 V dog_poop(I pause)
 {
 	S str;
-	strcpy(str, colour("../../pic/dog/poop_1.png"), dt->colour);
+	strcpy(str, colour("../../pic/dog/poop_1.png", dt->colour));
 	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/3);
-	strcpy(str, colour("../../pic/dog/poop_2.png"), dt->colour);
+	strcpy(str, colour("../../pic/dog/poop_2.png", dt->colour));
 	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/3);
-	strcpy(str, colour("../../pic/dog/poop_3.png"), dt->colour);
+	strcpy(str, colour("../../pic/dog/poop_3.png", dt->colour));
 	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/3);
 }
