@@ -72,3 +72,7 @@ typedef enum  	{	sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep
 typedef pDat* dat;
 typedef pCounter* tm_cnt;
 typedef pCoor* coor;
+
+ext tm_cnt cnt;
+ext dat dt;
+ext coor crd;
