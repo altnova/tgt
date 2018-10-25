@@ -1,10 +1,11 @@
 #include "../___.h"
-
-#include "../visual/del_s.h"
-#include "../gui/win.h"
 #include "../cfg.h"
 
 #include "../params.h"
+#include "../gui/win.h"
+#include "../visual/del_s.h"
+
+
 
 
 // ext coor crd;
@@ -18,8 +19,8 @@ V board_show(C key, I obj)
 {
 	UH x, y;
 	// C filename[21] = { '.', '.', '/', 'p', 'i', 'c', '/', 'b', 'r', 'd', '/', 'n', 'o', 'm', '_', '0', '.', 'p', 'n', 'g', '\0'};
-	C filename[21] = "../../pic/brd/nom_0.png";
-	filename[15] += obj;
+	S filename = "../../pic/brd/nom_0.png";
+	filename[18] += obj;
 
 	SW(key)													//<	set filename and crd
 	{
