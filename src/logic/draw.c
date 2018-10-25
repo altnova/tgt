@@ -5,9 +5,6 @@
 #include "../gui/win.h"
 #include "../visual/del_s.h"
 
-
-
-
 // ext coor crd;
 
 /*ext D_STAT d_stat;
