@@ -1,3 +1,6 @@
+//<!!!	solve drawing few objects at a time
+//<```	free arg for colour 
+
 #include <unistd.h>
 #include "../___.h"
 #include "../cfg.h"
@@ -5,39 +8,46 @@
 #include "../base/mains.h"
 #include "../params.h"
 
-ext dat dt;
+/*ext dat dt;
 ext coor crd;
-ext tm_cnt cnt;
+ext tm_cnt cnt;*/
 
 /*ext D_STAT d_stat;
 ext I stat_time[12];
 ext S stat_name[12];
 */
-V depict(S filename, I x, I y)										//<!!! 	GTK+
+
+V depict(I am, S* filename, I *x, I *y);
+
+V depict(I am, S *filename, I *x, I *y)										//<!!! 	GTK+
 {
 	O("%s\t\tx-> %d y->%d", filename, x, y);
 }
 
 V this_way(I pause, S file_1, S file_2, S act, I way)
 {
-	depict(colour(file_1, dt->colour), crd->dog_x, crd->dog_y);
+	S str = colour(file_1, dt->colour);
+	depict(1, &str,  &crd->dog_x, &crd->dog_y);
 	crd->dir = way;
 	if (way)
 		crd->dog_x += (act[0] == 'r') ? DIFRUN : DIFWALK;
 	else 
 		crd->dog_x -= (act[0] == 'r') ? DIFRUN : DIFWALK;
 
+	str = colour(file_2, dt->colour);
 	usleep(pause/2);
-	depict(colour(file_2, dt->colour), crd->dog_x, crd->dog_y);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/2);
 }
 
 
 V dog_sit(I pause)
 {
-	depict(colour("../../pic/dog/sit_1.png", dt->colour), crd->dog_x, crd->dog_y);
+	S str = colour("../../pic/dog/sit_1.png", dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/2);
-	depict(colour("../../pic/dog/sit_2.png", dt->colour), crd->dog_x, crd->dog_y);
+	str = colour("../../pic/dog/sit_2.png", dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/2);
 }
 
@@ -57,23 +67,7 @@ V dog_walk(I pause)
 				this_way(pause, "../../pic/dog/walk_l_1.png", "../../pic/dog/walk_l_2.png", "walk", LEFT);	//<	walk LEFT
 }
 
-/*
 
-V dog_run_back()
-{
-	W(crd->dog_x > L_LIM) {
-		dog_run(run);
-		cnt_upd(run);
-	}
-}
-V dog_walk_back()								
-{
-	W(crd->dog_x > L_LIM) {
-		dog_walk(walk);
-		cnt_upd(walk);
-	}
-}
-*/
 V dog_return()
 {
 	// (dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? dog_run_back() :  dog_walk_back();
@@ -101,90 +95,139 @@ V dog_return()
 }
 
 
-V dog_sleep_1(I pause)
+V dog_sleep_1(I pause)									//< outside [no strength to return]
 {
-	depict(colour("../../pic/dog/sleep_1_1.png", dt->colour), crd->dog_x, crd->dog_y);
+	S str = colour("../../pic/dog/sleep_1_1.png", dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/2);
-	depict(colour("../../pic/dog/sleep_1_2.png", dt->colour), crd->dog_x, crd->dog_y);
+	str = colour("../../pic/dog/sleep_1_2.png", dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/2);
 }
 
-V dog_sleep_2(I pause)
+V dog_sleep_2(I pause)									//< in kennel
 {
+	
+	S str = colour("../../pic/dog/sleep_2_1.png", dt->colour);
 	dog_return();
-
-	depict(colour("../../pic/dog/sleep_2_1.png", dt->colour), crd->dog_x, crd->dog_y);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/2);
-	depict(colour("../../pic/dog/sleep_2_2.png", dt->colour), crd->dog_x, crd->dog_y);
+	str = colour("../../pic/dog/sleep_2_2.png", dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/2);
 }
 												//<	both needs running back
 V dog_eat(I pause)
 {
-	I i, p = pause/6;
-	depict("../../pic/obj/bowl_full.png", crd->bowl_x, crd->bowl_y);
-	dog_return();
+	I i, p = pause/7, x[2], y[2];
+	S str_1 = colour("../../pic/dog/eat_1.png", dt->colour);
+	S str_2 = colour("../../pic/dog/eat_2.png", dt->colour);
 
-	DO(3, 	{  	depict(colour("../../pic/dog/eat_1.png", dt->colour), crd->dog_x, crd->dog_y);
+	S *str = malloc(SZ(S) * 2);
+	str[0] = malloc(SZ(C) * 50);
+	str[1] = malloc(SZ(C) * 50);
+
+	strcpy(str[0], colour("../../pic/dog/eat_1.png", dt->colour));
+	strcpy(str[1], "../../pic/obj/bowl_full.png")
+
+	dog_return();
+	usleep(p);
+
+	x[0] = crd->dog_x;	
+	x[1] = crd->bowl_x;
+	y[0] = crd->dog_y;
+	y[1] = crd->bowl_y;
+	strcpy(str[1], "../../pic/obj/bowl_full.png");
+
+	DO(3, 	{  	strcpy(str[0], colour("../../pic/dog/eat_1.png", dt->colour));
+				
+				depict(2, str, x, y);
 				usleep(p);
-				depict(colour("../../pic/dog/eat_2.png", dt->colour), crd->dog_x, crd->dog_y);
+
+				strcpy(str[0], colour("../../pic/dog/eat_1.png", dt->colour));
+
+				depict(2, str, x, y);
 				usleep(p);});
-	depict("../../pic/obj/bowl_empty.png", crd->bowl_x, crd->bowl_y);
+	strcpy(str[1], "../../pic/obj/bowl_empty.png");
+	depict(2, str, x, y);
 }
 
 V dog_read(I pause)
 {
 	I i, p = pause/12;
-	DO(3,  {	depict(colour("../../pic/dog/read_1.png", dt->colour), crd->dog_x, crd->dog_y);
+	S str = malloc(SZ(C) * 5-);
+
+	DO(3,  {	
+				strcpy(str, colour("../../pic/dog/read_1.png", dt->colour));
+				depict(1, &str, &crd->dog_x, &crd->dog_y);
 				usleep(p);
-				depict(colour("../../pic/dog/read_2.png", dt->colour), crd->dog_x, crd->dog_y);
+
+				strcpy(str, colour("../../pic/dog/read_2.png", dt->colour));
+				depict(1, &str, &crd->dog_x, &crd->dog_y);
 				usleep(p);
-				depict(colour("../../pic/dog/read_3.png", dt->colour), crd->dog_x, crd->dog_y);
+
+				strcpy(str, colour("../../pic/dog/read_3.png", dt->colour));
+				depict(1, &str, &crd->dog_x, &crd->dog_y);
 				usleep(p);
-				depict(colour("../../pic/dog/read_4.png", dt->colour), crd->dog_x, crd->dog_y);
+
+				strcpy(str, colour("../../pic/dog/read_4.png", dt->colour));
+				depict(1, &str, &crd->dog_x, &crd->dog_y);
 				usleep(p);})
 }
 
 V dog_die(I pause)				//< 	??????
 {
-	I i, p = pause/12;
-	C filename[23] = { '.', '.', '/', '.', '.', '/', 'p', 'i', 'c', '/', 'd', 'o', 'g', '/', 'd', 'i', 'e', '_', 'n', '.', 'p', 'n', 'g'};
+	I i, p = pause/9;
+	// C filename[23] = { '.', '.', '/', '.', '.', '/', 'p', 'i', 'c', '/', 'd', 'o', 'g', '/', 'd', 'i', 'e', '_', 'n', '.', 'p', 'n', 'g'};
+	C filename[23] = "../../pic/dog/die_n.png";
+	S str;
 
-	DO(9, { filename[18] = i + '0' + 1;
-			depict(colour(filename, dt->colour), crd->dog_x, crd->dog_y);
-			if (i > 5)
-				crd->dog_y -= DIFY;
+	DO(9, { filename[18] = i + '1';
+			strcpy(str, colour(filename, dt->colour));
+			depict(1, &str, &crd->dog_x, &crd->dog_y);
+
+																			//< for a while
+			// if (i > 5)
+				// crd->dog_y -= DIFY;
 			usleep(p);});
 }
 
 V dog_rise(I pause)				//<		??????
 {
-	I i, p = pause/12;
-	C filename[24] = {'.', '.', '/', '.', '.', '/', 'p', 'i', 'c', '/', 'd', 'o', 'g', '/', 'r', 'i', 's', 'e', '_', 'n', '.', 'p', 'n', 'g'};
+	I i, p = pause/9;
+	// C filename[24] = {'.', '.', '/', '.', '.', '/', 'p', 'i', 'c', '/', 'd', 'o', 'g', '/', 'r', 'i', 's', 'e', '_', 'n', '.', 'p', 'n', 'g'};
+	C filename[24] = "../../pic/dog/rise_n.png";
+	S str;
 
-	DO(9, {	filename[19] = i + '0';
-			depict(colour(filename, dt->colour), crd->dog_x, crd->dog_y);
-			crd->dog_y -= DIFY;
+	DO(9, {	filename[19] = i + '1';
+			strcpy(str, colour(filename, dt->colour));
+			depict(1, &str, &crd->dog_x, &crd->dog_y);
+			// crd->dog_y -= DIFY;											//< for a while
 			usleep(p);});
 }
 
 V dog_love(I pause)
 {
 	I i, p = pause/6;
-	DO(2, {	depict(colour("../../pic/dog/love_1.png", dt->colour), crd->dog_x, crd->dog_y);
+	S str;
+	DO(3, {	strcpy(str, colour("../../pic/dog/love_1.png", dt->colour));
+			depict(1, &str, &crd->dog_x, &crd->dog_y);
 			usleep(p);
-			depict(colour("../../pic/dog/love_2.png", dt->colour), crd->dog_x, crd->dog_y);
-			usleep(p);
-			depict(colour("../../pic/dog/love_3.png", dt->colour), crd->dog_x, crd->dog_y);
+			strcpy(str, colour("../../pic/dog/love_2.png", dt->colour));
+			depict(1, &str, &crd->dog_x, &crd->dog_y);
 			usleep(p);});
 }
 
 V dog_poop(I pause)
 {
-	depict(colour("../../pic/dog/poop_1.png", dt->colour), crd->dog_x, crd->dog_y);
+	S str;
+	strcpy(str, colour("../../pic/dog/poop_1.png"), dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/3);
-	depict(colour("../../pic/dog/poop_2.png", dt->colour), crd->dog_x, crd->dog_y);
+	strcpy(str, colour("../../pic/dog/poop_2.png"), dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/3);
-	depict(colour("../../pic/dog/poop_3.png", dt->colour), crd->dog_x, crd->dog_y);
+	strcpy(str, colour("../../pic/dog/poop_3.png"), dt->colour);
+	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep(pause/3);
 }
