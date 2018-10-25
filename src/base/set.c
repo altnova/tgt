@@ -2,10 +2,6 @@
 #include "../___.h"
 // #include <gtk/gtk.h>
 
-ext tm_cnt cnt;
-ext dat dt;
-ext coor crd;
-
 
 /*
 typedef struct Coor 		//< coordinates of objects 
