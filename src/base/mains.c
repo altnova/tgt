@@ -123,8 +123,6 @@ S itoa(I n)
 
 
 
-
-
 S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colour num
 {
 	I len = scnt(name), i;
