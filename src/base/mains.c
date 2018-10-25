@@ -6,7 +6,13 @@
 #include "../___.h"
 
 
-UJ szfile(FILE *ptr)
+C FCLR(FILE *ptr, C r)
+{
+	fclose(ptr);
+	R r;
+}
+
+UJ szfile(FILE *ptr)											//< sizeof file
 {
 	UJ cur = ftell(ptr), size;
 	fseek(ptr, 0, SEEK_END);
@@ -20,7 +26,7 @@ C file_cont(FILE *ptr, S needle)								//<	search for a needle in file
 	I len = scnt(needle);
 	S haystack = malloc(SZ(C) * len * 2 + 1);
 
-	OMO(rewind(ptr), fread(haystack,1,SZ(C)*len*2, ptr) == len*2, {	X(strcasestr(haystack, needle) != NULL ,{rewind(ptr);free(haystack);}, 1);
+	OMO(rewind(ptr), fread(haystack,1,SZ(C)*len*2, ptr) == len*2, {	X(strcasestr(haystack, needle) /* != NULL*/  ,{rewind(ptr);free(haystack);}, 1);
 																		fseek(ptr, -(len-1), SEEK_CUR);});
 
 	free(haystack);
@@ -38,15 +44,15 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 
 
 	if (file_cont(ptr, "asshole") || file_cont(ptr, "bitch") || file_cont(ptr, "pidor")) 
-		FCLR(ptr, 4);
+		R FCLR(ptr, 4);
 
 	if (file_cont(ptr, "bone") || file_cont(ptr, "food")) 
-		FCLR(ptr, 1);
+		R FCLR(ptr, 1);
 
 	if (file_cont(ptr, "bath") || file_cont(ptr, "water") || file_cont(ptr, "shower")) 
-		FCLR(ptr, 2);
+		R FCLR(ptr, 2);
 
-	FCLR(ptr, 0);
+	R FCLR(ptr, 0);
 }
 
 C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)
@@ -126,10 +132,19 @@ S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colo
 
 	S new_name = malloc(SZ(C) * len_2);
 	strcpy(new_name, name);
-
+/*															// set 0 for a while
 	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
 
 	new_name[len_2 - i] = col + '0';
+
+	R new_name;
+	*/
+
+	for (i = 0; name[len - i] != '/'; i++) {
+		new_name[len_2 - i] = name[len - i];
+	}
+
+	new_name[len_2 - i] = '0';
 
 	R new_name;
 }
