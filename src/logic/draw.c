@@ -26,7 +26,7 @@ V board_show(C key, I obj)
 		CS('c', {x = crd->cle_x; y = crd->cle_y;});
 	}
 
-	depict(1, &filename, &x, &y);
+	add_to_canvas(1, &filename, &x, &y);
 }
 
 V dog_show(I obj)
