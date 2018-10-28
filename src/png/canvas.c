@@ -12,6 +12,9 @@
 
 #define FRM 20
 
+ext I height;
+ext I width;
+
 typedef struct Img {
 	I h;
 	I w;
