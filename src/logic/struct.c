@@ -80,7 +80,7 @@ V event_check()									//< user's commands
 				cnt->intellect = 0;})
 			CS(4, { 
 				dt->action = sit;
-				eat_file();
+				// eat_file();								//< 	test mode
 				O("eat_file\n");})
 			CD:
 				draw("dog", poop);
