@@ -4,7 +4,7 @@
 #include "../params.h"
 #include "../gui/win.h"
 #include "../visual/del_s.h"
-#include "../canvas.h"
+#include "../png/canvas.h"
 
 
 
