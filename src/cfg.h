@@ -16,7 +16,7 @@
 #define LEFT 0
 
 #define R_LIM 30			//< ???
-#define L_LIM 200 			//< ???
+#define L_LIM 800 			//< ???
 
 #define DIFRUN 15			//< ???
 #define DIFWALK 10			//< ???
