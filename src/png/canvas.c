@@ -113,7 +113,7 @@ img write_png_file(S file_name, img img_)		//<	write png file with name file_nam
 		R img_;
 }
 
-img read_png_file(char* file_name)				//<	read png file file_name and return struct 
+img read_png_file(S file_name)				//<	read png file file_name and return struct 
 {
 		I i;
 		char header[8];	// 8 is the maximum size that can be checked
@@ -183,7 +183,7 @@ img read_png_file(char* file_name)				//<	read png file file_name and return str
 }
 
 
-img dep_at_xy(I am, S* a_filename, S* b_filename, I* x_, I* y_)			//< draw pic b into pic a at x;y
+img dep_at_xy(I am, S a_filename, S* b_filename, I* x_, I* y_)			//< draw pic b into pic a at x;y
 {
 	I i, j, k;
 	png_byte *a_row, *b_row;
@@ -311,7 +311,7 @@ void frame(I am, S* filename, I* x_, I* y_)
 	write_png_file("../../pic/tmp.png", dep_at_xy(am, "../../pic/canvas.png", filename, x_, y_));		//< take base from canvas.png, modify it and put into tmp.png
 }
 
-
+/*
 I main()
 {
 	S filename[3];
@@ -339,7 +339,7 @@ I main()
 
 	R0;
 }
-
+*/
 
 /*
 I main()
