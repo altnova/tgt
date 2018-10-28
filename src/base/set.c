@@ -37,14 +37,16 @@ typedef struct Coor 		//< coordinates of objects
 #define BOWL_H 0
 #define BAR_H 0
 
+ext I height;
+ext I width;
 
 I height_()
 {
-
+	R 300;
 }
 I width_()
 {
-
+	R 900;
 }
 
 V set_data()
