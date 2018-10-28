@@ -4,15 +4,11 @@
 #include "../params.h"
 #include "../gui/win.h"
 #include "../visual/del_s.h"
+#include "../canvas.h"
 
-// ext coor crd;
 
-/*ext D_STAT d_stat;
-ext I stat_time[12];
-ext S stat_name[12];
-*/
 
-V board_show(C key, I obj)
+V board_show(C key, I obj)		//<	change params on board (through canvas.png)
 {
 	UH x, y;
 	// C filename[21] = { '.', '.', '/', 'p', 'i', 'c', '/', 'b', 'r', 'd', '/', 'n', 'o', 'm', '_', '0', '.', 'p', 'n', 'g', '\0'};
@@ -29,7 +25,7 @@ V board_show(C key, I obj)
 	add_to_canvas(1, &filename, &x, &y);
 }
 
-V dog_show(I obj)
+V dog_show(I obj)				//< choose type of action to show
 {
 	SW(obj) {
 		CS(sit, 	{dog_sit(		stat_time		[obj]);			} );
@@ -47,7 +43,7 @@ V dog_show(I obj)
 	}
 }
 
-V draw(S key, I obj)
+V draw(S key, I obj)			//<	change canvas or tmp.png?
 {
 	(key[0] == 'd') ? dog_show(obj) : board_show(key[0], obj);
 }
