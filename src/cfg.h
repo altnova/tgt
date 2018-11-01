@@ -15,11 +15,11 @@
 #define RIGHT 1
 #define LEFT 0
 
-#define R_LIM 30			//< ???
-#define L_LIM 800 			//< ???
+#define R_LIM 800			//< ???
+#define L_LIM 100 			//< ???
 
-#define DIFRUN 15			//< ???
-#define DIFWALK 10			//< ???
+#define DIFRUN 10			//< ???
+#define DIFWALK 15			//< ???
 #define DIFY 10
 
 #include "___.h"
