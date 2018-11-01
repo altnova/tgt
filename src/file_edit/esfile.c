@@ -54,10 +54,14 @@ S choose_name(S path, S filename)								//< unique enumerated file_name like pa
 }
 
 V make_file(S path, S new_file, S str)							//< creates file with unique name and writes in str
-{																
-	FILE *ptr = fopen(choose_name(path, new_file), "w");
+{	
+	S name;														
+	FILE *ptr;
+	name = choose_name(path, new_file);
+	ptr = fopen(name, "w");
 	fwrite(str, 1, SZ(C) * scnt(str), ptr); 
 	fclose(ptr);
+	free(name);
 }
 
 V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
@@ -80,4 +84,5 @@ V eat_file()													//< deletes first file in Desktop dir
 		}	
 		closedir(d);
 	}
+	free(path);
 }
