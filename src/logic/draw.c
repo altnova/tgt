@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include "../___.h"
 #include "../cfg.h"
 
@@ -8,12 +10,24 @@
 
 
 
-V board_show(C key, I obj)		//<	change params on board (through canvas.png)
+V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 {
 	UH x, y;
 	// C filename[21] = { '.', '.', '/', 'p', 'i', 'c', '/', 'b', 'r', 'd', '/', 'n', 'o', 'm', '_', '0', '.', 'p', 'n', 'g', '\0'};
-	S filename = "../../pic/brd/nom_0.png";
-	filename[18] += obj;
+/*	S filename = "pic/brd/nom_0.png\0";
+	O("iM IN BOARD SHOW\n");
+	O("%d --> 0(%d) + 'obj'(%d)\n", obj + filename[12], filename[12], obj);
+	fflush(stdout);
+	filename[12] = filename[12] + obj;*/
+
+	S filename = malloc(SZ(C) * 25);
+	strcpy(filename, "pic/brd/nom_0.png\0");
+
+		O("iM IN BOARD SHOW\n");
+	O("%d --> 0(%d) + 'obj'(%d)\n", obj + filename[12], filename[12], obj);
+	fflush(stdout);
+	filename[12] += obj;
+
 
 	SW(key)													//<	set filename and crd
 	{
@@ -22,11 +36,15 @@ V board_show(C key, I obj)		//<	change params on board (through canvas.png)
 		CS('c', {x = crd->cle_x; y = crd->cle_y;});
 	}
 
+	O("EVERYTHING IS OK\n");
+
 	add_to_canvas(1, &filename, &x, &y);
+	free(filename);
 }
 
 V dog_show(I obj)				//< choose type of action to show
 {
+	O("[dog_show(%s)]\n", stat_name[obj]);
 	SW(obj) {
 		CS(sit, 	{dog_sit(		stat_time		[obj]);			} );
 		CS(run, 	{dog_run(		stat_time		[obj]);			} );
