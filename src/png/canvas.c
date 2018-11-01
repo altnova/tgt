@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+#include <limits.h>
 #include "../___.h"
 #include "../cfg.h"
+#include "../base/mains.h"
 
 #define PNG_DEBUG 3
 #include <png.h>
@@ -67,10 +69,14 @@ void free_img(img img_)							//<	free struct
 img write_png_file(S file_name, img img_)		//<	write png file with name file_name with info from struct
 {
 		/* create file */
-		FILE *fp = fopen(file_name, "wb");
+		// C new[PATH_MAX + 1];
+		FILE *fp = fopen_(file_name, "wb");
+
+		O("WRITE '%s'\n", file_name);
 
 		if (!fp)
 				abort_("[write_png_file] File %s could not be opened for writing", file_name);
+		// R 0;
 
 		/* initialize stuff */
 		png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -105,7 +111,7 @@ img write_png_file(S file_name, img img_)		//<	write png file with name file_nam
 		png_write_image(png_ptr, img_->row_pointers);
 
 		// O("HALF DONE\n");
-		fflush(stdout);
+		// fflush(stdout);
 		/* end write */
 		if (setjmp(png_jmpbuf(png_ptr)))
 				abort_("[write_png_file] Error during end of write");
@@ -120,12 +126,13 @@ img read_png_file(S file_name)				//<	read png file file_name and return struct
 {
 		I i;
 		char header[8];	// 8 is the maximum size that can be checked
-
+		// C new[PATH_MAX + 1];
 		img img_ = malloc(SZ(pImg));												//<	allocate structure
 		png_bytep* rows;
 
+
 		/* open file and test for it being a png */
-		FILE *fp = fopen(file_name, "rb");
+		FILE *fp = fopen_(file_name, "rb");
 		if (!fp)
 				abort_("[read_png_file] File %s could not be opened for reading", file_name);
 
@@ -176,116 +183,91 @@ img read_png_file(S file_name)				//<	read png file file_name and return struct
 
 		fclose(fp);
 		
-		O("READ:  '%s' ", file_name);
-		for (i = 0; i < (48 - strlen(file_name) - 10)/8 + 1; i++)
+		O("READ:  '%s'\n", file_name);
+		/*
+		for (i = 0; i < (48 - strlen(new) - 10)/8 + 1; i++)
 			O("\t");
 		fflush(stdout);
 		O("-->\t\tw: %d\th: %d\tbd: %d  col_t: %d\n", img_->w, img_->h, img_->b_depth, img_->col);
-
+*/
 		R img_;
 }
 
 
-img dep_at_xy(I am, S a_filename, S* b_filename, I* x_, I* y_)			//< draw pic b into pic a at x;y
+img dep_at_xy(I am, S a_filename, S* b_filename, UH* x_, UH* y_)			//< draw pic b into pic a at x;y
 {
-	I i, j, k;
+	I i, j, k, par = 0, l = 0;
 	png_byte *a_row, *b_row;
 	img img_a, img_b;
 
-	O("[dep_at_xy\n");
-
+	O("[dep_at_xy()]\n");
+	// O("[dep_at_xy]\tx --> %hu\t y --> %hu\n", x_[0], y_[0]);
+	// O("(height %d\t width %d)\n", height, width);
 	img_a = read_png_file(a_filename);
+
+	O("%s \tw: %d\t h: %d\n", a_filename, img_a->w, img_a->h);
+
 
 	for (k = 0; k < am; k++) {
 		img_b = read_png_file(b_filename[k]);
+		O("%s \tw: %hu\t h: %hu\n", b_filename[k], img_b->w, img_b->h);
+		par = 0;
 
+		// O("KKK %d\nx_[k] --> %hu  x_[k] + img_b->w --> %hu + %d == %d\n",k, x_[k], x_[k], img_b->w, x_[k] + img_b->w);
 		for (i = y_[k]; i < (y_[k] + img_b->h); i++) { 
+
 			a_row = img_a->row_pointers[i];
 			b_row = img_b->row_pointers[i - y_[k]];
-
-			for (j = x_[k]; j < (x_[k] + img_b->w) && j < img_a->w; j++) {
-				if (b_row[(j - x_[k] + 1) * 4 - 1])
+			l++;
+			j = x_[k];
+			// O("j --> %d\n", j);
+			for (; (j < x_[k] + img_b->w) && (j < img_a->w); j++) {
+				if (b_row[(j - x_[k] + 1) * 4 - 1]) {
+					// O("in it!\n");
+					par++;
 					copy_byte(&a_row[j*4], &b_row[(j - x_[k]) * 4], 4);
+				}
 			}
+
+			// if (j >= x_[k] + img_b->w)
+				// O("%dHELP~\n", j);
+			// if (j >= img_a->w)
+				// O("%dHELP~~~\n", j);
 		}
 		free_img(img_b);
 	}
 
+	// O("%d pix!\t %d lines!\n", par, l);
+
 	R img_a;
 }
 
-/*
-void set_canvas()								//<	set blank canvas into pic/tmp.png with few standart pics
+
+void add_to_canvas(I am, S* filename, UH* x_, UH* y_)
 {
-	img img_a, img_b, img_;
-	png_byte *a_row, *b_row, *row;
-	png_bytep *rows = (png_bytep*) malloc(SZ(png_bytep) * height);;
-
-	for (y=0; y<height; y++)
-		rows[y] = (png_byte*) malloc(4 * width * SZ(png_byte));
-
-	img_a = read_png_file("../../pic/obj/kennel.png");
-	img_b = read_png_file("../../pic/obj/board.png");
-
-	img_ = malloc(SZ(pImg));
-	img_->h = height;
-	img_->w = width;
-	img_->row_pointers = rows;
-	img_->col = img_a->col;
-	img_->b_depth = img_a->b_depth;
-
-	for (y = 0; y < height; y++) {				
-		row 	= img_->row_pointers[y];
-		a_row 	= img_a->row_pointers[y - (height - img_a->h - FRM)];
-		b_row 	= img_b->row_pointers[y - (height - img_b->h - FRM)];
-
-		for (x = 0; x < width; x++) {
-			if (y < (height - FRM) && (y >= (height - img_a->h - FRM)) && (x > FRM) && (x <= (FRM + img_a->w))) 								//< kennel area
-				copy_byte(&(row[x*4]), &(a_row[(x-FRM)*4]), 4);
-			else {
-				if ( (y < (height - FRM)) && (y >= (height - img_b->h - FRM)) && (x >= (width - FRM - img_b->w)) && (x < (width - FRM))) 	//< board area
-					copy_byte(&(row[x*4]), &(b_row[(x-width+FRM+img_b->w)*4]), 4);
-				else {
-					row[x*4] = 0;
-					row[x*4 + 1] = 0;
-					row[x*4 + 2] = 0;
-					row[x*4 + 3] = 0;
-				}
-			}
-		}
-	}
-	// O("OUT OF ITER\n");
-	write_png_file("../../pic/canvas.png", img_);
-	// O("CANVAS WRITTEN\n");
-	free_img(img_a);
-	free_img(img_b);
-	free_img(img_);
-	// O("ALL REALLOCATED\n");
-}
-*/
-
-void add_to_canvas(I am, S* filename, I* x_, I* y_)
-{
-	free_img(write_png_file("../../pic/canvas.png", dep_at_xy(am, "../../pic/canvas.png" , filename, x_, y_)));
+	free_img(write_png_file("pic/canvas.png", dep_at_xy(am, "pic/canvas.png" , filename, x_, y_)));
 }
 
 void set_canvas()
 {
-	img img_a, img_b, img_;
-	png_byte *a_row, *b_row, *row;
+	img img_a, img_;
 	S filename[2];
-	I x_[2];
-	I y_[2];
+	UH x_[2];
+	UH y_[2];
 
-	png_bytep *rows = (png_bytep*) calloc(height, SZ(png_bytep));
+	png_bytep *rows;
+	height = 300;
+	width =800;
 
-	filename[0] = "../../pic/obj/kennel.png";
-	filename[1] = "../../pic/obj/board.png";
+	rows = (png_bytep*) malloc(height * SZ(png_bytep));
+
+	filename[0] = "pic/obj/kennel.png";
+	filename[1] = "pic/obj/board.png";
 
 	for (y=0; y<height; y++)
-		rows[y] = (png_byte*) calloc(4 * width, SZ(png_byte));
+		rows[y] = (png_byte*) malloc(SZ(png_byte) * width * 4);
 
-	img_a = read_png_file("../../pic/obj/kennel.png");
+	img_a = read_png_file("pic/obj/kennel.png");
 	// img_b = read_png_file("../../pic/obj/board.png");
 
 	img_ = malloc(SZ(pImg));
@@ -295,23 +277,26 @@ void set_canvas()
 	img_->col = img_a->col;
 	img_->b_depth = img_a->b_depth;
 
-	write_png_file("../../pic/canvas.png", img_);
+	write_png_file("pic/canvas.png", img_);
 
 	free_img(img_a);
-	free_img(img_);
+	// free_img(img_);
 
-	x_[0] = 20;
-	y_[0] = 20;
+	x_[0] = 40;
+	y_[0] = 100;
 	x_[1] = 400;
 	y_[1] = 20; 
 
-	img_ = dep_at_xy(2, "../../pic/canvas.png", filename, x_, y_);
-	free_img(write_png_file("../../pic/tmp.png", img_));
+	img_ = dep_at_xy(2, "pic/canvas.png", filename, x_, y_);
+	free_img(write_png_file("pic/canvas.png", img_));
 }
 
-void frame(I am, S* filename, I* x_, I* y_)
+void frame(I am, S* filename, UH* x_, UH* y_)
 {
-	write_png_file("../../pic/tmp.png", dep_at_xy(am, "../../pic/canvas.png", filename, x_, y_));		//< take base from canvas.png, modify it and put into tmp.png
+	img a =  dep_at_xy(am, "pic/canvas.png", filename, x_, y_);
+	img b = write_png_file ("pic/tmp.png", a);
+	free_img(b);
+	// free_img(write_png_file("pic/tmp.png", dep_at_xy(am, "pic/canvas.png", filename, x_, y_)));		//< take base from canvas.png, modify it and put into tmp.png
 }
 
 /*
@@ -343,11 +328,72 @@ I main()
 	R0;
 }
 */
+/*
+
+I main()
+{
+	S filename[3];
+	I i, j, x_[3], y_[3];
+	C c = 'c';
+	height = 200;
+	width = 600;
+	for (i = 0; i < 3; i++)
+		filename[i] = malloc(SZ(C) * 50);
+	strcpy(filename[0], "pic/dog/0/run_r_1.png");
+	strcpy(filename[1], "pic/dog/0/die_1.png");
+	strcpy(filename[2], "pic/dog/0/walk_r_1.png");
+	x_[0] = 150;
+	x_[1] = 150;
+	x_[2] = 300;
+	y_[0] = 80;
+	y_[1] = 10;
+	y_[2] = 20;
+
+	set_canvas();
+	frame(1, filename, x_, y_);
+	for (i = 0; i < 3; i++)
+		free(filename[i]);
+
+	// free(filename);
+	return 0;
+}
+*/
 
 /*
 I main()
 {
-	free_img(write_png_file("tmp_.png", read_png_file("../../pic/tmp.png")));
-	return 0;
-}
-*/
+	I i, j;
+
+	S *strings;
+	I *x = malloc(SZ(I) * 3);
+	I *y = malloc(SZ(I) * 3);
+
+	strings = malloc(SZ(S) * 3);
+	for (i = 0; i < 3; i++)
+		strings[i] = malloc(SZ(C) * 5);
+
+	strcpy(strings[0],"abc\0");
+	strcpy(strings[1], "def\0");
+	strcpy(strings[2], "xyz\0");	
+	O("BROKEN HEART\n");
+	x[0] = 1;
+	x[1] = 2;
+	x[2] = 3;
+	y[0] = 11;
+	y[1] = 22;
+	y[2] = 33;
+
+
+	C str[30] = "some/abc.png";
+	C buf[1000];
+	// S filename[2];
+	S filename = realpath("../../pic/tmp.png", NULL);
+	// filename[1] = realpath("../../png/tmp.png", buf);
+	// printf("path is '%s'\n", realpath("src/png/canvas.c", buf));
+
+	O("path1: '%s'\npath2: ''\n", filename);
+
+	// O("%s\n", colour(str));
+			
+   R0;
+}*/
