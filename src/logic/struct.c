@@ -9,6 +9,7 @@
 
 V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 {
+	O("[cnt_upd()]\n");
 	cnt_->last_act += stat_time[act];
 	cnt_->satiety += stat_time[act];
 	cnt_->intellect += stat_time[act];
@@ -24,6 +25,7 @@ C death()														//<	conditions of exit
 
 V cnt_check()										//<	conditions of modifing dt in case of appropriate cnt
 {
+	O("[cnt_check()]\n");
 	if (cnt->satiety >= MAX_CNT_ST) {								//<	check for satiety
 		cnt->satiety = 0;
 		draw("st", --dt->satiety);
@@ -46,10 +48,12 @@ V cnt_check()										//<	conditions of modifing dt in case of appropriate cnt
 
 C set_main_action()								//< set main action if nothing special happens
 {
+	O("[set_main_action()]\n");
+
 	X((cnt->last_act < MAX_CNT_LA), {
 		dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
 						(dt->satiety > STLIM && dt->cleanliness <= CLLIM)	? walk	: sit;}, 0);
-	dt->action = (dt->satiety <= STLIM || dt->cleanliness <= CLLIM) ? sleep_2 : sleep_1;
+	dt->action = ((dt->satiety <= STLIM) || (dt->cleanliness <= CLLIM)) ? sleep_1 : sleep_2;
 	cnt->last_act = MAX_CNT_LA;
 }
 
