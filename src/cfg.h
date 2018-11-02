@@ -85,10 +85,21 @@ ext dat dt;
 ext coor crd;
 
 
+#ifdef __linux__
+
 #define CWHT 	"\x1b[0;0m\x1b[37m\0"
 #define CBLU 	"\x1b[0;0m\x1b[34m\0"
 
 #define CRED 	"\x1b[0;0m\x1b[31m\0"
 #define CNRM 	"\x1b[0;0m\0"
 
+#endif
+#ifdef __APPLE_
 
+#define CWHT 	"\033[0;0m\033[37m\0"
+#define CBLU 	"\033[0;0m\033[34m\0"
+
+#define CRED 	"\033[0;0m\033[31m\0"
+#define CNRM 	"\033[0;0m\0"
+
+#endif
