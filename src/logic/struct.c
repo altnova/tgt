@@ -27,7 +27,7 @@ C death()														//<	conditions of exit
 	R 0;
 }
 
-V cnt_check()										//<	conditions of modifing dt in case of appropriate cnt
+V cnt_check()													//<	conditions of modifing dt in case of appropriate cnt
 {
 	S state = malloc(SZ(C) * 3);
 	// O("[cnt_check()]\n");
