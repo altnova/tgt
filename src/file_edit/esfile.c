@@ -7,7 +7,7 @@
 #include <dirent.h>
 
 #include "../___.h"
-
+#include "../cfg.h"
 #include "../base/mains.h"
 
 
@@ -73,7 +73,8 @@ V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
 
 V eat_file()													//< deletes first file in Desktop dir 
 {
-	DIR *d;
+	O("%s[eat_file()]%s\n", CWHT, CNRM);				//<			test mode
+	/*DIR *d;
  	struct dirent *dir;
 	S path = desktop_path();
 
@@ -84,5 +85,5 @@ V eat_file()													//< deletes first file in Desktop dir
 		}	
 		closedir(d);
 	}
-	free(path);
+	free(path);*/
 }
