@@ -1,4 +1,4 @@
-#define MAX_CNT_LA 3600000
+#define MAX_CNT_LA 360000
 #define MAX_CNT_ST 43200000
 #define MAX_CNT_IN 129600000
 #define MAX_CNT_CL 172800000
@@ -7,7 +7,7 @@
 #define MAX_ST 9
 #define MAX_CL 9
 #define MAX_IN 9
-#define SEC 1000
+#define SEC 0
 #define MINT 60000
 #define HOUR 3600000
 #define RANGE 30			//< ???
@@ -23,7 +23,14 @@
 #define DIFY 10
 
 #include "___.h"
+/*
 
+#define MAX_CNT_LA 3600000000
+#define MAX_CNT_ST 43200000000
+#define MAX_CNT_IN 129600000000
+#define MAX_CNT_CL 172800000000
+
+*/
 typedef struct Cnt_tm		//< counters
 {
 	I last_act;
@@ -76,3 +83,12 @@ typedef pCoor* coor;
 ext tm_cnt cnt;
 ext dat dt;
 ext coor crd;
+
+
+#define CWHT 	"\x1b[0;0m\x1b[37m\0"
+#define CBLU 	"\x1b[0;0m\x1b[34m\0"
+
+#define CRED 	"\x1b[0;0m\x1b[31m\0"
+#define CNRM 	"\x1b[0;0m\0"
+
+
