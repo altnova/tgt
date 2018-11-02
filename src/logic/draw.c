@@ -23,8 +23,8 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 	S filename = malloc(SZ(C) * 25);
 	strcpy(filename, "pic/brd/nom_0.png\0");
 
-		O("iM IN BOARD SHOW\n");
-	O("%d --> 0(%d) + 'obj'(%d)\n", obj + filename[12], filename[12], obj);
+	O("\n%s[board_show()]%s\t", CWHT, CNRM);
+	O("%d --> 0(%d) + 'obj'(%d)\n\n", obj + filename[12], filename[12], obj);
 	fflush(stdout);
 	filename[12] += obj;
 
@@ -36,15 +36,13 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 		CS('c', {x = crd->cle_x; y = crd->cle_y;});
 	}
 
-	O("EVERYTHING IS OK\n");
-
 	add_to_canvas(1, &filename, &x, &y);
 	free(filename);
 }
 
 V dog_show(I obj)				//< choose type of action to show
 {
-	O("[dog_show(%s)]\n", stat_name[obj]);
+	// O("[dog_show(%s)]\n", stat_name[obj]);
 	SW(obj) {
 		CS(sit, 	{dog_sit(		stat_time		[obj]);			} );
 		CS(run, 	{dog_run(		stat_time		[obj]);			} );
@@ -63,5 +61,6 @@ V dog_show(I obj)				//< choose type of action to show
 
 V draw(S key, I obj)			//<	change canvas or tmp.png?
 {
-	(key[0] == 'd') ? dog_show(obj) : board_show(key[0], obj);
+	C c = key[0];
+	(c == 'd') ? dog_show(obj) : board_show(key[0], obj);
 }
