@@ -185,9 +185,10 @@ V dog_die(I pause)				//< 	??????
 {
 	I i, p = pause/9;
 	// C filename[23] = { '.', '.', '/', '.', '.', '/', 'p', 'i', 'c', '/', 'd', 'o', 'g', '/', 'd', 'i', 'e', '_', 'n', '.', 'p', 'n', 'g'};
-	C filename[23] = "pic/dog/die_n.png";
-	S str;
+	// C filename[23] = "pic/dog/die_n.png";
 
+	S str = malloc(SZ(C) * 100), filename = malloc(SZ(C)* 23);
+	strcpy(filename, "pic/dog/die_n.png");
 	O("%s DOG_DIE%s\n", CRED, CNRM);
 
 	DO(9, { filename[18] = i + '1';
@@ -198,6 +199,9 @@ V dog_die(I pause)				//< 	??????
 			// if (i > 5)
 				// crd->dog_y -= DIFY;
 			usleep(p*SEC);});
+	free(str);
+	free(filename);
+
 }
 
 V dog_rise(I pause)				//<		??????
