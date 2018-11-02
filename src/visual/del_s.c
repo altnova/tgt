@@ -208,8 +208,11 @@ V dog_rise(I pause)				//<		??????
 {
 	I i, p = pause/9;
 	// C filename[24] = {'.', '.', '/', '.', '.', '/', 'p', 'i', 'c', '/', 'd', 'o', 'g', '/', 'r', 'i', 's', 'e', '_', 'n', '.', 'p', 'n', 'g'};
-	C filename[24] = "pic/dog/rise_n.png";
+	// C filename[24] = "pic/dog/rise_n.png";
+	S filename = malloc(SZ(C) * 24);
 	S str = malloc(SZ(C) * 100);
+
+	strcpy(filename, "pic/dog/rise_n.png");
 
 	O("%s DOG_RISE%s\n", CRED, CNRM);
 
@@ -219,6 +222,7 @@ V dog_rise(I pause)				//<		??????
 			// crd->dog_y -= DIFY;											//< for a while
 			usleep(p*SEC);});
 	free(str);
+	free(filename);
 }
 
 V dog_love(I pause)
