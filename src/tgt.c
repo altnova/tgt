@@ -30,7 +30,7 @@ I main()
 {
 	I i, j = -1, k = 0, l;
 	S dog = malloc(SZ(C) *4);
-	srand(time(NULL));
+	// srand(time(NULL));
 	set_start(dt, cnt, crd);
 
 	set_canvas();
@@ -60,9 +60,9 @@ I main()
 			break;
 	}
 	draw(dog, dt->action);
-	 p_dog_stat(cnt, dt);
-	 free(dog);
-	 O("%d ITERATIONS DONE\n", i);
+	p_dog_stat(cnt, dt);
+	free(dog);
+	O("%d ITERATIONS DONE\n", i);
 	O("DIE draw action %s\n", stat_name[dt->action]);
 	O("END\n");
 	R0;
