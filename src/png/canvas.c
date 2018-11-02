@@ -69,14 +69,12 @@ void free_img(img img_)							//<	free struct
 img write_png_file(S file_name, img img_)		//<	write png file with name file_name with info from struct
 {
 		/* create file */
-		// C new[PATH_MAX + 1];
 		FILE *fp = fopen_(file_name, "wb");
 
-		O("WRITE '%s'\n", file_name);
+		// O("WRITE '%s'\n", file_name);
 
 		if (!fp)
 				abort_("[write_png_file] File %s could not be opened for writing", file_name);
-		// R 0;
 
 		/* initialize stuff */
 		png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
@@ -107,17 +105,14 @@ img write_png_file(S file_name, img img_)		//<	write png file with name file_nam
 		if (setjmp(png_jmpbuf(png_ptr)))
 				abort_("[write_png_file] Error during writing bytes");
 
-		// O("PNG_WRITE_IMAGE\n");
 		png_write_image(png_ptr, img_->row_pointers);
 
-		// O("HALF DONE\n");
-		// fflush(stdout);
+
 		/* end write */
 		if (setjmp(png_jmpbuf(png_ptr)))
 				abort_("[write_png_file] Error during end of write");
 
 		png_write_end(png_ptr, NULL);
-		// O("PNG '%s' WRITE END\n", file_name);
 		fclose(fp);
 		R img_;
 }
@@ -182,14 +177,7 @@ img read_png_file(S file_name)				//<	read png file file_name and return struct
 		img_->row_pointers = rows;													
 
 		fclose(fp);
-		
-		O("READ:  '%s'\n", file_name);
-		/*
-		for (i = 0; i < (48 - strlen(new) - 10)/8 + 1; i++)
-			O("\t");
-		fflush(stdout);
-		O("-->\t\tw: %d\th: %d\tbd: %d  col_t: %d\n", img_->w, img_->h, img_->b_depth, img_->col);
-*/
+	
 		R img_;
 }
 
@@ -200,17 +188,15 @@ img dep_at_xy(I am, S a_filename, S* b_filename, UH* x_, UH* y_)			//< draw pic 
 	png_byte *a_row, *b_row;
 	img img_a, img_b;
 
-	O("[dep_at_xy()]\n");
 	// O("[dep_at_xy]\tx --> %hu\t y --> %hu\n", x_[0], y_[0]);
 	// O("(height %d\t width %d)\n", height, width);
 	img_a = read_png_file(a_filename);
 
-	O("%s \tw: %d\t h: %d\n", a_filename, img_a->w, img_a->h);
-
+	// O("%s \tw: %d\t h: %d\t", a_filename, img_a->w, img_a->h);
 
 	for (k = 0; k < am; k++) {
 		img_b = read_png_file(b_filename[k]);
-		O("%s \tw: %hu\t h: %hu\n", b_filename[k], img_b->w, img_b->h);
+		// O("%s \tw: %hu\t h: %hu\t", b_filename[k], img_b->w, img_b->h);
 		par = 0;
 
 		// O("KKK %d\nx_[k] --> %hu  x_[k] + img_b->w --> %hu + %d == %d\n",k, x_[k], x_[k], img_b->w, x_[k] + img_b->w);
@@ -236,6 +222,7 @@ img dep_at_xy(I am, S a_filename, S* b_filename, UH* x_, UH* y_)			//< draw pic 
 		}
 		free_img(img_b);
 	}
+	// O("\n");
 
 	// O("%d pix!\t %d lines!\n", par, l);
 
@@ -260,6 +247,8 @@ void set_canvas()
 	width =800;
 
 	rows = (png_bytep*) malloc(height * SZ(png_bytep));
+
+	O("SET_CANVAS\n");
 
 	filename[0] = "pic/obj/kennel.png";
 	filename[1] = "pic/obj/board.png";
