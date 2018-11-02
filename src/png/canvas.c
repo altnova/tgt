@@ -37,11 +37,9 @@ void abort_(const char * s, ...)
 		abort();
 }
 
-int x, y;
 
-int a_width, a_height, width, height;
-png_byte a_color_type, color_type;
-png_byte a_bit_depth, bit_depth;
+
+// int width, height;
 
 int number_of_passes;
 png_structp png_ptr;
@@ -68,6 +66,7 @@ void free_img(img img_)							//<	free struct
 
 img write_png_file(S file_name, img img_)		//<	write png file with name file_name with info from struct
 {
+	int y;
 		/* create file */
 		FILE *fp = fopen_(file_name, "wb");
 
@@ -119,7 +118,7 @@ img write_png_file(S file_name, img img_)		//<	write png file with name file_nam
 
 img read_png_file(S file_name)				//<	read png file file_name and return struct 
 {
-		I i;
+		I y;
 		char header[8];	// 8 is the maximum size that can be checked
 		// C new[PATH_MAX + 1];
 		img img_ = malloc(SZ(pImg));												//<	allocate structure
@@ -237,6 +236,7 @@ void add_to_canvas(I am, S* filename, UH* x_, UH* y_)
 
 void set_canvas()
 {
+	int y;
 	img img_a, img_;
 	S filename[2];
 	UH x_[2];
