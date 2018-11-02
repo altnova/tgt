@@ -94,7 +94,7 @@ ext coor crd;
 #define CNRM 	"\x1b[0;0m\0"
 
 #endif
-#ifdef __APPLE_
+#ifdef __APPLE__
 
 #define CWHT 	"\033[0;0m\033[37m\0"
 #define CBLU 	"\033[0;0m\033[34m\0"
