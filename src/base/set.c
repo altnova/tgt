@@ -101,7 +101,7 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 	dt_main->satiety = 5;
 	dt_main->intellect = 5;
 	dt_main->cleanliness = 5;
-	dt_main->colour = 5;
+	dt_main->colour = 2;
 	dt_main->action = 9;
 
 
@@ -111,7 +111,8 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 	// crd_main->dog_x 	= 2 * L_LIM;
 	crd_main->dog_x = 200;
 	crd_main->bar_x 	= R_LIM;
-	crd_main->int_x 	= R_LIM + BAR_W - NOM_W;	//<	BAR_W ??? NOM_W ???
+	// crd_main->int_x 	= R_LIM + BAR_W - NOM_W;	//<	BAR_W ??? NOM_W ???
+	crd_main->int_x 	= crd_main->int_x;
 	crd_main->cle_x 	= crd_main->int_x;
 	crd_main->sat_x 	= crd_main->int_x;
 
@@ -145,7 +146,7 @@ V set_objects()		//< kennel, board, empty_bowl;
 V check_env()
 {
 	if (getenv("TGT_HOME") == NULL) {				//<	not null, exists, directory
-		O("hmm\n");
+		O("please, set env variable TGT_HOME\n");
 		exit(1);
 	}
 
