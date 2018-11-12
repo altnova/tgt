@@ -1,0 +1,25 @@
+GLOBALS
+mains.c/colour? 		C NEW_NAME[]			foo used at	del_s.c/most^^ aka C FILENAME[] && C STR[]
+mains.c/itoa			C NUM[12]				foo used at	esfile.c/choose_name aka C NUM[12] LOCAL
+
+struct.c/event_check	C STAT[4]				pass to draw.c/draw
+struct.c/event_check	C FILENAME[]			pass to mains.c/input_type
+struct.c/event_check	C LINE[]				pass to esfile.c/spit_file
+
+draw.c/board_show 		C FILENAME[]			pass to canvas.c/add_to_canvas
+
+
+del_s.c/most^^			C FILENAME[]/C STR[]	pass to mains.c/colour && win.c/depict
+del_s.c/dog_eat			C STRS[?][?]			pass to win.c/depict
+
+
+LOCALS
+mains.c 	3 dif C FILENAME[]; I LEN[?]; I STATE[?]
+esfile.c 	2 dif C FILENAME[]; C LINE[?]; C NUM[12]
+struct.c 	C STAT[4];
+
+//< TOTAL LOCALS:	3 C FILENAME[]	[include C LINE as]
+					I LEN[?]
+					I STATE[?]
+					C NUM[12]
+					C STAT[4]
