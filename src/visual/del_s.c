@@ -1,6 +1,6 @@
 
 //<```	free arg for colour 
-
+//<	
 #include <stdlib.h>
 
 #include <unistd.h>
@@ -111,13 +111,16 @@ V dog_sleep_2(I pause)									//< in kennel
 	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep((pause*SEC)/2);
 }
+
 												//<	both needs running back
+
+//<	C STR[?][?] ++;
 V dog_eat(I pause)
 {
 	I i, p = pause/7;
 	UH x[2], y[2];
-	S str_1 = colour("pic/dog/eat_1.png", dt->colour);
-	S str_2 = colour("pic/dog/eat_2.png", dt->colour);
+	// S str_1 = colour("pic/dog/eat_1.png", dt->colour);
+	// S str_2 = colour("pic/dog/eat_2.png", dt->colour);
 
 	S *str = malloc(SZ(S) * 2);
 	str[0] = malloc(SZ(C) * 50);
@@ -154,6 +157,7 @@ V dog_eat(I pause)
 	free_array(str, 2);
 }
 
+//< C FILENAME[?] ++;
 V dog_read(I pause)
 {
 	I i, p = pause/12;
@@ -181,6 +185,7 @@ V dog_read(I pause)
 	free(str);
 }
 
+//< C STR[?] ++; C FILENAME[?] ++;
 V dog_die(I pause)				//< 	??????
 {
 	I i, p = pause/9;
@@ -204,6 +209,7 @@ V dog_die(I pause)				//< 	??????
 
 }
 
+//< C STR[?] ++; C FILENAME[?] ++;
 V dog_rise(I pause)				//<		??????
 {
 	I i, p = pause/9;
@@ -225,6 +231,7 @@ V dog_rise(I pause)				//<		??????
 	free(filename);
 }
 
+//< C STR[?] ++; 
 V dog_love(I pause)
 {
 	I i, p = pause/6;
@@ -239,6 +246,7 @@ V dog_love(I pause)
 	free(str);
 }
 
+//< C STR[?] ++; 
 V dog_poop(I pause)
 {
 	S str = malloc(SZ(C) * 100);

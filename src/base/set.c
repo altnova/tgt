@@ -1,3 +1,4 @@
+//<	init structs
 #include "../cfg.h"
 #include "../___.h"
 // #include <gtk/gtk.h>

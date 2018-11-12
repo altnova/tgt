@@ -1,3 +1,4 @@
+//< C STAT[4] --; C STAT[4] ++; C FILENAME[PATH_MAX] ++; C LINE[?] ++;
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,6 +28,7 @@ C death()														//<	conditions of exit
 	R 0;
 }
 
+//<	C STAT[4] --;
 V cnt_check()													//<	conditions of modifing dt in case of appropriate cnt
 {
 	S state = malloc(SZ(C) * 3);
@@ -74,7 +76,7 @@ C set_main_action()								//< set main action if nothing special happens
 	}
 }
 
-
+//< C STAT[4] ++; C FILENAME[PATH_MAX] ++; C LINE[?] ++;
 V event_check()									//< user's commands 
 {
 	/* GET FILE */
@@ -84,10 +86,6 @@ V event_check()									//< user's commands
 	C r;
 	// O("[event_check()]\n");
 
-	/*#define MAX_CNT_LA 3600000
-#define MAX_CNT_ST 43200000
-#define MAX_CNT_IN 129600000
-#define MAX_CNT_CL 172800000*/
 
 	strcpy(file_input, "123");
 	strcpy(dog, "dog");

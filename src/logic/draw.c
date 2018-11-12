@@ -1,3 +1,4 @@
+//< C FILENAME[PATH_MAX] --;
 #include <stdlib.h>
 #include <string.h>
 #include "../___.h"
@@ -9,7 +10,7 @@
 #include "../png/canvas.h"
 
 
-
+//< C FILENAME[PATH_MAX] --;
 V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 {
 	UH x, y;

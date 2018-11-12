@@ -1,4 +1,4 @@
-//<!! solve height/width problem !!
+//< init structs and row/col pointers
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -44,6 +44,8 @@ void abort_(const char * s, ...)
 int number_of_passes;
 png_structp png_ptr;
 png_infop info_ptr;
+
+
 
 void info_out(img img_)							//< write struct info into stdout
 {
@@ -116,6 +118,7 @@ img write_png_file(S file_name, img img_)		//<	write png file with name file_nam
 		R img_;
 }
 
+//< struct init; png_bytep ROWS[H] ++; H png_byte rows[y] = (png_byte*) malloc(png_get_rowbytes(png_ptr,info_ptr));	
 img read_png_file(S file_name)				//<	read png file file_name and return struct 
 {
 		I y;
@@ -187,43 +190,27 @@ img dep_at_xy(I am, S a_filename, S* b_filename, UH* x_, UH* y_)			//< draw pic 
 	png_byte *a_row, *b_row;
 	img img_a, img_b;
 
-	// O("[dep_at_xy]\tx --> %hu\t y --> %hu\n", x_[0], y_[0]);
-	// O("(height %d\t width %d)\n", height, width);
 	img_a = read_png_file(a_filename);
-
-	// O("%s \tw: %d\t h: %d\t", a_filename, img_a->w, img_a->h);
 
 	for (k = 0; k < am; k++) {
 		img_b = read_png_file(b_filename[k]);
-		// O("%s \tw: %hu\t h: %hu\t", b_filename[k], img_b->w, img_b->h);
 		par = 0;
 
-		// O("KKK %d\nx_[k] --> %hu  x_[k] + img_b->w --> %hu + %d == %d\n",k, x_[k], x_[k], img_b->w, x_[k] + img_b->w);
 		for (i = y_[k]; i < (y_[k] + img_b->h); i++) { 
 
 			a_row = img_a->row_pointers[i];
 			b_row = img_b->row_pointers[i - y_[k]];
 			l++;
 			j = x_[k];
-			// O("j --> %d\n", j);
 			for (; (j < x_[k] + img_b->w) && (j < img_a->w); j++) {
 				if (b_row[(j - x_[k] + 1) * 4 - 1]) {
-					// O("in it!\n");
 					par++;
 					copy_byte(&a_row[j*4], &b_row[(j - x_[k]) * 4], 4);
 				}
 			}
-
-			// if (j >= x_[k] + img_b->w)
-				// O("%dHELP~\n", j);
-			// if (j >= img_a->w)
-				// O("%dHELP~~~\n", j);
 		}
 		free_img(img_b);
 	}
-	// O("\n");
-
-	// O("%d pix!\t %d lines!\n", par, l);
 
 	R img_a;
 }
@@ -257,7 +244,6 @@ void set_canvas()
 		rows[y] = (png_byte*) malloc(SZ(png_byte) * width * 4);
 
 	img_a = read_png_file("pic/obj/kennel.png");
-	// img_b = read_png_file("../../pic/obj/board.png");
 
 	img_ = malloc(SZ(pImg));
 	img_->h = height;
@@ -285,7 +271,6 @@ void frame(I am, S* filename, UH* x_, UH* y_)
 	img a =  dep_at_xy(am, "pic/canvas.png", filename, x_, y_);
 	img b = write_png_file ("pic/tmp.png", a);
 	free_img(b);
-	// free_img(write_png_file("pic/tmp.png", dep_at_xy(am, "pic/canvas.png", filename, x_, y_)));		//< take base from canvas.png, modify it and put into tmp.png
 }
 
 /*

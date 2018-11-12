@@ -1,3 +1,6 @@
+//<	3 C FILENAME[PATH_MAX] --; C NEW_NAME[?] ++; C NUM[12] ++; I LEN[am] --; I STAT[am] --;
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -41,12 +44,12 @@ C case_cmp(C letter, C c)
 	R (letter == c || (IN('A', letter, 'Z') && c == letter + ' ') || (IN('a', letter, 'z') && c == letter - ' ')) ? 1 : 0;
 }
 
-
+//< I LEN[am] -- 		//<	I STAT[am] -- 
 C file_cont(FILE *ptr, S* needle, I am)							
 {
 	S buf;
 	I i, j, *len = malloc(SZ(C) * am), *num = calloc(am, SZ(C)), a = 0, szbuf, b;
-	S *name = calloc(am, SZ(S));
+	// S *name = calloc(am, SZ(S));
 	C c;
 
 	for (i = 0; i < am; i++) 
@@ -58,7 +61,6 @@ C file_cont(FILE *ptr, S* needle, I am)
 
 	for (i = 0; i < am; i++) {
 		len[i] = strlen(needle[i]);
-		name[i] = needle[i];
 	}
 
 	b = szbuf;
@@ -68,7 +70,7 @@ C file_cont(FILE *ptr, S* needle, I am)
 		for (i = 0; i < b; i++) {						//<	for each char from buf
 
 			for (j = 0; j < am; j++) {						//<	for each needle
-				c = case_cmp(buf[i], name[j][num[j]]);
+				c = case_cmp(buf[i], needle[j][num[j]]);
 				num[j] = (c)	? num[j] + 1 	:	0; 
 				if (num[j] == len[j])
 					R 1;
@@ -85,7 +87,7 @@ C file_cont(FILE *ptr, S* needle, I am)
 	R 0;
 }
 
-
+//< 3 FILENAME[?] --
 C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 {
 	FILE *ptr = fopen_(filename, "r");
@@ -139,13 +141,10 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	R FCLR(ptr, 0);
 }
 
-
-
 C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)
 {
 	R (IN(obj_1_x - RANGE, obj_2_x, obj_1_x + RANGE) && IN(obj_1_y - RANGE, obj_2_y, obj_1_y + RANGE)) ? 1 : 0;
 }
-
 
 I dec_digits(UJ num)
 {
@@ -162,19 +161,20 @@ UJ pow_(I basis, I exp_)
 	R1;
 }
 
-
 V reverse(S s)
- {
-     I i, j;
-     C c;
+{
+	I i, j;
+	C c;
  
-     for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
-         c = s[i];
-         s[i] = s[j];
-         s[j] = c;
-     }
- }
+	for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
+		c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+	}
+}
 
+
+//< C NUM[12] ++
 S itoa(I n)
 {
 	I i, max;
@@ -188,6 +188,8 @@ S itoa(I n)
 	R str;
 }
 
+
+//< C NEW_NAME[?] ++
 S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colour num
 {
 	I len = scnt(name), i;
@@ -212,7 +214,7 @@ S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colo
 }
 
 
-
+//<	C FILENAME[PATH_MAX] -- 
 FILE* fopen_(S str1, S str2)
 {
 	FILE *ptr;
