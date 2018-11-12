@@ -1,3 +1,4 @@
+//<	C par[4] ++[draw.c/draw];
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -25,7 +26,7 @@ D_STAT d_stat;
 I height;
 I width;
 
-
+//<	C par[4] ++;
 I main()
 {
 	I i, j = -1, k = 0, l;

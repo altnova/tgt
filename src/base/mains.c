@@ -1,4 +1,4 @@
-//<	3 C FILENAME[PATH_MAX] --; C NEW_NAME[?] ++; C NUM[12] ++; I LEN[am] --; I STAT[am] --;
+//<	3 C FILENAME[PATH_MAX] --; C NEW_NAME[?] ++; C NUM[12] ++; I LEN[am] --; I STATE[am] --;
 
 
 #include <stdio.h>
@@ -44,7 +44,7 @@ C case_cmp(C letter, C c)
 	R (letter == c || (IN('A', letter, 'Z') && c == letter + ' ') || (IN('a', letter, 'z') && c == letter - ' ')) ? 1 : 0;
 }
 
-//< I LEN[am] -- 		//<	I STAT[am] -- 
+//< I LEN[am] -- 		//<	I STATE[am] -- 
 C file_cont(FILE *ptr, S* needle, I am)							
 {
 	S buf;

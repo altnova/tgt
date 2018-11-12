@@ -1,5 +1,5 @@
 //< all functions process only inside this file
-//<	2 C FILENAME[PATH_MAX] ++; C LINE[?] ++;
+//<	2 C FILENAME[PATH_MAX] +-; C LINE[?] +-; C NUM[12] --;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,7 +14,7 @@
 
 #define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
 
-//< C FILENAME[PATH_MAX] ++
+//< C FILENAME[PATH_MAX] +-
 S desktop_path()												//<	returns string with a path to Desktop dir 
 {
 	S filename = malloc(SZ(C)* 300);
@@ -23,7 +23,7 @@ S desktop_path()												//<	returns string with a path to Desktop dir
 	R filename;
 }
 
-//< C FILENAME[?] ++; C NUM[12] --;
+//< C FILENAME[?] +-; C NUM[12] --;
 S choose_name(S path, S filename)								//< unique enumerated file_name like path/to/dir/nnn_file_name
 {
 	I i, len, path_len, name_len, num_len;
@@ -66,7 +66,7 @@ V make_file(S path, S new_file, S str)							//< creates file with unique name a
 	free(name);
 }
 
-//< C LINE[?]++
+//< C LINE[?]+-
 V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
 {
 	str = realloc(str, scnt(str) + scnt(CONST_STR) + 1);

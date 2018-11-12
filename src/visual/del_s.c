@@ -1,4 +1,4 @@
-
+//< C STR[?] ++ (used few times parallel); C FILENAME[?] ++ (used few times parallel); C STRS[?][?] ++;
 //<```	free arg for colour 
 //<	
 #include <stdlib.h>
@@ -37,7 +37,6 @@ V this_way(I pause, S file_1, S file_2, S act, I way)			//< which way to move
 	depict(1, &str, &crd->dog_x, &crd->dog_y);
 	usleep((pause*SEC)/2);
 }
-
 
 V dog_sit(I pause)						
 {
@@ -114,7 +113,7 @@ V dog_sleep_2(I pause)									//< in kennel
 
 												//<	both needs running back
 
-//<	C STR[?][?] ++;
+//<	C STRS[?][?] ++;
 V dog_eat(I pause)
 {
 	I i, p = pause/7;
