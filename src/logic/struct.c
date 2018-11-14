@@ -1,4 +1,4 @@
-//< C STAT[4] --; C STAT[4] ++; C FILENAME[PATH_MAX] ++; C LINE[?] ++;
+//< C STAT[4] ++; C STAT[4] ++; C FILENAME[PATH_MAX] ++; C LINE[?] ++;
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -23,12 +23,32 @@ V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 
 C death()														//<	conditions of exit 	
 {    
-	X(!dt->satiety || dt->satiety > MAX_ST, {dt->action = die;}, 1);							//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST        
+
+	if (!dt->satiety || dt->satiety > MAX_ST) {
+		dt->action = die;
+		if (!dt->satiety) 
+			O("your dog died of starvation. stupid\n"); 
+		else 
+			O("your dog died of gluttony. feckless\n");
+		R 1;
+	}
+
+	if (dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL) {
+		dt->action = rise;
+		if (dt->intellect >= MAX_IN) 
+			O("he was much smarter than you\n");
+		else 
+			O("he was as clean as your virginity\n");
+		R 1;
+	}
+/*
+	X(!dt->satiety || dt->satiety > MAX_ST, {dt->action = die;}, 1);					//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST        
 	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {dt->action = rise;}, 1);			//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
+	*/
 	R 0;
 }
 
-//<	C STAT[4] --;
+//<	C STAT[4] ++;
 V cnt_check()													//<	conditions of modifing dt in case of appropriate cnt
 {
 	S state = malloc(SZ(C) * 3);
@@ -37,6 +57,7 @@ V cnt_check()													//<	conditions of modifing dt in case of appropriate c
 		cnt->satiety = 0;
 		strcpy(state, "st");
 		draw(state, --dt->satiety);
+		p_dog_stat();
 	}
 
 	if (cnt->intellect >= MAX_CNT_IN) {								//<	check for intellect
@@ -44,6 +65,7 @@ V cnt_check()													//<	conditions of modifing dt in case of appropriate c
 		dt->intellect = dt->intellect ? --dt->intellect : dt->intellect;
 		strcpy(state, "in");
 		draw(state, dt->intellect);
+		p_dog_stat();
 	}
 
 	if (cnt->cleanliness >= MAX_CNT_CL) {							//< check for cleanliness 
@@ -52,7 +74,9 @@ V cnt_check()													//<	conditions of modifing dt in case of appropriate c
 		strcpy(state, "cl");
 		draw(state, dt->cleanliness);
 		dt->colour = dt->cleanliness/2;
+		p_dog_stat();
 	}
+
 	free(state);
 }
 
@@ -69,7 +93,8 @@ C set_main_action()								//< set main action if nothing special happens
 						(dt->satiety > STLIM && dt->cleanliness <= CLLIM)	? walk	: sit;}, 0);
 	dt->action = ((dt->satiety <= STLIM) || (dt->cleanliness <= CLLIM)) ? sleep_1 : sleep_2;
 	cnt->last_act = MAX_CNT_LA;
-	
+	// if (act == sleep_2 && dt->action == sleep_1)
+
 	if (act != dt->action) {
 		O("\n%s%s%s to %s%s%s\n", CBLU, stat_name[act], CNRM, CRED,stat_name[dt->action], CNRM);
 		p_dog_stat();

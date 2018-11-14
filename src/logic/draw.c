@@ -25,7 +25,7 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 	strcpy(filename, "pic/brd/nom_0.png\0");
 
 	O("\n%s[board_show()]%s\t", CWHT, CNRM);
-	O("%d --> 0(%d) + 'obj'(%d)\n\n", obj + filename[12], filename[12], obj);
+	O("'%c' --> '%c' + 'obj'(%d)\n\n", obj + filename[12], filename[12], obj);
 	fflush(stdout);
 	filename[12] += obj;
 
