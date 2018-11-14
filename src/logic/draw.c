@@ -60,8 +60,7 @@ V dog_show(I obj)				//< choose type of action to show
 	}
 }
 
-V draw(S key, I obj)			//<	change canvas or tmp.png?
+V draw(C key, I obj)			//<	change canvas or tmp.png?
 {
-	C c = key[0];
-	(c == 'd') ? dog_show(obj) : board_show(key[0], obj);
+	(key == 'd') ? dog_show(obj) : board_show(key, obj);
 }

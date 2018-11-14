@@ -26,21 +26,20 @@ D_STAT d_stat;
 I height;
 I width;
 
+// I ITER;
+
 //<	C par[4] ++;
 I main()
 {
 	I i, j = -1, k = 0, l;
-	S dog = malloc(SZ(C) *4);
+	C dog = 'd';
 	srand(time(NULL));
 	set_start(dt, cnt, crd);
 
 	set_canvas();
-	// R0;
 
-	strcpy(dog, "dog");
-	// set_main_action();
-	// draw("dog", dt->action);
-	
+	ITER = 0;
+
 	dt->action = love;
 
 
@@ -56,13 +55,14 @@ I main()
 		cnt_check();										//< checking timers for updating dat 
 															//<						logic/struct.c
 
-		// R 0;
+		ITER++;
+
 		if (death())										//<	conditions of death
 			break;
 	}
 	draw(dog, dt->action);
 	p_dog_stat(cnt, dt);
-	free(dog);
+	// free(dog);
 
 	O("%d ITERATIONS DONE\n", i);
 	O("DIE draw action %s\n", stat_name[dt->action]);
