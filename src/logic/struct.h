@@ -9,3 +9,5 @@ ext C death();											//<	conditions of exit
 ext V event_check();									//< user's commands 
 
 ext C set_main_action();								//< set main action if nothing special happens
+
+ext I ITER;
