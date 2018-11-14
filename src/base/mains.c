@@ -11,6 +11,8 @@
 
 static C needle[4][PATH_MAX/2];
 
+ext C INPUT_FN[PATH_MAX + 1];
+
 V arrcat(S buf, S line, I ptr)
 {
 	I i, j = 0;
@@ -26,6 +28,20 @@ I arrlen(S str)
 	I i;
 	for (i = 0; str[i]; i++);
 	R i;
+}
+
+V carrzero(S buf, I len)
+{
+	I i;
+	for (i = 0; i < len; i++)
+		buf[i] = 0;
+}
+
+V iarrzero(I* buf, I len)
+{
+	I i;
+	for (i = 0; i < len; i++)
+		buf[i] = 0;
 }
 
 
@@ -68,14 +84,12 @@ C file_cont(FILE *ptr, I am)
 {
 	C buf[2000];
 	I i, j, a = 0, szbuf, b;
-	// S *name = calloc(am, SZ(S));
 	C c;
 	I length[100], state[100];
 
-	// c = needle[0][0];
 
 	if (am > 100) {
-		O("too much string for search; --> 100\n");
+		O("too much strings for search; amount --> 100\n");
 		am == 100;
 	}
 
@@ -90,31 +104,24 @@ C file_cont(FILE *ptr, I am)
 	}
 
 	szbuf = 2000;
-	// buf = malloc(SZ(C) * szbuf);
-
-	// for (i = 0; i < am; i++) 
-		// length[i] = arrlen(needle[i]);
-	
 
 	b = szbuf;
+
+	iarrzero(state, 100);
 
 	W (b == szbuf) {
 		b = fread(buf, SZ(C), szbuf, ptr);
 		for (i = 0; i < b; i++) {						//<	for each char from buf
 
 			for (j = 0; j < am; j++) {						//<	for each needle
+
 				c = case_cmp(buf[i], needle[j][state[j]]);
 				state[j] = (c)	? state[j] + 1 	:	0; 
 				if (state[j] == length[j])
 					R 1;
-
 			}
 		}
 	}
-
-	// free(buf);
-	// free(num);
-	// free(len);
 
 	rewind(ptr);
 	R 0;
@@ -123,7 +130,8 @@ C file_cont(FILE *ptr, I am)
 //< 3 FILENAME[?] --
 C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 {
-	FILE *ptr = fopen_(filename, "r");
+	// FILE *ptr = fopen_(filename, "r");
+	FILE *ptr = fopen_(INPUT_FN, "r");
 	I i, size;
 	// S* needle;
 
@@ -283,7 +291,9 @@ typedef struct Dt 			//< dog info
 
 V p_dog_stat()
 {
-	O("\n\n\tACT: %s\n\tSAT: %d\n\tINT: %d\n\tCLE: %d\n\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
+	// O("\n\n\tACT: %s\n\tSAT: %d\n\tINT: %d\n\tCLE: %d\n\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
+	O("\n\n\tACT: %s\t\tSAT: %d\tINT: %d\tCLE: %d\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
+
 	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t(max %d[%d sec]) \n\tintellect: %d   [%d s] \t(max %d[%d sec])\n\tcleanliness: %d   [%d s] \t(max %d[%d sec])\n\tsatiety: %d   [%d s] \t(max %d[%d sec])\n\n", cnt->last_act, cnt->last_act/1000, MAX_CNT_LA, MAX_CNT_LA/1000, cnt->intellect, cnt->intellect/1000, MAX_CNT_IN, MAX_CNT_IN/1000, cnt->cleanliness, cnt->cleanliness/1000, MAX_CNT_CL, MAX_CNT_CL/1000, cnt->satiety, cnt->satiety/1000, MAX_CNT_ST, MAX_CNT_ST/1000);
 
 }
