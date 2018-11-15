@@ -104,8 +104,6 @@ C file_cont(FILE *ptr, S* string, I am)										//<	~grep
 	C c;
 	I length[100], state[100];
 
-	O("'%s'\n", string[0]);
-
 	if (am > 100) {
 		O("too much strings for search; amount --> 100\n");
 		am == 100;
@@ -147,17 +145,8 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	I i, size;
 
 	if (!ptr) {
-		O("УЖАС!!!\n");
-		exit(0);
+		R 0;
 	}
-
-	// addr_needle = {&needle[0], &needle[1], &needle[2], &needle[3]};
-	
-	// for (i = 0; i < 4; i++) {
-		// addr_needle[i] = needle[i];
-	// }
-
-	// addr_main[0] = addr_needle;
 
 	//<	0 --> input file is too large or nothing clear inside
 	//<	1 --> input file food
@@ -175,7 +164,7 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	arrcat(needle[1], "bitch", 0);
 	arrcat(needle[2], "pidor", 0);
 
-	O("%u: 	addr of n[0]\n%u: 	addr of n[1]\n%u: 	addr of n[2]\n", &needle[0], &needle[1], &needle[2]);
+	// O("%u: 	addr of n[0]\n%u: 	addr of n[1]\n%u: 	addr of n[2]\n", &needle[0], &needle[1], &needle[2]);
 
 
 	if (file_cont(ptr, addr_main[0], 3)) 
@@ -271,7 +260,7 @@ S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colo
 V p_dog_stat()
 {
 	// O("\n\n\tACT: %s\n\tSAT: %d\n\tINT: %d\n\tCLE: %d\n\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
-	O("\n\n\tACT: %s\t\tSAT: %d\tINT: %d\tCLE: %d\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
+	O("\n\tACT: %s\t\tSAT: %d\tINT: %d\tCLE: %d\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
 
 	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t(max %d[%d sec]) \n\tintellect: %d   [%d s] \t(max %d[%d sec])\n\tcleanliness: %d   [%d s] \t(max %d[%d sec])\n\tsatiety: %d   [%d s] \t(max %d[%d sec])\n\n", cnt->last_act, cnt->last_act/1000, MAX_CNT_LA, MAX_CNT_LA/1000, cnt->intellect, cnt->intellect/1000, MAX_CNT_IN, MAX_CNT_IN/1000, cnt->cleanliness, cnt->cleanliness/1000, MAX_CNT_CL, MAX_CNT_CL/1000, cnt->satiety, cnt->satiety/1000, MAX_CNT_ST, MAX_CNT_ST/1000);
 }

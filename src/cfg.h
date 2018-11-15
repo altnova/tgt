@@ -80,9 +80,17 @@ typedef pDat* dat;
 typedef pCounter* tm_cnt;
 typedef pCoor* coor;
 
+
+
+ext pCounter CNT;
+ext pDat DAT;
+ext pCoor COR;
+
 ext tm_cnt cnt;
 ext dat dt;
 ext coor crd;
+
+
 
 
 #ifdef __linux__

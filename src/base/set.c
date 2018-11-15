@@ -84,6 +84,13 @@ typedef struct Dt 			//< dog info
 } pDat;
 
 */
+
+pDat DAT;
+pCounter CNT;
+pCoor COR;
+
+
+
 V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 {
 	I height = height_();
@@ -97,9 +104,9 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 
 	// dat dt_main
 
-	dt_main = malloc(SZ(pDat));
-	cnt_main = malloc(SZ(pCounter));
-	crd_main = malloc(SZ(pCoor));
+	dt_main = &DAT;
+	cnt_main = &CNT;
+	crd_main = &COR;
 
 	crd_main->dir = RIGHT;
 	crd_main->rad = RANGE;

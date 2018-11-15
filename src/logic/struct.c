@@ -125,7 +125,7 @@ V event_check()														//< user's commands
 /////////////////////////////////////////////////////////////////////////
 	arrcat(FILENAME, "123\0", 0);
 
-	if (MAIN_IT%15000 == 0 || MAIN_IT%14000 == 0) {
+	if (MAIN_IT%27000 == 0 || MAIN_IT%22000 == 0) {
 		r = rand()%5;
 		SW(r) {
 			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})			//<	0

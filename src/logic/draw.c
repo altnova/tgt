@@ -30,9 +30,9 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 
 	SW(key)													//<	set filename and crd
 	{
-		CS('s', {x = crd->sat_x; y = crd->sat_y; O("\tSAT\n\n");});
-		CS('i', {x = crd->int_x; y = crd->int_y; O("\tINT\n\n");});
-		CS('c', {x = crd->cle_x; y = crd->cle_y; O("\tCLE\n\n");});
+		CS('s', {x = crd->sat_x; y = crd->sat_y; O("\t%sSAT%s\n\n", CWHT, CNRM);});
+		CS('i', {x = crd->int_x; y = crd->int_y; O("\t%sINT%s\n\n", CWHT, CNRM);});
+		CS('c', {x = crd->cle_x; y = crd->cle_y; O("\t%sCLE%s\n\n", CWHT, CNRM);});
 	}
 	fflush(stdout);
 
