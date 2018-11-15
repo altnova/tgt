@@ -3,6 +3,7 @@
 #include "../___.h"
 #include "../png/canvas.h"
 
+#include "../globals.h"
 
 V depict(I am, S *filename, UH *x_, UH *y_)										//<!!! 	GTK+
 {

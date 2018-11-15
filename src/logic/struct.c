@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <limits.h>
 
-C INPUT_FN[PATH_MAX + 1];
+#include "../globals.h"
 
 I ITER = 0;
 
@@ -49,7 +49,7 @@ C death()														//<	conditions of exit
 			O("he was as clean as your virginity\n");
 		R 1;
 	}
-/*
+	/*
 	X(!dt->satiety || dt->satiety > MAX_ST, {dt->action = die;}, 1);					//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST        
 	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {dt->action = rise;}, 1);			//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
 	*/
@@ -88,22 +88,17 @@ V cnt_check()													//<	conditions of modifing dt in case of appropriate c
 
 C set_main_action()								//< set main action if nothing special happens
 {
-	C act;
+	C act = dt->action;;
 	// O("[set_main_action()]\n");
-	
-	act = dt->action;
 
 	X((cnt->last_act < MAX_CNT_LA), {
 		dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
 						(dt->satiety > STLIM && dt->cleanliness <= CLLIM)	? walk	: sit;}, 0);
 
-
 	cnt->last_act = MAX_CNT_LA;
 
 	dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM)	? sleep_2 	: 				//< sleep_1 --> sleep where you are;	sleep_2 --> go to kennel
 					(dt->action != sleep_2) 							? sleep_1 	:	sleep_2;
-
-
 
 	if (act != dt->action) {
 		O("\n%s%s%s to %s%s%s\n%d iterations between\n\n", CBLU, stat_name[act], CNRM, CRED,stat_name[dt->action], CNRM, ITER);
@@ -117,34 +112,32 @@ V event_check()									//< user's commands
 {
 	/* GET FILE */
 
-	// S file_input = malloc(SZ(C) * 100);						//< for ex
 	I type;
 	C r, dog = 'd';
 	// O("[event_check()]\n");
 
-
-	strcpy(INPUT_FN, "123");
+	arrcat(FILENAME, "123\0", 0);
 
 	if (cnt->last_act >= MAX_CNT_LA) {
 		r = rand()%5;
 		SW(r) {
-			CS(1, {strcpy(INPUT_FN, "txt/FOOD.txt");})
-			CS(2, {strcpy(INPUT_FN, "txt/bath.txt");})
-			CS(3, {strcpy(INPUT_FN, "txt/big.txt");})
-			CS(4, {strcpy(INPUT_FN, "txt/rude.txt");})
+			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})
+			CS(2, {arrcat(FILENAME, "txt/bath.txt", 0);})
+			CS(3, {arrcat(FILENAME, "txt/big.txt", 0);})
+			CS(4, {arrcat(FILENAME, "txt/rude.txt", 0);})
 			CD:
-				strcpy(INPUT_FN, "txt/mess.txt");
+				arrcat(FILENAME, "txt/mess.txt", 0);
 		}
 
-		// strcpy(INPUT_FN, "txt/FOOD.txt");
+		// arrcat(FILENAME, "txt/FOOD.txt", 0);
 		p_dog_stat();
 	}
 
-	if (1 && !access(INPUT_FN, F_OK)) {			//< GET_FILE instead of 1
+	if (1 && !access(FILENAME, F_OK)) {			//< GET_FILE instead of 1
 		cnt->last_act = 0;
 	
-		O("file: %s\n", INPUT_FN);
-		type = input_type(INPUT_FN);
+		O("file: %s\n", FILENAME);
+		type = input_type(FILENAME);
 		SW(type) {
 			CS(1, { 
 				draw(dog, eat);
@@ -170,9 +163,6 @@ V event_check()									//< user's commands
 				spit_file("\n\n\n\t\tbad boy\n\n\n\n");
 		}
 	}
-
-	// free(file_input);
-
 	
 	/*GET CLICK EVENT*/
 /*

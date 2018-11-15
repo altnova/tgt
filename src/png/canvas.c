@@ -9,6 +9,8 @@
 #include "../cfg.h"
 #include "../base/mains.h"
 
+#include "../globals.h"
+
 #define PNG_DEBUG 3
 #include <png.h>
 

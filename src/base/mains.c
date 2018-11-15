@@ -9,9 +9,10 @@
 #include "../params.h"
 #include "../___.h"
 
-static C needle[4][PATH_MAX/2];
+#include "../globals.h"
 
-ext C INPUT_FN[PATH_MAX + 1];
+static C needle[4][PATH_MAX/2];
+// ext C INPUT_FN[PATH_MAX + 1];
 
 V arrcat(S buf, S line, I ptr)
 {
@@ -20,8 +21,8 @@ V arrcat(S buf, S line, I ptr)
 	for (i = ptr; line[j]; i++){
 		buf[i] = line[j++];
 	}
+	buf[i] = 0;
 }
-
 
 I arrlen(S str) 
 {
@@ -44,15 +45,29 @@ V iarrzero(I* buf, I len)
 		buf[i] = 0;
 }
 
-
-V free_array(S *arr, I am) {
+V free_array(S *arr, I am) 
+{
 	for (I i = 0; i < am; i++)
 		free(arr[i]);
 	free(arr);
 }
 
-FILE* fopen_(S str1, S str2);
+FILE* fopen_(S str1, S str2)
+{
+	FILE *ptr;
+	I len;
+	C file[PATH_MAX + 1];
+	S home = getenv("TGT_HOME");
 
+	strcpy(file, home);
+	len = strlen(home);
+	file[len] = '/';
+	file[++len] = 0;
+	strcat(file, str1);
+	O("FILENAME: '%s'\n", file);
+	ptr = fopen(file, str2);
+	R ptr;
+}
 
 C FCLR(FILE *ptr, C r)				//< close file and return r
 {
@@ -66,7 +81,6 @@ UJ szfile(FILE *ptr)											//< sizeof file
 	if (ptr == NULL)
 		R 0;
 	cur = ftell(ptr);
-	// O("ftell: %s\n", strerror(errno));
 	fseek(ptr, 0, SEEK_END);
 
 	size = ftell(ptr);
@@ -79,14 +93,12 @@ C case_cmp(C letter, C c)
 	R (letter == c || (IN('A', letter, 'Z') && c == letter + ' ') || (IN('a', letter, 'z') && c == letter - ' ')) ? 1 : 0;
 }
 
-//< I LEN[am] -- 		//<	I STATE[am] -- 
 C file_cont(FILE *ptr, I am)							
 {
 	C buf[2000];
 	I i, j, a = 0, szbuf, b;
 	C c;
 	I length[100], state[100];
-
 
 	if (am > 100) {
 		O("too much strings for search; amount --> 100\n");
@@ -99,12 +111,10 @@ C file_cont(FILE *ptr, I am)
 	}
 	a++;
 
-	if (a > 2000) {
+	if (a > 2000) 
 		printf("some of the strings are too long\n");
-	}
 
 	szbuf = 2000;
-
 	b = szbuf;
 
 	iarrzero(state, 100);
@@ -112,9 +122,7 @@ C file_cont(FILE *ptr, I am)
 	W (b == szbuf) {
 		b = fread(buf, SZ(C), szbuf, ptr);
 		for (i = 0; i < b; i++) {						//<	for each char from buf
-
 			for (j = 0; j < am; j++) {						//<	for each needle
-
 				c = case_cmp(buf[i], needle[j][state[j]]);
 				state[j] = (c)	? state[j] + 1 	:	0; 
 				if (state[j] == length[j])
@@ -127,11 +135,10 @@ C file_cont(FILE *ptr, I am)
 	R 0;
 }
 
-//< 3 FILENAME[?] --
 C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 {
 	// FILE *ptr = fopen_(filename, "r");
-	FILE *ptr = fopen_(INPUT_FN, "r");
+	FILE *ptr = fopen_(FILENAME, "r");
 	I i, size;
 	// S* needle;
 
@@ -140,17 +147,10 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 		exit(0);
 	}
 
-	// O("ftell: %s at mains.c/input_type\n", strerror(errno));
-
 	size = szfile(ptr);
 
 	X(size>3000, 	{fclose(ptr); O("3\n");},3);				
 	X(size>2000000, {fclose(ptr); O("0\n");},0);
-
-	// needle = malloc(SZ(S) * 3);
-
-	// for (i = 0; i < 3; i++)
-		// needle[i] = malloc(SZ(C) * 50);
 
 	strcpy(needle[0], "asshole");
 	strcpy(needle[1], "bitch");
@@ -200,8 +200,7 @@ V reverse(S s)
 {
 	I i, j;
 	C c;
- 
-	for (i = 0, j = arrlen(s)-1; i<j; i++, j--) {
+	for (i = 0, j = arrlen(s) - 1; i < j; i++, j--) {
 		c = s[i];
 		s[i] = s[j];
 		s[j] = c;
@@ -222,16 +221,16 @@ S itoa(I n)
 	R str;
 }
 
-
 //< C NEW_NAME[?] ++
 S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colour num
 {
-	I len = scnt(name), i;
+	I len = arrlen(name), i;
 	I len_2 = len + 2;
-
-	S new_name = malloc(SZ(C) * len_2);
-	strcpy(new_name, name);
-/*															// set 0 for a while
+	C new_name[2000];
+	// S new_name = malloc(SZ(C) * len_2);
+	arrcat(new_name, name, 0);
+	// strcpy(new_name, name);
+	/*															// set 0 for a while
 	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
 
 	new_name[len_2 - i] = col + '0';
@@ -244,50 +243,10 @@ S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colo
 	new_name[len_2 - i] = '0';
 	// new_name[len_2 - i] = '0';
 
-	R new_name;
+	arrcat(FILENAME, new_name, 0);
+
+	R FILENAME;
 }
-
-
-//<	C FILENAME[PATH_MAX] -- 
-FILE* fopen_(S str1, S str2)
-{
-	FILE *ptr;
-	// S buf;
-	I len;
-	C file[PATH_MAX + 1];
-	S home = getenv("TGT_HOME");
-	// buf = calloc((PATH_MAX + 1), SZ(C));
-
-	strcpy(file, home);
-	len = strlen(home);
-	file[len] = '/';
-	file[++len] = 0;
-	strcat(file, str1);
-	O("FILENAME: '%s'\n", file);
-	ptr = fopen(file, str2);
-	// free(buf);
-	R ptr;
-
-}
-/*
-typedef struct Cnt_tm		//< counters
-{
-	I last_act;
-	I satiety;
-	I intellect;
-	I cleanliness;
-} pCounter;
-
-
-typedef struct Dt 			//< dog info
-{
-	C satiety;
-	C intellect;
-	C cleanliness;
-	C colour;
-	C action;
-} pDat;
-*/
 
 V p_dog_stat()
 {
@@ -295,5 +254,4 @@ V p_dog_stat()
 	O("\n\n\tACT: %s\t\tSAT: %d\tINT: %d\tCLE: %d\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
 
 	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t(max %d[%d sec]) \n\tintellect: %d   [%d s] \t(max %d[%d sec])\n\tcleanliness: %d   [%d s] \t(max %d[%d sec])\n\tsatiety: %d   [%d s] \t(max %d[%d sec])\n\n", cnt->last_act, cnt->last_act/1000, MAX_CNT_LA, MAX_CNT_LA/1000, cnt->intellect, cnt->intellect/1000, MAX_CNT_IN, MAX_CNT_IN/1000, cnt->cleanliness, cnt->cleanliness/1000, MAX_CNT_CL, MAX_CNT_CL/1000, cnt->satiety, cnt->satiety/1000, MAX_CNT_ST, MAX_CNT_ST/1000);
-
 }

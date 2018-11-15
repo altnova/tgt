@@ -1,4 +1,7 @@
 
+ext V arrcat(S buf, S line, I ptr);
+
+
 ext V free_array(S *arr, I am);
 
 ext UJ szfile(FILE *ptr);

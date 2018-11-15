@@ -6,6 +6,8 @@
 #include <limits.h>
 
 
+
+
 /*
 typedef struct Coor 		//< coordinates of objects 
 {	
@@ -42,6 +44,11 @@ typedef struct Coor 		//< coordinates of objects
 
 ext I height;
 ext I width;
+
+C NUM_INT[12];
+C DOG_FILE[2000];
+C FILENAME[2000];
+S ADDR;
 
 I height_()
 {
