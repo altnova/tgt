@@ -1,6 +1,7 @@
 
 ext V arrcat(S buf, S line, I ptr);
 
+ext I arrlen(S str);
 
 ext V free_array(S *arr, I am);
 

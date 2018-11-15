@@ -16,6 +16,8 @@ static S addr_needle[4] = {needle[0], needle[1], needle[2], needle[3]};
 static S* addr_main[1] = {addr_needle};
 // static S* addr_needle = &addr_needle;
 
+
+
 V arrcat(S buf, S line, I ptr)										//<	strcat for global arrays
 {
 	I i, j = 0;
@@ -97,7 +99,7 @@ C case_cmp(C letter, C c)											//<	case unsensetive char compare
 	R (letter == c || (IN('A', letter, 'Z') && c == letter + ' ') || (IN('a', letter, 'z') && c == letter - ' ')) ? 1 : 0;
 }
 
-C file_cont(FILE *ptr, S* string, I am)										//<	~grep		
+C file_cont(FILE *ptr, S* string, I am)								//<	~grep		
 {
 	C buf[2000];
 	I i, j, a = 0, szbuf, b;
@@ -186,19 +188,19 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	R FCLR(ptr, 0);
 }
 
-C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)
+C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)				//< is obj_2 in range of obj_1?
 {
 	R (IN(obj_1_x - RANGE, obj_2_x, obj_1_x + RANGE) && IN(obj_1_y - RANGE, obj_2_y, obj_1_y + RANGE)) ? 1 : 0;
 }
 
-I dec_digits(UJ num)
+I dec_digits(UJ num)												//<	decimal digits of num
 {
 	I i;
 	X(num, {for (i = 0; num; num/= 10, i++);}, i);
 	R1;
 }
 
-UJ pow_(I basis, I exp_) 
+UJ pow_(I basis, I exp_) 											//<	my intteger pow_
 {
 	I i;
 	UJ result = 1;
@@ -206,7 +208,7 @@ UJ pow_(I basis, I exp_)
 	R1;
 }
 
-V reverse(S s)
+V reverse(S s)														//< reverse string
 {
 	I i, j;
 	C c;
@@ -218,17 +220,17 @@ V reverse(S s)
 }
 
 //< C NUM[12] ++
-S itoa(I n)
+S itoa(I n)															//< integer to ascii
 {
 	I i, max;
-	S str = malloc(SZ(C) * 12);
-	str[0] = n % 10 + '0';
+	// S str = malloc(SZ(C) * 12);
+	NUM_INT[0] = n % 10 + '0';
 	for(i = 1;(n/=10) > 0;i++) 
-		str[i] = n % 10 + '0';
+		NUM_INT[i] = n % 10 + '0';
 	
-	str[i] = '\0';
-	reverse(str);
-	R str;
+	NUM_INT[i] = '\0';
+	reverse(NUM_INT);
+	// R str;
 }
 
 //< C NEW_NAME[?] ++

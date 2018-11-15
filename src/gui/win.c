@@ -11,3 +11,17 @@ V depict(I am, S *filename, UH *x_, UH *y_)										//<!!! 	GTK+
 	// O("DEPICT\n");
 	// frame(am, filename, x_, y_);									//< for tests!!!!
 }
+
+
+
+
+V set_win()
+{
+
+	/* make transparent (click/view) window fullscreen	*/
+
+
+
+	/* draw png on it	*/
+
+}

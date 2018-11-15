@@ -9,7 +9,6 @@
 #include <errno.h>
 
 
-
 /*
 typedef struct Coor 		//< coordinates of objects 
 {	
@@ -44,14 +43,7 @@ typedef struct Coor 		//< coordinates of objects
 #define BOWL_H 0
 #define BAR_H 0
 
-ext I height;
-ext I width;
 
-C NUM_INT[12];
-C DOG_FILE[2000];
-C FILENAME[2000];
-S ADDR = FILENAME;
-S* ADDR_ADDR = &ADDR;
 
 I height_()
 {
@@ -85,24 +77,15 @@ typedef struct Dt 			//< dog info
 
 */
 
-pDat DAT;
-pCounter CNT;
-pCoor COR;
 
-
+C last_c(S line, S needle, I len);
+C first_c(S line, S needle, I len);
 
 V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 {
 	I height = height_();
 	I width = width_();
 	I down = width - 65;
-	// pDat dt_main = {5, 5, 5, 2, 9};
-	// pCounter cnt_main = {0, 0, 0, 0};
-	// pCoor crd_main;
-
-	
-
-	// dat dt_main
 
 	dt_main = &DAT;
 	cnt_main = &CNT;
@@ -110,17 +93,6 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 
 	crd_main->dir = RIGHT;
 	crd_main->rad = RANGE;
-
-	cnt_main->last_act = 0;
-	cnt_main->satiety = 0;
-	cnt_main->intellect = 0;
-	cnt_main->cleanliness = 0;
-
-	dt_main->satiety = 5;
-	dt_main->intellect = 5;
-	dt_main->cleanliness = 5;
-	dt_main->colour = 2;
-	dt_main->action = 9;
 
 
 		/*	x 	*/
@@ -159,39 +131,6 @@ V set_objects()		//< kennel, board, empty_bowl;
 {
 
 }
-
-C last_c(S line, S needle, I len)
-{
-	I n_len = strlen(needle);
-	I i = n_len - 1, j;
-
-	for (j = len - 1, i = n_len - 1; i >= 0; j--, i--) {
-			if (line[j] != needle[i]) {
-				O("line[j] --> '%c'; needle[i] --> '%c'\n", line[j], needle[i]);
-				R 0;
-			}
-	}
-
-	R 1;
-}
-
-C first_c(S line, S needle, I len)
-{
-	I n_len = strlen(needle), i;
-
-	for (i = 0; needle[i] && i < n_len && i < len; i++) {
-		if (line[i] != needle[i]) {
-			R 0;
-		}
-	}
-	if (i == len)
-		R 0;
-
-	R 1;
-
-}
-
-
 
 C is_tgt(S path)
 {
@@ -286,6 +225,8 @@ V check_env()
 dat dt;
 coor crd;
 */
+
+
 V set_start(tm_cnt cnt_, dat dt_, coor crd_)
 {
 	check_env();
@@ -294,3 +235,35 @@ V set_start(tm_cnt cnt_, dat dt_, coor crd_)
 	set_objects();
 	
 }
+
+C last_c(S line, S needle, I len)									//< cmp line ending and needle							
+{
+	I n_len = strlen(needle);
+	I i = n_len - 1, j;
+
+	for (j = len - 1, i = n_len - 1; i >= 0; j--, i--) {
+			if (line[j] != needle[i]) 
+				R 0;
+	}
+
+	R 1;
+}
+
+C first_c(S line, S needle, I len)									//<	cmp line beggining and needle
+{
+	I n_len = strlen(needle), i;
+
+	for (i = 0; needle[i] && i < n_len && i < len; i++) {
+		if (line[i] != needle[i]) {
+			R 0;
+		}
+	}
+	if (i == len)
+		R 0;
+
+	R 1;
+}
+
+
+
+

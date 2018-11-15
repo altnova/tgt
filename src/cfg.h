@@ -75,12 +75,9 @@ typedef struct Coor 		//< coordinates of objects
 
 typedef enum  	{	sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop, return_} D_STAT;
 
-
 typedef pDat* dat;
 typedef pCounter* tm_cnt;
 typedef pCoor* coor;
-
-
 
 ext pCounter CNT;
 ext pDat DAT;
@@ -91,6 +88,25 @@ ext dat dt;
 ext coor crd;
 
 
+
+
+/*
+ext pCounter CNT;
+ext pDat DAT;
+ext pCoor COR;
+
+ext tm_cnt cnt;
+ext dat dt;
+ext coor crd;
+
+
+C NUM_INT[12];
+C DOG_FILE[2000];
+C FILENAME[2000];
+S ADDR = FILENAME;
+S* ADDR_ADDR = &ADDR;
+
+*/
 
 
 #ifdef __linux__

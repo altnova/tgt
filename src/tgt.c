@@ -25,13 +25,21 @@ D_STAT d_stat;
 I height;
 I width;
 
-// I ITER;
+C NUM_INT[12];
+C DOG_FILE[2000];
+C FILENAME[2000];
+S ADDR = FILENAME;
+S* ADDR_ADDR = &ADDR;
+
+pDat DAT = {5, 5, 5, 2, 9};
+pCounter CNT = {0,  0, 0, 0};
+pCoor COR;
 
 I main()
 {
 	I i, j = -1;
 	C dog = 'd';
-	srand(time(NULL));
+	// srand(time(NULL));
 	set_start(dt, cnt, crd);
 
 	O("\n\t\t%sSTART%s\n\n", CWUL, CNRM);

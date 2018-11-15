@@ -12,6 +12,7 @@
 #include "../___.h"
 #include "../cfg.h"
 #include "../base/mains.h"
+#include "../globals.h"
 
 #define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
 
@@ -31,27 +32,26 @@ S desktop_path()												//<	returns string with a path to Desktop dir
 //< C FILENAME[?] +-; C NUM[12] --;
 S choose_name(S path, S filename)								//< unique enumerated file_name like path/to/dir/nnn_file_name
 {
-	I i, len, path_len, name_len, num_len;
+	I i, path_len, num_len;
 	C number[13];
-	name_len = scnt(filename);
-	path_len = scnt(path);
-	len = path_len + name_len + 2;
+	path_len = arrlen(path);
 
-	scpy(file, path, scnt(path));
-	strcat(file, filename);
+	arrcat(FILENAME, path, 0);
+	arrcat(FILENAME, filename, arrlen(FILENAME));
 
-	for (i = 1; !(access(file, F_OK)); i++) {
+	for (i = 1; !(access(FILENAME, F_OK)); i++) {
 		num_len = dec_digits(i);
-		strcpy(number, itoa(i));
+		itoa(i);
+		arrcat(number, NUM_INT, 0);
 		number[num_len] = '_';
 		number[num_len + 1] = 0;
 
-		file[path_len] = 0;
-		strcat(file, number);
-		strcat(file, filename);
+		FILENAME[path_len] = 0;
+		strcat(FILENAME, number);
+		strcat(FILENAME, filename);
 	}
 
-	R file;
+	R FILENAME;
 }
 
 V make_file(S path, S new_file, S str)							//< creates file with unique name and writes in str
@@ -72,8 +72,8 @@ V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
 		O("long lines at esfile.c/spit_file\n");
 		exit(0);
 	}
-	strcpy(STR, str);
-	strcat(STR, CONST_STR);
+	arrcat(STR, str, 0);
+	arrcat(STR, CONST_STR, arrlen(STR));
 	make_file(desktop_path(), "spit.txt", STR);
 }
 
