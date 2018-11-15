@@ -21,7 +21,6 @@ I test_cnt[5] = {0, 0, 0, 0, 0};
 
 V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 {
-	// O("[cnt_upd()]\n");
 	cnt_->last_act += stat_time[act];
 	
 	if (cnt->last_act > MAX_CNT_LA)
@@ -32,7 +31,7 @@ V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 	cnt_->cleanliness += stat_time[act];
 }
 
-C death()														//<	conditions of exit 	
+C death()															//<	conditions of exit 	
 {    
 
 	if (!dt->satiety || dt->satiety > MAX_ST) {
@@ -53,13 +52,13 @@ C death()														//<	conditions of exit
 		R 1;
 	}
 	/*
-	X(!dt->satiety || dt->satiety > MAX_ST, {dt->action = die;}, 1);					//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST        
+	X(!dt->satiety || dt->satiety > MAX_ST, {dt->action = die;}, 1);							//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST        
 	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {dt->action = rise;}, 1);			//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
 	*/
 	R 0;
 }
 
-V cnt_check()													//<	conditions of modifing dt in case of appropriate cnt
+V cnt_check()														//<	conditions of modifing dt in case of appropriate cnt
 {
 	C state;
 	// O("[cnt_check()]\n");
@@ -89,7 +88,7 @@ V cnt_check()													//<	conditions of modifing dt in case of appropriate c
 }
 
 
-C set_main_action()								//< set main action if nothing special happens
+C set_main_action()													//< set main action if nothing special happens
 {
 	C act = dt->action;;
 	// O("[set_main_action()]\n");
@@ -111,7 +110,7 @@ C set_main_action()								//< set main action if nothing special happens
 }
 
 //< C FILENAME[PATH_MAX] ++;
-V event_check()									//< user's commands 
+V event_check()														//< user's commands 
 {
 	/* GET FILE */
 
@@ -119,6 +118,11 @@ V event_check()									//< user's commands
 	C r, dog = 'd', st;
 	// O("[event_check()]\n");
 
+
+//< this part is only for testing; in future it will get name of a file, 
+//<	that user draged to kennel coordinates IF MACOS
+//< and will get filename from console, check existance etc. IF LINUX
+/////////////////////////////////////////////////////////////////////////
 	arrcat(FILENAME, "123\0", 0);
 
 	if (MAIN_IT%15000 == 0 || MAIN_IT%14000 == 0) {
@@ -137,6 +141,8 @@ V event_check()									//< user's commands
 	}
 
 	if (1 && !access(FILENAME, F_OK)) {			//< GET_FILE instead of 1
+/////////////////////////////////////////////////////////////////////////
+		
 		cnt->last_act = 0;
 	
 		O("%sfile: %s%s\n", CWUL, FILENAME, CNRM);
@@ -178,6 +184,10 @@ V event_check()									//< user's commands
 		}
 	}
 	
+
+//<	in future this part will get click-event coordinates
+//< if it's a dog coors --> act = love
+////////////////////////////////////////////////////////////////////////
 	/*GET CLICK EVENT*/
 /*
 	if (click) {
@@ -192,6 +202,5 @@ V event_check()									//< user's commands
 		}
 	
 	}*/
-	// free(str);
-	// free(dog);
+////////////////////////////////////////////////////////////////////////
 }

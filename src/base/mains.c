@@ -12,8 +12,11 @@
 #include "../globals.h"
 
 static C needle[4][PATH_MAX/2];
+static S addr_needle[4] = {needle[0], needle[1], needle[2], needle[3]};
+static S* addr_main[1] = {addr_needle};
+// static S* addr_needle = &addr_needle;
 
-V arrcat(S buf, S line, I ptr)
+V arrcat(S buf, S line, I ptr)										//<	strcat for global arrays
 {
 	I i, j = 0;
 
@@ -23,35 +26,37 @@ V arrcat(S buf, S line, I ptr)
 	buf[i] = 0;
 }
 
-I arrlen(S str) 
+I arrlen(S str)  													//<	global array len
 {
 	I i;
-	for (i = 0; str[i]; i++);
+	for (i = 0; str[i]; i++){
+		// O("'%c' --> %d\n", str[i], i);
+	}
 	R i;
 }
 
-V carrzero(S buf, I len)
+V carrzero(S buf, I len)											//<	char global array set all as zero
 {
 	I i;
 	for (i = 0; i < len; i++)
 		buf[i] = 0;
 }
 
-V iarrzero(I* buf, I len)
+V iarrzero(I* buf, I len)											//<	int global array det all as zero
 {
 	I i;
 	for (i = 0; i < len; i++)
 		buf[i] = 0;
 }
-
-V free_array(S *arr, I am) 
+/*
+V free_array(S *arr, I am) 	
 {
 	for (I i = 0; i < am; i++)
 		free(arr[i]);
 	free(arr);
 }
-
-FILE* fopen_(S str1, S str2)
+*/
+FILE* fopen_(S str1, S str2)										//<	fopen with concatenating env var path to directory
 {
 	FILE *ptr;
 	I len;
@@ -68,13 +73,13 @@ FILE* fopen_(S str1, S str2)
 	R ptr;
 }
 
-C FCLR(FILE *ptr, C r)				//< close file and return r
+C FCLR(FILE *ptr, C r)												//< close file and return r
 {
 	fclose(ptr);
 	R r;
 }
 
-UJ szfile(FILE *ptr)											//< sizeof file
+UJ szfile(FILE *ptr)												//< sizeof file
 {
 	UJ cur, size;
 	if (ptr == NULL)
@@ -87,17 +92,19 @@ UJ szfile(FILE *ptr)											//< sizeof file
 	R size;
 }
 
-C case_cmp(C letter, C c)						
+C case_cmp(C letter, C c)											//<	case unsensetive char compare 	
 {
 	R (letter == c || (IN('A', letter, 'Z') && c == letter + ' ') || (IN('a', letter, 'z') && c == letter - ' ')) ? 1 : 0;
 }
 
-C file_cont(FILE *ptr, I am)							
+C file_cont(FILE *ptr, S* string, I am)										//<	~grep		
 {
 	C buf[2000];
 	I i, j, a = 0, szbuf, b;
 	C c;
 	I length[100], state[100];
+
+	O("'%s'\n", string[0]);
 
 	if (am > 100) {
 		O("too much strings for search; amount --> 100\n");
@@ -105,7 +112,7 @@ C file_cont(FILE *ptr, I am)
 	}
 
 	for (i = 0; i < am; i++) {
-		length[i] = arrlen(needle[i]);
+		length[i] = arrlen(string[i]);
 		a = MAX(a, length[i]);
 	}
 	a++;
@@ -122,7 +129,7 @@ C file_cont(FILE *ptr, I am)
 		b = fread(buf, SZ(C), szbuf, ptr);
 		for (i = 0; i < b; i++) {						//<	for each char from buf
 			for (j = 0; j < am; j++) {						//<	for each needle
-				c = case_cmp(buf[i], needle[j][state[j]]);
+				c = case_cmp(buf[i], string[j][state[j]]);
 				state[j] = (c)	? state[j] + 1 	:	0; 
 				if (state[j] == length[j])
 					R 1;
@@ -144,6 +151,14 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 		exit(0);
 	}
 
+	// addr_needle = {&needle[0], &needle[1], &needle[2], &needle[3]};
+	
+	// for (i = 0; i < 4; i++) {
+		// addr_needle[i] = needle[i];
+	// }
+
+	// addr_main[0] = addr_needle;
+
 	//<	0 --> input file is too large or nothing clear inside
 	//<	1 --> input file food
 	//<	2 --> input file clean
@@ -156,24 +171,27 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	X(size>3000, 	{fclose(ptr); O("3\n");},3);				
 	X(size>2000000, {fclose(ptr); O("0\n");},0);
 
-	strcpy(needle[0], "asshole");
-	strcpy(needle[1], "bitch");
-	strcpy(needle[2], "pidor");
+	arrcat(needle[0], "asshole", 0);
+	arrcat(needle[1], "bitch", 0);
+	arrcat(needle[2], "pidor", 0);
 
-	if (file_cont(ptr, 3)) 
+	O("%u: 	addr of n[0]\n%u: 	addr of n[1]\n%u: 	addr of n[2]\n", &needle[0], &needle[1], &needle[2]);
+
+
+	if (file_cont(ptr, addr_main[0], 3)) 
 		R FCLR(ptr, 4);
 
-	strcpy(needle[0], "bone");
-	strcpy(needle[1], "food");
+	arrcat(needle[0], "bone", 0);
+	arrcat(needle[1], "food", 0);
 
-	if (file_cont(ptr, 2)) 
+	if (file_cont(ptr, addr_main[0], 2)) 
 		R FCLR(ptr, 1);
 
-	strcpy(needle[0], "bath");
-	strcpy(needle[1], "water");
-	strcpy(needle[2], "shower");
+	arrcat(needle[0], "bath", 0);
+	arrcat(needle[1], "water", 0);
+	arrcat(needle[2], "shower", 0);
 
-	if (file_cont(ptr, 3)) 
+	if (file_cont(ptr, addr_main[0], 3)) 
 		R FCLR(ptr, 2);
 
 	R FCLR(ptr, 0);
