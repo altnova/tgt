@@ -48,7 +48,8 @@ ext I width;
 C NUM_INT[12];
 C DOG_FILE[2000];
 C FILENAME[2000];
-S ADDR;
+S ADDR = FILENAME;
+S* ADDR_ADDR = &ADDR;
 
 I height_()
 {

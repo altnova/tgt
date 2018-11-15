@@ -12,7 +12,6 @@
 #include "../globals.h"
 
 static C needle[4][PATH_MAX/2];
-// ext C INPUT_FN[PATH_MAX + 1];
 
 V arrcat(S buf, S line, I ptr)
 {
@@ -137,10 +136,8 @@ C file_cont(FILE *ptr, I am)
 
 C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 {
-	// FILE *ptr = fopen_(filename, "r");
-	FILE *ptr = fopen_(FILENAME, "r");
+	FILE *ptr = fopen_(filename, "r");
 	I i, size;
-	// S* needle;
 
 	if (!ptr) {
 		O("УЖАС!!!\n");
@@ -172,7 +169,6 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	if (file_cont(ptr, 3)) 
 		R FCLR(ptr, 2);
 
-	// free_array(needle, 3);
 	R FCLR(ptr, 0);
 }
 
@@ -227,7 +223,7 @@ S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colo
 	I len = arrlen(name), i;
 	I len_2 = len + 2;
 	C new_name[2000];
-	// S new_name = malloc(SZ(C) * len_2);
+
 	arrcat(new_name, name, 0);
 	// strcpy(new_name, name);
 	/*															// set 0 for a while
@@ -241,7 +237,6 @@ S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colo
 	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
 
 	new_name[len_2 - i] = '0';
-	// new_name[len_2 - i] = '0';
 
 	arrcat(FILENAME, new_name, 0);
 

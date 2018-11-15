@@ -17,20 +17,8 @@
 V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 {
 	UH x, y;
-	// C filename[21] = { '.', '.', '/', 'p', 'i', 'c', '/', 'b', 'r', 'd', '/', 'n', 'o', 'm', '_', '0', '.', 'p', 'n', 'g', '\0'};
-/*	S filename = "pic/brd/nom_0.png\0";
-	O("iM IN BOARD SHOW\n");
-	O("%d --> 0(%d) + 'obj'(%d)\n", obj + filename[12], filename[12], obj);
-	fflush(stdout);
-	filename[12] = filename[12] + obj;*/
-
-	// S filename = malloc(SZ(C) * 25);
-	// strcpy(filename, "pic/brd/nom_0.png\0");
-
-	ADDR = FILENAME;
 
 	arrcat(FILENAME, "pic/brd/nom_0.png\0", 0);
-
 
 	O("\n%s[board_show()]%s\t", CWHT, CNRM);
 	O("'%c' --> '%c' + 'obj'(%d)\n\n", obj + FILENAME[12], FILENAME[12], obj);
@@ -46,7 +34,7 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 	}
 
 	add_to_canvas(1, &ADDR, &x, &y);
-	// free(filename);
+
 }
 
 V dog_show(I obj)				//< choose type of action to show
