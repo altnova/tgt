@@ -1,4 +1,3 @@
-//<	C par[4] ++[draw.c/draw];
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -28,33 +27,36 @@ I width;
 
 // I ITER;
 
-//<	C par[4] ++;
 I main()
 {
-	I i, j = -1, k = 0, l;
+	I i, j = -1;
 	C dog = 'd';
 	srand(time(NULL));
 	set_start(dt, cnt, crd);
 
+	O("\n\t\t%sSTART%s\n\n", CWUL, CNRM);
+
+
 	set_canvas();
 
 	ITER = 0;
+	MAIN_IT = 0;
+
 
 	dt->action = love;
 
-
-	for (i = 0; dt->action != rise && dt->action != die; i++) {
+	for (MAIN_IT = 0; dt->action != rise && dt->action != die; MAIN_IT++) {
 		
 		set_main_action();									//< 					logic/struct.c
 
-
 		draw(dog, dt->action);								//<	draw action 		logic/draw.c
+
 		cnt_upd(cnt, dt->action);							//<	increase timers 	logic/struct.c
 
 		event_check();										//< eat event to update dat and timers
+
 		cnt_check();										//< checking timers for updating dat 
 															//<						logic/struct.c
-
 		ITER++;
 
 		if (death())										//<	conditions of death
@@ -62,11 +64,12 @@ I main()
 	}
 	draw(dog, dt->action);
 	p_dog_stat(cnt, dt);
-	// free(dog);
 
-	O("%d ITERATIONS DONE\n", i);
-	O("DIE draw action %s\n", stat_name[dt->action]);
-	O("END\n");
+	O("%d ITERATIONS DONE\n", MAIN_IT);
+
+	O("\n\t%d feeding\n\t%d cleaning\n\t%d reading\n\t%d del_file\n\t%d spit_file\n\n", test_cnt[0], test_cnt[1], test_cnt[2], test_cnt[3], test_cnt[4]);
+
+	O("\n\t\t%sEND%s\n\n", CWUL, CNRM);
 	R0;
 }
 

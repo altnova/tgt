@@ -21,19 +21,25 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 	arrcat(FILENAME, "pic/brd/nom_0.png\0", 0);
 
 	O("\n%s[board_show()]%s\t", CWHT, CNRM);
-	O("'%c' --> '%c' + 'obj'(%d)\n\n", obj + FILENAME[12], FILENAME[12], obj);
+	if (obj > 9)
+		obj = 0;
+	O("'%c' --> '%c' + 'obj'(%d)\t", obj + FILENAME[12], FILENAME[12], obj);
 	fflush(stdout);
 	FILENAME[12] += obj;
 
 
 	SW(key)													//<	set filename and crd
 	{
-		CS('s', {x = crd->sat_x; y = crd->sat_y;});
-		CS('i', {x = crd->int_x; y = crd->int_y;});
-		CS('c', {x = crd->cle_x; y = crd->cle_y;});
+		CS('s', {x = crd->sat_x; y = crd->sat_y; O("\tSAT\n\n");});
+		CS('i', {x = crd->int_x; y = crd->int_y; O("\tINT\n\n");});
+		CS('c', {x = crd->cle_x; y = crd->cle_y; O("\tCLE\n\n");});
 	}
+	fflush(stdout);
 
-	add_to_canvas(1, &ADDR, &x, &y);
+	// if (key == 's')
+		// exit(1);
+
+	add_to_canvas(1, ADDR_ADDR, &x, &y);
 
 }
 

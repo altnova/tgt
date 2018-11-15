@@ -15,6 +15,9 @@
 #include "../globals.h"
 
 I ITER = 0;
+I MAIN_IT = 0;
+
+I test_cnt[5] = {0, 0, 0, 0, 0};
 
 V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 {
@@ -35,18 +38,18 @@ C death()														//<	conditions of exit
 	if (!dt->satiety || dt->satiety > MAX_ST) {
 		dt->action = die;
 		if (!dt->satiety) 
-			O("your dog died of starvation. stupid\n"); 
+			O("\n\tyour dog died of %sstarvation%s. stupid\n\n", CRED, CNRM); 
 		else 
-			O("your dog died of gluttony. feckless\n");
+			O("\n\tyour dog died of %sgluttony%s. feckless\n\n", CBLU, CNRM);
 		R 1;
 	}
 
 	if (dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL) {
 		dt->action = rise;
 		if (dt->intellect >= MAX_IN) 
-			O("he was much smarter than you\n");
+			O("\n\the was much %ssmarter%s than you\n\n", CBLU, CNRM);
 		else 
-			O("he was as clean as your virginity\n");
+			O("\n\the was as %sclean%s as your virginity\n\n", CWHT, CNRM);
 		R 1;
 	}
 	/*
@@ -113,20 +116,20 @@ V event_check()									//< user's commands
 	/* GET FILE */
 
 	I type;
-	C r, dog = 'd';
+	C r, dog = 'd', st;
 	// O("[event_check()]\n");
 
 	arrcat(FILENAME, "123\0", 0);
 
-	if (cnt->last_act >= MAX_CNT_LA) {
+	if (MAIN_IT%15000 == 0 || MAIN_IT%14000 == 0) {
 		r = rand()%5;
 		SW(r) {
-			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})
-			CS(2, {arrcat(FILENAME, "txt/bath.txt", 0);})
-			CS(3, {arrcat(FILENAME, "txt/big.txt", 0);})
-			CS(4, {arrcat(FILENAME, "txt/rude.txt", 0);})
+			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})			//<	0
+			CS(2, {arrcat(FILENAME, "txt/bath.txt", 0);})			//<	1
+			CS(3, {arrcat(FILENAME, "txt/big.txt", 0);})			//<	2
+			CS(4, {arrcat(FILENAME, "txt/rude.txt", 0);})			//<	3
 			CD:
-				arrcat(FILENAME, "txt/mess.txt", 0);
+				arrcat(FILENAME, "txt/mess.txt", 0);				//<	4
 		}
 
 		// arrcat(FILENAME, "txt/FOOD.txt", 0);
@@ -136,28 +139,39 @@ V event_check()									//< user's commands
 	if (1 && !access(FILENAME, F_OK)) {			//< GET_FILE instead of 1
 		cnt->last_act = 0;
 	
-		O("file: %s\n", FILENAME);
+		O("%sfile: %s%s\n", CWUL, FILENAME, CNRM);
 		type = input_type(FILENAME);
 		SW(type) {
 			CS(1, { 
 				draw(dog, eat);
 				cnt_upd(cnt, eat);
 				dt->satiety++;
-				cnt->satiety = 0; })
+				cnt->satiety = 0; 
+				test_cnt[0]++;
+				st = 's';
+				draw(st, dt->satiety);})
 			CS(2, { 
 				dt->cleanliness++;
 				cnt->cleanliness = 0;
-				dt->colour = dt->cleanliness/2;})
+				test_cnt[1]++;
+				dt->colour = dt->cleanliness/2;
+				st = 'c';
+				draw(st, dt->cleanliness);})
 			CS(3, {
 				draw(dog, read_);
 				cnt_upd(cnt, read_);
 				dt->intellect++;
-				cnt->intellect = 0;})
+				cnt->intellect = 0;
+				test_cnt[2]++;
+				st = 'i';
+				draw(st, dt->intellect);})
 			CS(4, { 
+				test_cnt[3]++;
 				dt->action = sit;
 				eat_file();})								//< 	test mode
 
 			CD:
+				test_cnt[4]++;
 				draw(dog, poop);
 				cnt_upd(cnt, poop);
 				spit_file("\n\n\n\t\tbad boy\n\n\n\n");

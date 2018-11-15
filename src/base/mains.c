@@ -144,6 +144,13 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 		exit(0);
 	}
 
+	//<	0 --> input file is too large or nothing clear inside
+	//<	1 --> input file food
+	//<	2 --> input file clean
+	//<	3 --> input file reading
+	//<	4 --> input file rude
+
+
 	size = szfile(ptr);
 
 	X(size>3000, 	{fclose(ptr); O("3\n");},3);				
