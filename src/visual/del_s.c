@@ -5,7 +5,7 @@
 
 #include <unistd.h>
 #include <string.h>
-#include "../cfg.h"
+#include "../cfg/cfg.h"
 
 #include "../logic/struct.h"
 #include "../base/mains.h"

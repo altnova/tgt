@@ -4,13 +4,13 @@
 #include <string.h>
 #include "cfg.h"
 
-#include "logic/struct.h"
+#include "../logic/struct.h"
 
-#include "base/set.h"
+#include "../base/set.h"
 
-#include "logic/draw.h"
-#include "png/canvas.h"
-#include "base/mains.h"
+#include "../logic/draw.h"
+#include "../png/canvas.h"
+#include "../base/mains.h"
 
 
 tm_cnt cnt;

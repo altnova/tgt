@@ -1,6 +1,7 @@
 //< C FILENAME[PATH_MAX] ++;
 #include <stdlib.h>
 #include <string.h>
+
 #include "../cfg.h"
 
 #include "../gui/win.h"

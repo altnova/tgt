@@ -9,7 +9,8 @@
 #include <dirent.h>
 #include <limits.h>
 
-#include "../cfg.h"
+#include "../cfg/cfg.h"
+
 #include "../base/mains.h"
 
 #define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"

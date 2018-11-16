@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <errno.h>
-#include "../cfg.h"
+#include "../cfg/cfg.h"
 
 
 static C needle[4][PATH_MAX/2];

@@ -3,13 +3,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
+#include <limits.h>
+
 #include "../cfg.h"
 
 #include "../logic/draw.h"
 #include "../file_edit/esfile.h"
 #include "../base/mains.h"
-#include <unistd.h>
-#include <limits.h>
 
 
 I ITER = 0;
