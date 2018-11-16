@@ -4,14 +4,11 @@
 #include <string.h>
 #include "cfg.h"
 
-#include "logic/struct.h"
-
-#include "base/set.h"
-
-#include "logic/draw.h"
-#include "png/canvas.h"
-#include "base/mains.h"
-
+#include "../lgc/struct.h"
+#include "../bsc/set.h"
+#include "../lgc/draw.h"
+#include "../png/canvas.h"
+#include "../bsc/mains.h"
 
 tm_cnt cnt;
 dat dt;
@@ -55,16 +52,16 @@ I main()
 
 	for (MAIN_IT = 0; dt->action != rise && dt->action != die; MAIN_IT++) {
 		
-		set_main_action();									//< 					logic/struct.c
+		set_main_action();									//< 					lgc/struct.c
 
-		draw(dog, dt->action);								//<	draw action 		logic/draw.c
+		draw(dog, dt->action);								//<	draw action 		lgc/draw.c
 
-		cnt_upd(cnt, dt->action);							//<	increase timers 	logic/struct.c
+		cnt_upd(cnt, dt->action);							//<	increase timers 	lgc/struct.c
 
 		event_check();										//< eat event to update dat and timers
 
 		cnt_check();										//< checking timers for updating dat 
-															//<						logic/struct.c
+															//<						lgc/struct.c
 		ITER++;
 
 		if (death())										//<	conditions of death

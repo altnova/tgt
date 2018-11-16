@@ -5,11 +5,10 @@
 #include <string.h>
 #include <stdarg.h>
 #include <limits.h>
-#include "../___.h"
-#include "../cfg.h"
-#include "../base/mains.h"
 
-#include "../globals.h"
+#include "../cfg/cfg.h"
+
+#include "../bsc/mains.h"
 
 #define PNG_DEBUG 3
 #include <png.h>

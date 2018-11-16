@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../cfg.h"
+#include "../cfg/cfg.h"
 
 #include "../gui/win.h"
-#include "../visual/del_s.h"
+#include "../vis/del_s.h"
 #include "../png/canvas.h"
-#include "../base/mains.h"
+#include "../bsc/mains.h"
 
 
 //< C FILENAME[PATH_MAX] ++;

@@ -11,7 +11,7 @@
 
 #include "../cfg/cfg.h"
 
-#include "../base/mains.h"
+#include "../bsc/mains.h"
 
 #define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
 

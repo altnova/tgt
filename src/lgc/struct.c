@@ -6,11 +6,11 @@
 #include <unistd.h>
 #include <limits.h>
 
-#include "../cfg.h"
+#include "../cfg/cfg.h"
 
-#include "../logic/draw.h"
-#include "../file_edit/esfile.h"
-#include "../base/mains.h"
+#include "../lgc/draw.h"
+#include "../fld/esfile.h"
+#include "../bsc/mains.h"
 
 
 I ITER = 0;

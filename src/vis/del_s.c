@@ -2,14 +2,14 @@
 //<```	free arg for colour 
 //<	
 #include <stdlib.h>
-
 #include <unistd.h>
 #include <string.h>
+
 #include "../cfg/cfg.h"
 
-#include "../logic/struct.h"
-#include "../base/mains.h"
-#include "../params.h"
+#include "../lgc/struct.h"
+#include "../bsc/mains.h"
+
 #include "../gui/win.h"
 #include "../png/canvas.h"
 
