@@ -1,6 +1,5 @@
 //<	init structs
 #include "../cfg.h"
-#include "../___.h"
 // #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <limits.h>

@@ -3,8 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include "cfg.h"
-#include "___.h"
-#include "params.h"
+
 #include "logic/struct.h"
 
 #include "base/set.h"
@@ -12,6 +11,7 @@
 #include "logic/draw.h"
 #include "png/canvas.h"
 #include "base/mains.h"
+
 
 tm_cnt cnt;
 dat dt;

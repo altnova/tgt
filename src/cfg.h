@@ -23,6 +23,9 @@
 #define DIFY 10
 
 #include "___.h"
+
+#include "globals.h"
+
 /*
 
 #define MAX_CNT_LA 3600000000
@@ -88,7 +91,7 @@ ext dat dt;
 ext coor crd;
 
 
-
+#include "params.h"
 
 /*
 ext pCounter CNT;

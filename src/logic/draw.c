@@ -1,17 +1,13 @@
 //< C FILENAME[PATH_MAX] ++;
 #include <stdlib.h>
 #include <string.h>
-#include "../___.h"
 #include "../cfg.h"
 
-#include "../params.h"
 #include "../gui/win.h"
 #include "../visual/del_s.h"
 #include "../png/canvas.h"
-
 #include "../base/mains.h"
 
-#include "../globals.h"
 
 //< C FILENAME[PATH_MAX] ++;
 V board_show(C key, C obj)		//<	change params on board (through canvas.png)

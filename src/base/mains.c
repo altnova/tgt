@@ -6,10 +6,7 @@
 #include <limits.h>
 #include <errno.h>
 #include "../cfg.h"
-#include "../params.h"
-#include "../___.h"
 
-#include "../globals.h"
 
 static C needle[4][PATH_MAX/2];
 static S addr_needle[4] = {needle[0], needle[1], needle[2], needle[3]};

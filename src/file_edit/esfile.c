@@ -9,10 +9,8 @@
 #include <dirent.h>
 #include <limits.h>
 
-#include "../___.h"
 #include "../cfg.h"
 #include "../base/mains.h"
-#include "../globals.h"
 
 #define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
 

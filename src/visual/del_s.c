@@ -5,16 +5,14 @@
 
 #include <unistd.h>
 #include <string.h>
-#include "../___.h"
 #include "../cfg.h"
+
 #include "../logic/struct.h"
 #include "../base/mains.h"
 #include "../params.h"
 #include "../gui/win.h"
-
 #include "../png/canvas.h"
 
-#include "../globals.h"
 
 
 V this_way(I pause, S file_1, S file_2, S act, I way)			//< which way to move
