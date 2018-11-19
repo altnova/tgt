@@ -1,5 +1,4 @@
-//< all functions process only inside this file
-//<	2 C FILENAME[PATH_MAX] +-; C LINE[?] +-; C NUM[12] --;
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,7 +19,11 @@ static C STR[1000];
 static C file[PATH_MAX + 1];
 
 
-//< C FILENAME[PATH_MAX] +-
+V delete_file(S path)
+{
+	remove(path);
+}
+
 S desktop_path()												//<	returns string with a path to Desktop dir 
 {
 	strcpy(DESKTOP_PATH, getenv("HOME"));
@@ -28,7 +31,6 @@ S desktop_path()												//<	returns string with a path to Desktop dir
 	return DESKTOP_PATH;
 }
 
-//< C FILENAME[?] +-; C NUM[12] --;
 S choose_name(S path, S filename)								//< unique enumerated file_name like path/to/dir/nnn_file_name
 {
 	I i, path_len, num_len;
@@ -63,10 +65,9 @@ V make_file(S path, S new_file, S str)							//< creates file with unique name a
 	fclose(ptr);
 }
 
-//< C LINE[?]+-
 V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
 {
-	// C line[1000];
+	O("%s[spit_file()]%s\n", CWHT, CNRM);						//<			test mode
 	if (strlen(str) + strlen(CONST_STR) >= 1000) {
 		O("long lines at esfile.c/spit_file\n");
 		exit(0);

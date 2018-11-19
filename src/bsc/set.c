@@ -1,12 +1,12 @@
-//<	init structs
-#include "../cfg/cfg.h"
-// #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <dirent.h>
 #include <string.h>
 #include <errno.h>
 
+#include "../cfg/cfg.h"
+#include "../gui/win.h"
+#include "mains.h"
 
 /*
 typedef struct Coor 		//< coordinates of objects 
@@ -32,6 +32,7 @@ typedef struct Coor 		//< coordinates of objects
 } pCoor;
 */
 
+//< set this part 
 //< !!!!!!!!!!!!!!!!!
 #define BAR_W 0 
 #define NOM_W 0
@@ -41,19 +42,29 @@ typedef struct Coor 		//< coordinates of objects
 #define KENNEL_H 0
 #define BOWL_H 0
 #define BAR_H 0
+//<	!!!!!!!!!!!!!!!!!
 
+tm_cnt cnt;
+dat dt;
+coor crd;
 
+I stat_time[12] = 	{	1000, 	1000,	1000,   3000, 4000,   7000,	  7000, 	1000, 	  1000,  	 1000,   3000, 		0 };		//< /1000 --> get am in seconds 
+S stat_name[12] = 	{	"sit", "run", "walk", "eat", "read_", "die", "rise", "sleep_1", "sleep_2", 	"love", "wc", "return"};
 
-I height_()
-{
-	I h = 300;
-	R h;
-}
-I width_()
-{
-	I w = 900;
-	R w;
-}
+D_STAT d_stat;
+
+I height;
+I width;
+
+C NUM_INT[12];
+C DOG_FILE[2000];
+C FILENAME[2000];
+S ADDR = FILENAME;
+S* ADDR_ADDR = &ADDR;
+
+pDat DAT = {5, 5, 5, 2, 9};
+pCounter CNT = {0,  0, 0, 0};
+pCoor COR;
 
 /*
 typedef struct Cnt_tm		//< counters
@@ -76,14 +87,10 @@ typedef struct Dt 			//< dog info
 
 */
 
-
-C last_c(S line, S needle, I len);
-C first_c(S line, S needle, I len);
-
 V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 {
-	I height = height_();
-	I width = width_();
+	height = height_();
+	width = width_();
 	I down = width - 65;
 
 	dt_main = &DAT;
@@ -234,35 +241,4 @@ V set_start(tm_cnt cnt_, dat dt_, coor crd_)
 	set_objects();
 	
 }
-
-C last_c(S line, S needle, I len)									//< cmp line ending and needle							
-{
-	I n_len = strlen(needle);
-	I i = n_len - 1, j;
-
-	for (j = len - 1, i = n_len - 1; i >= 0; j--, i--) {
-			if (line[j] != needle[i]) 
-				R 0;
-	}
-
-	R 1;
-}
-
-C first_c(S line, S needle, I len)									//<	cmp line beggining and needle
-{
-	I n_len = strlen(needle), i;
-
-	for (i = 0; needle[i] && i < n_len && i < len; i++) {
-		if (line[i] != needle[i]) {
-			R 0;
-		}
-	}
-	if (i == len)
-		R 0;
-
-	R 1;
-}
-
-
-
 

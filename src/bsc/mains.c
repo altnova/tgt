@@ -1,5 +1,3 @@
-//<	3 C FILENAME[PATH_MAX] --; C NEW_NAME[?] ++; C NUM[12] ++; I LEN[am] --; I STATE[am] --;
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -7,13 +5,39 @@
 #include <errno.h>
 #include "../cfg/cfg.h"
 
-
 static C needle[4][PATH_MAX/2];
 static S addr_needle[4] = {needle[0], needle[1], needle[2], needle[3]};
 static S* addr_main[1] = {addr_needle};
-// static S* addr_needle = &addr_needle;
 
 
+
+C last_c(S line, S needle, I len)									//< cmp line ending and needle							
+{
+	I n_len = strlen(needle);
+	I i = n_len - 1, j;
+
+	for (j = len - 1, i = n_len - 1; i >= 0; j--, i--) {
+			if (line[j] != needle[i]) 
+				R 0;
+	}
+
+	R 1;
+}
+
+C first_c(S line, S needle, I len)									//<	cmp line beggining and needle
+{
+	I n_len = strlen(needle), i;
+
+	for (i = 0; needle[i] && i < n_len && i < len; i++) {
+		if (line[i] != needle[i]) {
+			R 0;
+		}
+	}
+	if (i == len)
+		R 0;
+
+	R 1;
+}
 
 V arrcat(S buf, S line, I ptr)										//<	strcat for global arrays
 {
@@ -28,9 +52,7 @@ V arrcat(S buf, S line, I ptr)										//<	strcat for global arrays
 I arrlen(S str)  													//<	global array len
 {
 	I i;
-	for (i = 0; str[i]; i++){
-		// O("'%c' --> %d\n", str[i], i);
-	}
+	for (i = 0; str[i]; i++);
 	R i;
 }
 
@@ -67,7 +89,7 @@ FILE* fopen_(S str1, S str2)										//<	fopen with concatenating env var path 
 	file[len] = '/';
 	file[++len] = 0;
 	strcat(file, str1);
-	O("FILENAME: '%s'\n", file);
+	// O("FILENAME: '%s'\n", file);
 	ptr = fopen(file, str2);
 	R ptr;
 }
@@ -163,9 +185,6 @@ C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
 	arrcat(needle[1], "bitch", 0);
 	arrcat(needle[2], "pidor", 0);
 
-	// O("%u: 	addr of n[0]\n%u: 	addr of n[1]\n%u: 	addr of n[2]\n", &needle[0], &needle[1], &needle[2]);
-
-
 	if (file_cont(ptr, addr_main[0], 3)) 
 		R FCLR(ptr, 4);
 
@@ -216,29 +235,25 @@ V reverse(S s)														//< reverse string
 	}
 }
 
-//< C NUM[12] ++
 S itoa(I n)															//< integer to ascii
 {
 	I i, max;
-	// S str = malloc(SZ(C) * 12);
 	NUM_INT[0] = n % 10 + '0';
 	for(i = 1;(n/=10) > 0;i++) 
 		NUM_INT[i] = n % 10 + '0';
 	
 	NUM_INT[i] = '\0';
 	reverse(NUM_INT);
-	// R str;
 }
 
-//< C NEW_NAME[?] ++
-S colour(S name, I col)				//< 	dir/filename --> dir/n/filename, where n is colour num
+S colour(S name, I col)												//< 	dir/filename --> dir/n/filename, where n is colour num
 {
 	I len = arrlen(name), i;
 	I len_2 = len + 2;
 	C new_name[2000];
 
 	arrcat(new_name, name, 0);
-	// strcpy(new_name, name);
+
 	/*															// set 0 for a while
 	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
 

@@ -24,3 +24,9 @@ ext S colour(S name, I col);
 ext FILE* fopen_(S str1, S str2);
 
 ext V p_dog_stat();
+
+
+ext C last_c(S line, S needle, I len);
+
+ext C first_c(S line, S needle, I len);
+					

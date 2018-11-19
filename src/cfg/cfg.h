@@ -1,3 +1,5 @@
+
+
 #define MAX_CNT_LA 360000
 #define MAX_CNT_ST 43200000
 #define MAX_CNT_IN 129600000
@@ -24,16 +26,7 @@
 
 #include "___.h"
 
-#include "globals.h"
 
-/*
-
-#define MAX_CNT_LA 3600000000
-#define MAX_CNT_ST 43200000000
-#define MAX_CNT_IN 129600000000
-#define MAX_CNT_CL 172800000000
-
-*/
 typedef struct Cnt_tm		//< counters
 {
 	I last_act;
@@ -76,6 +69,9 @@ typedef struct Coor 		//< coordinates of objects
 	UH bowl_y;
 } pCoor;
 
+
+/*	typedef pointers and enums	*/
+
 typedef enum  	{	sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop, return_} D_STAT;
 
 typedef pDat* dat;
@@ -91,26 +87,9 @@ ext dat dt;
 ext coor crd;
 
 
-#include "params.h"
+#include "globals.h"
 
-/*
-ext pCounter CNT;
-ext pDat DAT;
-ext pCoor COR;
-
-ext tm_cnt cnt;
-ext dat dt;
-ext coor crd;
-
-
-C NUM_INT[12];
-C DOG_FILE[2000];
-C FILENAME[2000];
-S ADDR = FILENAME;
-S* ADDR_ADDR = &ADDR;
-
-*/
-
+/*	colours		*/
 
 #ifdef __linux__
 

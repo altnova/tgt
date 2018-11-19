@@ -18,6 +18,8 @@ I MAIN_IT = 0;
 
 I test_cnt[5] = {0, 0, 0, 0, 0};
 
+
+
 V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 {
 	cnt_->last_act += stat_time[act];
@@ -108,7 +110,6 @@ C set_main_action()													//< set main action if nothing special happens
 	}
 }
 
-//< C FILENAME[PATH_MAX] ++;
 V event_check()														//< user's commands 
 {
 	/* GET FILE */
@@ -124,7 +125,7 @@ V event_check()														//< user's commands
 /////////////////////////////////////////////////////////////////////////
 	arrcat(FILENAME, "123\0", 0);
 
-	if (MAIN_IT%27000 == 0 || MAIN_IT%22000 == 0) {
+	if (MAIN_IT%400 == 0 || MAIN_IT%300 == 0) {
 		r = rand()%5;
 		SW(r) {
 			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})			//<	0
@@ -182,13 +183,16 @@ V event_check()														//< user's commands
 				spit_file("\n\n\n\t\tbad boy\n\n\n\n");
 		}
 	}
+
+	//<	delte_file(FILENAME);
 	
 
 //<	in future this part will get click-event coordinates
 //< if it's a dog coors --> act = love
 ////////////////////////////////////////////////////////////////////////
 	/*GET CLICK EVENT*/
-/*
+	
+	/*
 	if (click) {
 		if (dog_click) {
 		cnt->last_act = 0;
@@ -200,6 +204,8 @@ V event_check()														//< user's commands
 				draw(dog, return_);
 		}
 	
-	}*/
+	}
+	*/
 ////////////////////////////////////////////////////////////////////////
+
 }

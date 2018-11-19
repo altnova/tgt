@@ -10,27 +10,7 @@
 #include "../png/canvas.h"
 #include "../bsc/mains.h"
 
-tm_cnt cnt;
-dat dt;
-coor crd;
 
-I stat_time[12] = 	{	1000, 	1000,	1000,   3000, 4000,   7000,	  7000, 	1000, 	  1000,  	 1000,   3000, 		0 };		//< /1000 --> get am in seconds 
-S stat_name[12] = 	{	"sit", "run", "walk", "eat", "read_", "die", "rise", "sleep_1", "sleep_2", 	"love", "wc", "return"};
-
-D_STAT d_stat;
-
-I height;
-I width;
-
-C NUM_INT[12];
-C DOG_FILE[2000];
-C FILENAME[2000];
-S ADDR = FILENAME;
-S* ADDR_ADDR = &ADDR;
-
-pDat DAT = {5, 5, 5, 2, 9};
-pCounter CNT = {0,  0, 0, 0};
-pCoor COR;
 
 I main()
 {
