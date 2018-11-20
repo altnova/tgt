@@ -1,3 +1,4 @@
+//<	calculation method for choosing which pic to depict 
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
