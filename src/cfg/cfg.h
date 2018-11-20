@@ -22,7 +22,11 @@
 #define DIFWALK 15			//< ???
 #define DIFY 10
 
+#define LINE_MAX_ 1000
+
+
 #include "___.h"
+
 
 
 typedef struct Cnt_tm		//< counters
