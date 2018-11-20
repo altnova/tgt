@@ -102,22 +102,26 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 
 
 		/*	x 	*/
-	crd_main->kennel_x 	= L_LIM/2;					//< L_LIM == WIDTH/10; R_LIM = WIDTH*9/10
+	// crd_main->kennel_x 	= L_LIM/2;					//< L_LIM == WIDTH/10; R_LIM = WIDTH*9/10
+	crd_main->kennel_x 	= 30;
 	crd_main->bowl_x 	= L_LIM/4;
 	// crd_main->dog_x 	= 2 * L_LIM;
 	crd_main->dog_x = 200;
-	crd_main->bar_x 	= R_LIM;
+	// crd_main->bar_x 	= R_LIM;
+	crd_main->bar_x 	= 600;
 	// crd_main->int_x 	= R_LIM + BAR_W - NOM_W;	//<	BAR_W ??? NOM_W ???
 	crd_main->int_x 	= crd_main->int_x;
 	crd_main->cle_x 	= crd_main->int_x;
 	crd_main->sat_x 	= crd_main->int_x;
 
 		/*	y 	*/
-	crd_main->kennel_y 	= D_LIM - KENNEL_H;			//<	D_LIM ??? KENNEL_H		
+	// crd_main->kennel_y 	= D_LIM - KENNEL_H;			//<	D_LIM ??? KENNEL_H		
+	crd_main->kennel_y 	= 100;
 	crd_main->bowl_y 	= D_LIM - BOWL_H;			//< BOWL_H ???
 	// crd_main->dog_y 	= D_LIM - DOG_H;				//<	DOG_H ????
 	crd_main->dog_y = 100;
-	crd_main->bar_y 	= D_LIM - BAR_H;
+	// crd_main->bar_y 	= D_LIM - BAR_H;
+	crd_main->bar_y 	= 100;
 	crd_main->int_y 	= crd_main->bar_y;
 	crd_main->cle_y 	= crd_main->bar_y - NOM_H;
 	crd_main->sat_y 	= crd_main->int_x;
@@ -130,6 +134,8 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 
 V set_window()			//< fullscreen, transparent, click-trough
 {
+
+	/*	something from gui/win.c 	*/
 
 }
 																	//!!!!!<	GTK+
@@ -171,7 +177,6 @@ C is_tgt(S path)
 
 	R 0;
 }
-
 
 
 C is_home(S path)

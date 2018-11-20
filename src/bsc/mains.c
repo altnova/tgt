@@ -69,14 +69,7 @@ V iarrzero(I* buf, I len)											//<	int global array det all as zero
 	for (i = 0; i < len; i++)
 		buf[i] = 0;
 }
-/*
-V free_array(S *arr, I am) 	
-{
-	for (I i = 0; i < am; i++)
-		free(arr[i]);
-	free(arr);
-}
-*/
+
 FILE* fopen_(S str1, S str2)										//<	fopen with concatenating env var path to directory
 {
 	FILE *ptr;
@@ -127,7 +120,7 @@ C file_cont(FILE *ptr, S* string, I am)								//<	~grep
 
 	if (am > 100) {
 		O("too much strings for search; amount --> 100\n");
-		am == 100;
+		am = 100;
 	}
 
 	for (i = 0; i < am; i++) {
@@ -146,8 +139,8 @@ C file_cont(FILE *ptr, S* string, I am)								//<	~grep
 
 	W (b == szbuf) {
 		b = fread(buf, SZ(C), szbuf, ptr);
-		for (i = 0; i < b; i++) {						//<	for each char from buf
-			for (j = 0; j < am; j++) {						//<	for each needle
+		for (i = 0; i < b; i++) {									//<	for each char from buf
+			for (j = 0; j < am; j++) {								//<	for each needle
 				c = case_cmp(buf[i], string[j][state[j]]);
 				state[j] = (c)	? state[j] + 1 	:	0; 
 				if (state[j] == length[j])
@@ -160,14 +153,13 @@ C file_cont(FILE *ptr, S* string, I am)								//<	~grep
 	R 0;
 }
 
-C input_type(S filename)										//<	figures out input type: 1, 2, 3, 4 or 0
+C input_type(S filename)											//<	figures out input type: 1, 2, 3, 4 or 0
 {
 	FILE *ptr = fopen_(filename, "r");
-	I i, size;
+	I size;
 
-	if (!ptr) {
+	if (!ptr) 
 		R 0;
-	}
 
 	//<	0 --> input file is too large or nothing clear inside
 	//<	1 --> input file food
@@ -254,17 +246,10 @@ S colour(S name, I col)												//< 	dir/filename --> dir/n/filename, where n
 
 	arrcat(new_name, name, 0);
 
-	/*															// set 0 for a while
 	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
 
-	new_name[len_2 - i] = col + '0';
-
-	R new_name;
-	*/
-
-	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
-
-	new_name[len_2 - i] = '0';
+	new_name[len_2 - i] = '0';																//< set 0 for a while
+	//<	new_name[len_2 - i] = col + '0';
 
 	arrcat(FILENAME, new_name, 0);
 
@@ -273,8 +258,7 @@ S colour(S name, I col)												//< 	dir/filename --> dir/n/filename, where n
 
 V p_dog_stat()
 {
-	// O("\n\n\tACT: %s\n\tSAT: %d\n\tINT: %d\n\tCLE: %d\n\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
 	O("\n\tACT: %s\t\tSAT: %d\tINT: %d\tCLE: %d\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
-
-	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t(max %d[%d sec]) \n\tintellect: %d   [%d s] \t(max %d[%d sec])\n\tcleanliness: %d   [%d s] \t(max %d[%d sec])\n\tsatiety: %d   [%d s] \t(max %d[%d sec])\n\n", cnt->last_act, cnt->last_act/1000, MAX_CNT_LA, MAX_CNT_LA/1000, cnt->intellect, cnt->intellect/1000, MAX_CNT_IN, MAX_CNT_IN/1000, cnt->cleanliness, cnt->cleanliness/1000, MAX_CNT_CL, MAX_CNT_CL/1000, cnt->satiety, cnt->satiety/1000, MAX_CNT_ST, MAX_CNT_ST/1000);
+	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t(max %d[%d sec]) \n\tintellect: %d   [%d s] \t(max %d[%d sec])\n", cnt->last_act, cnt->last_act/1000, MAX_CNT_LA, MAX_CNT_LA/1000, cnt->intellect, cnt->intellect/1000, MAX_CNT_IN, MAX_CNT_IN/1000);
+	O("\tcleanliness: %d   [%d s] \t(max %d[%d sec])\n\tsatiety: %d   [%d s] \t(max %d[%d sec])\n\n", cnt->cleanliness, cnt->cleanliness/1000, MAX_CNT_CL, MAX_CNT_CL/1000, cnt->satiety, cnt->satiety/1000, MAX_CNT_ST, MAX_CNT_ST/1000);
 }
