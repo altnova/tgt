@@ -1,3 +1,4 @@
+//<	set gui
 #include <stdio.h>
 
 #include "../cfg/cfg.h"
