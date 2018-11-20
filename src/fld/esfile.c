@@ -19,11 +19,6 @@ static C STR[1000];
 static C file[PATH_MAX + 1];
 
 
-V delete_file(S path)
-{
-	remove(path);
-}
-
 S desktop_path()												//<	returns string with a path to Desktop dir 
 {
 	strcpy(DESKTOP_PATH, getenv("HOME"));
@@ -90,6 +85,5 @@ V eat_file()													//< deletes first file in Desktop dir
 		}	
 		closedir(d);
 	}
-	//free(path);
 	*/
 }
