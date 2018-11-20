@@ -20,7 +20,7 @@ static S* addr_main[1] = {addr_needle};
 
 C file_cont(FILE *ptr, S* string, I am)								//<	~grep		
 {
-	C buf[2000];
+	C buf[LINE_MAX_];
 	I i, j, a = 0, szbuf, b;
 	C c;
 	I length[100], state[100];
@@ -36,10 +36,10 @@ C file_cont(FILE *ptr, S* string, I am)								//<	~grep
 	}
 	a++;
 
-	if (a > 2000) 
+	if (a > LINE_MAX_) 
 		printf("some of the strings are too long\n");
 
-	szbuf = 2000;
+	szbuf = LINE_MAX_;
 	b = szbuf;
 
 	iarrzero(state, 100);
@@ -126,6 +126,8 @@ C fdn(S path, S dir, I path_len)
 			}
 		}
 	}
+	closedir(d);
+	R -1;
 }
 
 
