@@ -1,4 +1,4 @@
-//< init structs and row/col pointers
+//<	compile .png for visualization
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -12,7 +12,7 @@
 #define FRM 20
 
 #define COL_TYPE 6
-#define BIT_DEPTH 8//< init structs and row/col pointers
+#define BIT_DEPTH 8
 
 #include "../cfg/cfg.h"
 #include "../bsc/mains.h"
@@ -137,9 +137,6 @@ V end_canvas()
 {
 	free_img(CANVAS);
 	O("canvas free ok\n");
-	// free_img(GLOB_PASS);
-	// O("glob_pass free ok\n");
-
 }
 
 V abort_(const char * s, ...)
