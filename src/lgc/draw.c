@@ -1,3 +1,4 @@
+//<	depict board params or dog stat
 #include <stdlib.h>
 #include <string.h>
 
