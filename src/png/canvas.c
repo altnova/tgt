@@ -82,7 +82,7 @@ V copy_byte(png_byte *a, png_byte *b, I j);		//< copy j png_bytes from a to b
 
 V free_img(img img_);							//<	free struct
 
-img copy_img(img a, img b);							//< a into b
+img copy_img(img b, img a);							//< a into b
 
 img write_png_file(S file_name, img img_);
 img read_png_file(S file_name, img img_);
@@ -94,9 +94,7 @@ img dep_at_xy(I am, img a, S* b_filename, UH* x_, UH* y_)			//< draw pic b into 
 {
 	I i, j, k, par, par_, l = 0;
 
-	// GLOB_IMG = read_png_file(a_filename, GLOB_IMG);
-
-	copy_img(a, TMP);												//<	copy CANVAS into TMP
+	copy_img(TMP, a);												//<	copy CANVAS into TMP
 
 	for (k = 0; k < am; k++) {										//< for each img
 		GLOB_PASS = read_png_file(b_filename[k], GLOB_PASS);
@@ -122,7 +120,7 @@ img dep_at_xy(I am, img a, S* b_filename, UH* x_, UH* y_)			//< draw pic b into 
 V add_to_canvas(I am, S* filename, UH* x_, UH* y_)
 {
 	img a = dep_at_xy(am, CANVAS, filename, x_, y_);
-	copy_img(a, CANVAS);
+	copy_img(CANVAS, a);
 	free_img(a);
 
 	// free_img(copy_img(dep_at_xy(am, CANVAS, filename, x_, y_), CANVAS));
@@ -139,24 +137,21 @@ V frame(I am, S* filename, UH* x_, UH* y_)						//< make compelete tmp.png for d
 
 V set_canvas()
 {
-	int y;
+	int i, j;
 	img tmp;
-	// S* filename = malloc(SZ(S) * 2);
-	// UH *x_ = malloc(SZ(UH) * 2);
-	// UH *y_ = malloc(SZ(UH) * 2);
-
 	png_bytep *rows;
 
 	rows = (png_bytep*) malloc(height * SZ(png_bytep));
 
-	for (y=0; y<height; y++)
-		rows[y] = (png_byte*) malloc(SZ(png_byte) * width * 4);
+	for (i = 0; i < height; i++) {
+		rows[i] = (png_byte*) calloc(width * 4, SZ(png_byte));
 
-	// filename[0] = malloc(SZ(C) * 50);
-	// filename[1] = malloc(SZ(C) * 50);
+		// for (j = 0; j < width*4; j++) {
+			// rows[i][j] = 0;
+		// }
 
-	// filename[0] = "pic/obj/kennel.png";
-	// filename[1] = "pic/obj/board.png";
+	}
+
 
 	arrcat(FNM[0], "pic/obj/kennel.png", 0);
 	arrcat(FNM[1], "pic/obj/board.png", 0);
@@ -167,30 +162,16 @@ V set_canvas()
 	CANVAS->col = COL_TYPE;
 	CANVAS->b_depth = BIT_DEPTH;
 
-	// write_png_file("pic/canvas.png", GLOB_IMG);
-
 	x_c[0] = 40;
 	y_c[0] = 100;
 	x_c[1] = 400;
 	y_c[1] = 20; 
 
-
 	tmp = dep_at_xy(2, CANVAS, addr_fnm, x_c, y_c);
 
-	copy_img(tmp, CANVAS);
-
+	copy_img(CANVAS, tmp);
 	free_img(tmp);
-
-	// copy_img(dep_at_xy(2, CANVAS, filename, x_, y_), CANVAS);
-	
 	write_png_file("pic/canvas.png", CANVAS);
-
-	// free_img(GLOB_IMG);
-
-	// free(filename);
-
-	// free(x_);
-	// free(y_);
 }
 
 V end_canvas()
@@ -270,7 +251,7 @@ V free_img(img img_)							//<	free struct
 	// free(img_);
 }
 
-img copy_img(img a, img b)						//< a into b
+img copy_img(img b, img a)						//< a into b
 {
 	I i, j;
 	png_bytep *rows;
@@ -283,14 +264,7 @@ img copy_img(img a, img b)						//< a into b
 
 	for (i = 0; i < b->h; i++){
 		rows[i] = (png_byte*) malloc(SZ(png_byte) * b->w * 4);
-
-		// O("broken at %d\n", i);
-		// row = rows[i];
-		// row_= a->row_pointers[i];
-
 		copy_byte(rows[i], a->row_pointers[i], b->w * 4);
-		// for (j = 0; j < b->w; j++)
-			// copy_byte(&rows[i][j*4], &b->row_pointers[i][j*4], 4);
 	}
 
 	b->row_pointers = rows;
@@ -306,8 +280,6 @@ img write_png_file(S file_name, img img_)		//<	write png file with name file_nam
 	int y;
 		/* create file */
 		FILE *fp = fopen_(file_name, "wb");
-
-		// O("WRITE '%s'\n", file_name);
 
 		if (!fp)
 				abort_("[write_png_file] File %s could not be opened for writing", file_name);
@@ -350,13 +322,7 @@ img write_png_file(S file_name, img img_)		//<	write png file with name file_nam
 
 		png_write_end(png_ptr, NULL);
 
-		//< png_destroy_read_struct(png_structpp png_ptr_ptr, png_infopp info_ptr_ptr, png_infopp end_info_ptr_ptr);
-
-		//< void png_destroy_info_struct(png_structp png_ptr, png_infopp info_ptr_ptr);
-
 		png_destroy_write_struct(&png_ptr, &info_ptr);
-		// png_destroy_info_struct(png_ptr, &info_ptr);
-
 		fclose(fp);
 		R img_;
 }
