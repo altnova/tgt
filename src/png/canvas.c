@@ -64,6 +64,7 @@ img write_png_file(S file_name, img img_);
 img read_png_file(S file_name, img img_);
 
 
+
 //< RETURNS TMP
 img dep_at_xy(I am, img a, S* b_filename, UH* x_, UH* y_)			//< draw pic b into pic a at x;y
 {
@@ -78,9 +79,9 @@ img dep_at_xy(I am, img a, S* b_filename, UH* x_, UH* y_)			//< draw pic b into 
 		for (i = y_[k]; i < (y_[k] + GLOB_PASS->h) && i < TMP->h; i++) { 
 			row = TMP->row_pointers[i];
 			row_ = GLOB_PASS->row_pointers[i - y_[k]];
-			
+
 			for (j = x_[k]; (j < x_[k] + GLOB_PASS->w) && (j < TMP->w); j++) 
-				if (row_[(j - x_[k] + 1) * 4 - 1]) 
+				if (row_[(j - x_[k] + 1) * 4 - 1]) 					//<	copy only visible pix
 					copy_byte(&row[j*4], &row_[(j - x_[k]) * 4], 4);
 		}
 		free_img(GLOB_PASS);
@@ -135,8 +136,10 @@ V set_canvas()
 V end_canvas()
 {
 	free_img(CANVAS);
-	free_img(TMP);
-	free_img(GLOB_PASS);
+	O("canvas free ok\n");
+	// free_img(GLOB_PASS);
+	// O("glob_pass free ok\n");
+
 }
 
 V abort_(const char * s, ...)
@@ -151,7 +154,6 @@ V abort_(const char * s, ...)
 
 V info_out(img img_)												//< write struct info into stdout
 {
-
 	O("IMG:\th --> %d;\t w --> %d;\n\tdep --> %d;\t col --> %d;\n\n", img_->h, img_->w, img_->b_depth, img_->col);
 }
 
@@ -166,7 +168,6 @@ V free_img(img img_)												//<	free struct
 	for (I i = 0; i < img_->h; i++)
 		free(img_->row_pointers[i]);
 	free(img_->row_pointers);
-	// free(img_);
 }
 
 img copy_img(img b, img a)											//< a into b
@@ -274,9 +275,7 @@ img read_png_file(S file_name, img img_)							//<	read png file file_name and r
 				abort_("[read_png_file] Error during init_io");
 
 		png_init_io(png_ptr, fp);
-
 		png_set_sig_bytes(png_ptr, 8);
-
 		png_read_info(png_ptr, info_ptr);
 
 		img_->w = png_get_image_width(png_ptr, info_ptr);
