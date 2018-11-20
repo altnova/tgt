@@ -1,5 +1,3 @@
-
-
 #define MAX_CNT_LA 360000
 #define MAX_CNT_ST 43200000
 #define MAX_CNT_IN 129600000
