@@ -12,12 +12,10 @@
 #include "../fld/esfile.h"
 #include "../bsc/mains.h"
 
-
 I ITER = 0;
 I MAIN_IT = 0;
 
 I test_cnt[5] = {0, 0, 0, 0, 0};
-
 
 
 V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
@@ -120,7 +118,7 @@ V event_check()														//< user's commands
 
 
 //< this part is only for testing; in future it will get name of a file, 
-//<	that user draged to kennel coordinates IF MACOS
+//<	that user dragged to kennel coordinates IF MACOS
 //< and will get filename from console, check existance etc. IF LINUX
 /////////////////////////////////////////////////////////////////////////
 	arrcat(FILENAME, "123\0", 0);

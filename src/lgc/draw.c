@@ -12,16 +12,15 @@
 V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 {
 	UH x, y;
-
 	arrcat(FILENAME, "pic/brd/nom_0.png\0", 0);
 
 	O("\n%s[board_show()]%s\t", CWHT, CNRM);
 	if (obj > 9)
 		obj = 0;
+
 	O("'%c' --> '%c' + 'obj'(%d)\t", obj + FILENAME[12], FILENAME[12], obj);
 	fflush(stdout);
 	FILENAME[12] += obj;
-
 
 	SW(key)													//<	set filename and crd
 	{
@@ -29,13 +28,8 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 		CS('i', {x = crd->int_x; y = crd->int_y; O("\t%sINT%s\n\n", CWHT, CNRM);});
 		CS('c', {x = crd->cle_x; y = crd->cle_y; O("\t%sCLE%s\n\n", CWHT, CNRM);});
 	}
-	fflush(stdout);
-
-	// if (key == 's')
-		// exit(1);
 
 	add_to_canvas(1, ADDR_ADDR, &x, &y);
-
 }
 
 V dog_show(I obj)				//< choose type of action to show
