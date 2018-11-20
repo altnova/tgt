@@ -1,3 +1,4 @@
+//<	set start data 
 #include <stdlib.h>
 #include <limits.h>
 #include <dirent.h>
