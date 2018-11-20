@@ -118,7 +118,6 @@ V dog_read(I pause)
 			col_dep_sleep("pic/dog/read_2.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, p);
 			col_dep_sleep("pic/dog/read_3.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, p);
 			col_dep_sleep("pic/dog/read_4.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, p);});
-
 }
 
 V dog_die(I pause)				//< 	??????
@@ -130,9 +129,7 @@ V dog_die(I pause)				//< 	??????
 
 	DO(9, { 
 			DOG_FILE[12] = i + '1';
-			col_dep_sleep(DOG_FILE, dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, p);});
-
-			
+			col_dep_sleep(DOG_FILE, dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, p);});			
 }
 
 V dog_rise(I pause)				
