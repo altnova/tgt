@@ -16,17 +16,17 @@ I main()
 {
 	I i, j = -1;
 	C dog = 'd';
+
 	// srand(time(NULL));
+
 	set_start(dt, cnt, crd);
 
 	O("\n\t\t%sSTART%s\n\n", CWUL, CNRM);
-
 
 	set_canvas();
 
 	ITER = 0;
 	MAIN_IT = 0;
-
 
 	dt->action = love;
 
@@ -49,6 +49,8 @@ I main()
 	}
 	draw(dog, dt->action);
 	p_dog_stat(cnt, dt);
+
+	end_canvas();
 
 	O("%d ITERATIONS DONE\n", MAIN_IT);
 
