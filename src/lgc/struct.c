@@ -11,6 +11,7 @@
 #include "../lgc/draw.h"
 #include "../fld/esfile.h"
 #include "../bsc/mains.h"
+#include "../fld/wfile.h"
 
 I ITER = 0;
 I MAIN_IT = 0;
@@ -123,7 +124,7 @@ V event_check()														//< user's commands
 /////////////////////////////////////////////////////////////////////////
 	arrcat(FILENAME, "123\0", 0);
 
-	if (MAIN_IT%400 == 0 || MAIN_IT%300 == 0) {
+	if (MAIN_IT%100 == 0 || MAIN_IT%50 == 0) {
 		r = rand()%5;
 		SW(r) {
 			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})			//<	0
@@ -134,7 +135,6 @@ V event_check()														//< user's commands
 				arrcat(FILENAME, "txt/mess.txt", 0);				//<	4
 		}
 
-		// arrcat(FILENAME, "txt/FOOD.txt", 0);
 		p_dog_stat();
 	}
 
