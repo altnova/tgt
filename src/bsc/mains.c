@@ -3,41 +3,12 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <errno.h>
+
+#include <pwd.h>
+#include <sys/types.h>
+#include <dirent.h>
+
 #include "../cfg/cfg.h"
-
-static C needle[4][PATH_MAX/2];
-static S addr_needle[4] = {needle[0], needle[1], needle[2], needle[3]};
-static S* addr_main[1] = {addr_needle};
-
-
-
-C last_c(S line, S needle, I len)									//< cmp line ending and needle							
-{
-	I n_len = strlen(needle);
-	I i = n_len - 1, j;
-
-	for (j = len - 1, i = n_len - 1; i >= 0; j--, i--) {
-			if (line[j] != needle[i]) 
-				R 0;
-	}
-
-	R 1;
-}
-
-C first_c(S line, S needle, I len)									//<	cmp line beggining and needle
-{
-	I n_len = strlen(needle), i;
-
-	for (i = 0; needle[i] && i < n_len && i < len; i++) {
-		if (line[i] != needle[i]) {
-			R 0;
-		}
-	}
-	if (i == len)
-		R 0;
-
-	R 1;
-}
 
 V arrcat(S buf, S line, I ptr)										//<	strcat for global arrays
 {
@@ -111,91 +82,6 @@ C case_cmp(C letter, C c)											//<	case unsensetive char compare
 	R (letter == c || (IN('A', letter, 'Z') && c == letter + ' ') || (IN('a', letter, 'z') && c == letter - ' ')) ? 1 : 0;
 }
 
-C file_cont(FILE *ptr, S* string, I am)								//<	~grep		
-{
-	C buf[2000];
-	I i, j, a = 0, szbuf, b;
-	C c;
-	I length[100], state[100];
-
-	if (am > 100) {
-		O("too much strings for search; amount --> 100\n");
-		am = 100;
-	}
-
-	for (i = 0; i < am; i++) {
-		length[i] = arrlen(string[i]);
-		a = MAX(a, length[i]);
-	}
-	a++;
-
-	if (a > 2000) 
-		printf("some of the strings are too long\n");
-
-	szbuf = 2000;
-	b = szbuf;
-
-	iarrzero(state, 100);
-
-	W (b == szbuf) {
-		b = fread(buf, SZ(C), szbuf, ptr);
-		for (i = 0; i < b; i++) {									//<	for each char from buf
-			for (j = 0; j < am; j++) {								//<	for each needle
-				c = case_cmp(buf[i], string[j][state[j]]);
-				state[j] = (c)	? state[j] + 1 	:	0; 
-				if (state[j] == length[j])
-					R 1;
-			}
-		}
-	}
-
-	rewind(ptr);
-	R 0;
-}
-
-C input_type(S filename)											//<	figures out input type: 1, 2, 3, 4 or 0
-{
-	FILE *ptr = fopen_(filename, "r");
-	I size;
-
-	if (!ptr) 
-		R 0;
-
-	//<	0 --> input file is too large or nothing clear inside
-	//<	1 --> input file food
-	//<	2 --> input file clean
-	//<	3 --> input file reading
-	//<	4 --> input file rude
-
-
-	size = szfile(ptr);
-
-	X(size>3000, 	{fclose(ptr); O("3\n");},3);				
-	X(size>2000000, {fclose(ptr); O("0\n");},0);
-
-	arrcat(needle[0], "asshole", 0);
-	arrcat(needle[1], "bitch", 0);
-	arrcat(needle[2], "pidor", 0);
-
-	if (file_cont(ptr, addr_main[0], 3)) 
-		R FCLR(ptr, 4);
-
-	arrcat(needle[0], "bone", 0);
-	arrcat(needle[1], "food", 0);
-
-	if (file_cont(ptr, addr_main[0], 2)) 
-		R FCLR(ptr, 1);
-
-	arrcat(needle[0], "bath", 0);
-	arrcat(needle[1], "water", 0);
-	arrcat(needle[2], "shower", 0);
-
-	if (file_cont(ptr, addr_main[0], 3)) 
-		R FCLR(ptr, 2);
-
-	R FCLR(ptr, 0);
-}
-
 C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)				//< is obj_2 in range of obj_1?
 {
 	R (IN(obj_1_x - RANGE, obj_2_x, obj_1_x + RANGE) && IN(obj_1_y - RANGE, obj_2_y, obj_1_y + RANGE)) ? 1 : 0;
@@ -262,3 +148,35 @@ V p_dog_stat()
 	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t(max %d[%d sec]) \n\tintellect: %d   [%d s] \t(max %d[%d sec])\n", cnt->last_act, cnt->last_act/1000, MAX_CNT_LA, MAX_CNT_LA/1000, cnt->intellect, cnt->intellect/1000, MAX_CNT_IN, MAX_CNT_IN/1000);
 	O("\tcleanliness: %d   [%d s] \t(max %d[%d sec])\n\tsatiety: %d   [%d s] \t(max %d[%d sec])\n\n", cnt->cleanliness, cnt->cleanliness/1000, MAX_CNT_CL, MAX_CNT_CL/1000, cnt->satiety, cnt->satiety/1000, MAX_CNT_ST, MAX_CNT_ST/1000);
 }
+
+
+/*
+C last_c(S line, S needle, I len)									//< cmp line ending and needle							
+{
+	I n_len = strlen(needle);
+	I i = n_len - 1, j;
+
+	for (j = len - 1, i = n_len - 1; i >= 0; j--, i--) {
+			if (line[j] != needle[i]) 
+				R 0;
+	}
+
+	R 1;
+}
+
+C first_c(S line, S needle, I len)									//<	cmp line beggining and needle
+{
+	I n_len = strlen(needle), i;
+
+	for (i = 0; needle[i] && i < n_len && i < len; i++) {
+		if (line[i] != needle[i]) {
+			R 0;
+		}
+	}
+	if (i == len)
+		R 0;
+
+	R 1;
+}
+
+*/

@@ -6,6 +6,7 @@
 
 #include "../cfg/cfg.h"
 #include "../gui/win.h"
+#include "../fld/wfile.h"
 #include "mains.h"
 
 /*
@@ -144,76 +145,54 @@ V set_objects()		//< kennel, board, empty_bowl;
 
 }
 
+
 C is_tgt(S path)
 {
 	I len = strlen(path);
-	FILE *ptr;
-	DIR *d;
 
-	if (!last_c(path, "/tgt", len)) {
-		O("invalid path to tgt!\n");
+	if (!subcheck_d(path, "", len))
 		R 0;
-		// exit(0);
-	}
 
-
-	d = opendir(path);
-
-	if (d != NULL) {
-		if (errno != ENOTEMPTY)
-			R 1;
-		else {
-			O("tgt directory is empty!\n");
-			R 0;
-		}
-
-	}
-
-	if (errno == ENOTDIR) {
-		O("your tgt must be a directory!\n");
+	if (!subcheck_d(path, "/pic/dog/0", len))					//< pic/dog check
 		R 0;
-	}
+	if (!subcheck_d(path, "/pic/dog/1", len))
+		R 0;
+	if (!subcheck_d(path, "/pic/dog/2", len))
+		R 0;
+	if (!subcheck_d(path, "/pic/dog/3", len))
+		R 0;
+	if (!subcheck_d(path, "/pic/dog/4", len))
+		R 0;
 
+	if (!subcheck_d(path, "/pic/obj", len))						//< pic/obj check
+		R 0;
 
-	R 0;
+	if (!subcheck_d(path, "/pic/brd", len))						//<	pic/brd check
+		R 0;
+
+	R 1;
 }
 
 
 C is_home(S path)
 {
 	I len = strlen(path);
-	FILE *ptr;
-	DIR *d;
 
-	if (!first_c(path, "/home", len)) {
-		O("no home directory!\n");
-		// exit(0);
+
+	if (!subcheck_d(path, "", len))
 		R 0;
-	}
 
-	d = opendir(path);
-
-	if (d != NULL) {
-		if (errno != ENOTEMPTY)
-			R 1;
-		else {
-			O("home directory is empty!\n");
-			R 0;
-		}
-	}
-
-	if (errno == ENOTDIR) {
-		O("home must be directory!\n");
+	if (!subcheck_d(path, "/Desktop", len))			//< pic/dog check
 		R 0;
-	}
-
-	R 0; 
+	
+	R 1;
 }
 
 
 V check_env()
 {
 	S tgt_home = getenv("TGT_HOME"), home = getenv("HOME");
+
 	if (tgt_home == NULL) {				//<	not null, exists, directory
 		O("please, set env variable TGT_HOME\n");
 		exit(1);
