@@ -1,4 +1,4 @@
-//< C FILENAME[PATH_MAX] ++; 
+//< main checks for counters and click/file_input events
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,28 +33,19 @@ V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 
 C death()															//<	conditions of exit 	
 {    
+	X(!dt->satiety || dt->satiety > MAX_ST, {	dt->action = die; 						//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST 
+												if (!dt->satiety) 
+													O("\n\tyour dog died of %sstarvation%s. stupid\n\n", CRED, CNRM); 
+												else 
+												O("\n\tyour dog died of %sgluttony%s. feckless\n\n", CBLU, CNRM);},
+												1);
 
-	if (!dt->satiety || dt->satiety > MAX_ST) {
-		dt->action = die;
-		if (!dt->satiety) 
-			O("\n\tyour dog died of %sstarvation%s. stupid\n\n", CRED, CNRM); 
-		else 
-			O("\n\tyour dog died of %sgluttony%s. feckless\n\n", CBLU, CNRM);
-		R 1;
-	}
-
-	if (dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL) {
-		dt->action = rise;
-		if (dt->intellect >= MAX_IN) 
-			O("\n\the was much %ssmarter%s than you\n\n", CBLU, CNRM);
-		else 
-			O("\n\the was as %sclean%s as your virginity\n\n", CWHT, CNRM);
-		R 1;
-	}
-	/*
-	X(!dt->satiety || dt->satiety > MAX_ST, {dt->action = die;}, 1);							//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST        
-	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {dt->action = rise;}, 1);			//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
-	*/
+	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {dt->action = rise;			//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
+															if (dt->intellect >= MAX_IN) 
+																O("\n\the was much %ssmarter%s than you\n\n", CBLU, CNRM);
+															else 
+																O("\n\the was as %sclean%s as your virginity\n\n", CWHT, CNRM);},
+															1);
 	R 0;
 }
 
