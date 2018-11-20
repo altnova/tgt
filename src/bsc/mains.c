@@ -128,7 +128,7 @@ S colour(S name, I col)												//< 	dir/filename --> dir/n/filename, where n
 {
 	I len = arrlen(name), i;
 	I len_2 = len + 2;
-	C new_name[2000];
+	C new_name[PATH_MAX + 1];
 
 	arrcat(new_name, name, 0);
 
