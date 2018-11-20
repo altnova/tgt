@@ -45,7 +45,7 @@ static UH y_c[2];
 
 //< for a while
 //////////////////////////////////////////
-static C FNM[2][50];
+static C FNM[2][LINE_MAX];
 static S addr_fnm_[4] = {FNM[0], FNM[1]};
 static S* addr_fnm = addr_fnm_;
 //////////////////////////////////////////
