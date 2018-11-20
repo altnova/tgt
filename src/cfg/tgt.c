@@ -19,10 +19,9 @@ I main()
 
 	// srand(time(NULL));
 
-	set_start(dt, cnt, crd);
-
 	O("\n\t\t%sSTART%s\n\n", CWUL, CNRM);
 
+	set_start(dt, cnt, crd);
 	set_canvas();
 
 	ITER = 0;
@@ -31,15 +30,10 @@ I main()
 	dt->action = love;
 
 	for (MAIN_IT = 0; dt->action != rise && dt->action != die; MAIN_IT++) {
-		
 		set_main_action();									//< 					lgc/struct.c
-
 		draw(dog, dt->action);								//<	draw action 		lgc/draw.c
-
 		cnt_upd(cnt, dt->action);							//<	increase timers 	lgc/struct.c
-
 		event_check();										//< eat event to update dat and timers
-
 		cnt_check();										//< checking timers for updating dat 
 															//<						lgc/struct.c
 		ITER++;
@@ -47,9 +41,9 @@ I main()
 		if (death())										//<	conditions of death
 			break;
 	}
+
 	draw(dog, dt->action);
 	p_dog_stat(cnt, dt);
-
 	end_canvas();
 
 	O("%d ITERATIONS DONE\n", MAIN_IT);
