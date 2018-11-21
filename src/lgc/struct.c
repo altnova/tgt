@@ -18,8 +18,12 @@ I MAIN_IT = 0;
 
 I test_cnt[5] = {0, 0, 0, 0, 0};
 
-
-V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
+///////////////////////////////////////////////////////////////
+//<				cnt_upd(tm_cnt cnt_, I act)					>//
+///////////////////////////////////////////////////////////////
+//<		add to all cnt_ counters star_time[act]				>//
+///////////////////////////////////////////////////////////////
+V cnt_upd(tm_cnt cnt_, I act)								
 {
 	cnt_->last_act += stat_time[act];
 	
@@ -31,24 +35,39 @@ V cnt_upd(tm_cnt cnt_, I act)										//< cnt++ for ex. after action
 	cnt_->cleanliness += stat_time[act];
 }
 
-C death()															//<	conditions of exit 	
+///////////////////////////////////////////////////////////////
+//<						death()								>//
+///////////////////////////////////////////////////////////////
+//<		check conditions of dog death (finish program)		>//
+///////////////////////////////////////////////////////////////
+//<			on success (dog die) return 1; else 0 			>//
+///////////////////////////////////////////////////////////////
+C death()															
 {    
-	X(!dt->satiety || dt->satiety > MAX_ST, {	dt->action = die; 						//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST 
-												if (!dt->satiety) 
-													O("\n\tyour dog died of %sstarvation%s. stupid\n\n", CRED, CNRM); 
-												else 
-												O("\n\tyour dog died of %sgluttony%s. feckless\n\n", CBLU, CNRM);},
-												1);
+	X(!dt->satiety || dt->satiety > MAX_ST, {	
+		dt->action = die; 											//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST 
+		if (!dt->satiety) 
+			O("\n\tyour dog died of %sstarvation%s. stupid\n\n", CRED, CNRM); 
+		else 
+			O("\n\tyour dog died of %sgluttony%s. feckless\n\n", CBLU, CNRM);},
+	1);
 
-	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {dt->action = rise;			//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
-															if (dt->intellect >= MAX_IN) 
-																O("\n\the was much %ssmarter%s than you\n\n", CBLU, CNRM);
-															else 
-																O("\n\the was as %sclean%s as your virginity\n\n", CWHT, CNRM);},
-															1);
+	X(dt->intellect >= MAX_IN || dt->cleanliness > MAX_CL, {
+		dt->action = rise;											//< dog rises if intellect > MAX_IN || cleanliness > MAX_CL
+		if (dt->intellect >= MAX_IN) 
+			O("\n\the was much %ssmarter%s than you\n\n", CBLU, CNRM);
+		else 
+			O("\n\the was as %sclean%s as your virginity\n\n", CWHT, CNRM);},
+		1);
 	R 0;
 }
 
+///////////////////////////////////////////////////////////////
+//<						cnt_check()							>//
+///////////////////////////////////////////////////////////////
+//<		if global counter cnt value has overflow, dog dat 	>//
+//<		and board images must be updated (decremented) 		>//
+///////////////////////////////////////////////////////////////
 V cnt_check()														//<	conditions of modifing dt in case of appropriate cnt
 {
 	C state;
@@ -78,29 +97,45 @@ V cnt_check()														//<	conditions of modifing dt in case of appropriate 
 	}
 }
 
-
-C set_main_action()													//< set main action if nothing special happens
+///////////////////////////////////////////////////////////////
+//<					set_main_action()						>//
+///////////////////////////////////////////////////////////////
+//<		sets what dog should do if there are no special 	>//
+//<		conditions; 	dependent on dog dat 				>//
+///////////////////////////////////////////////////////////////
+C set_main_action()												
 {
 	C act = dt->action;;
 	// O("[set_main_action()]\n");
 
 	X((cnt->last_act < MAX_CNT_LA), {
-		dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? run 	: 
-						(dt->satiety > STLIM && dt->cleanliness <= CLLIM)	? walk	: sit;}, 0);
+		dt->action = (dt->satiety > STLIM && dt->cleanliness > CLLIM)  ? run  : 
+					 (dt->satiety > STLIM && dt->cleanliness <= CLLIM) ? walk : 
+					  sit;}, 0);
 
 	cnt->last_act = MAX_CNT_LA;
 
-	dt->action = 	(dt->satiety > STLIM && dt->cleanliness > CLLIM)	? sleep_2 	: 				//< sleep_1 --> sleep where you are;	sleep_2 --> go to kennel
-					(dt->action != sleep_2) 							? sleep_1 	:	sleep_2;
+//< sleep_1 --> sleep where you are;	sleep_2 --> go to kennel
+	dt->action = (dt->satiety > STLIM && dt->cleanliness > CLLIM) ? sleep_2   : 				
+				 (dt->action != sleep_2) 						  ? sleep_1   :	
+				  sleep_2;
 
 	if (act != dt->action) {
-		O("\n%s%s%s to %s%s%s\n%d iterations between\n\n", CBLU, stat_name[act], CNRM, CRED,stat_name[dt->action], CNRM, ITER);
+		O("\n%s%s%s", CBLU, stat_name[act], CNRM);
+		O(" to %s%s%s\n", CRED,stat_name[dt->action], CNRM);
+		O("%d iterations between\n\n", ITER);
 		p_dog_stat();
 		ITER = 0;
 	}
 }
 
-V event_check()														//< user's commands 
+///////////////////////////////////////////////////////////////
+//<						event_check()						>//
+///////////////////////////////////////////////////////////////
+//<		check for user's input and click events 			>//
+//<			dog act and dat modify in some cases 			>//
+///////////////////////////////////////////////////////////////
+V event_check()														
 {
 	/* GET FILE */
 

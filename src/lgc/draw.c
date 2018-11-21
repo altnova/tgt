@@ -9,8 +9,16 @@
 #include "../png/canvas.h"
 #include "../bsc/mains.h"
 
-
-V board_show(C key, C obj)		//<	change params on board (through canvas.png)
+///////////////////////////////////////////////////////////////
+//< 			board_show(C key, C obj)					>//
+///////////////////////////////////////////////////////////////
+//<	switch statement dependent on key to set right coors	>//
+//<			where number 'obj' will be shown				>//
+//<				's' for satiety 							>//
+//<				'i' for intellect							>//
+//<				'c' for cleanliness							>//
+///////////////////////////////////////////////////////////////
+V board_show(C key, C obj)	
 {
 	UH x, y;
 	arrcat(FILENAME, "pic/brd/nom_0.png\0", 0);
@@ -23,17 +31,30 @@ V board_show(C key, C obj)		//<	change params on board (through canvas.png)
 	fflush(stdout);
 	FILENAME[12] += obj;
 
-	SW(key)													//<	set filename and crd
+	SW(key)														//<	set filename and crd
 	{
-		CS('s', {x = crd->sat_x; y = crd->sat_y; O("\t%sSAT%s\n\n", CWHT, CNRM);});
-		CS('i', {x = crd->int_x; y = crd->int_y; O("\t%sINT%s\n\n", CWHT, CNRM);});
-		CS('c', {x = crd->cle_x; y = crd->cle_y; O("\t%sCLE%s\n\n", CWHT, CNRM);});
+		CS('s', {	x = crd->sat_x; y = crd->sat_y; 
+					O("\t%sSAT%s\n\n", CWHT, CNRM);});
+		CS('i', {	x = crd->int_x; y = crd->int_y; 
+					O("\t%sINT%s\n\n", CWHT, CNRM);});
+		CS('c', {	x = crd->cle_x; y = crd->cle_y; 
+					O("\t%sCLE%s\n\n", CWHT, CNRM);});
+
+		CD: 	O("board_show() ERROR!\ninvalid key\n\n");
+				exit(0);
 	}
 
 	add_to_canvas(1, ADDR_ADDR, &x, &y);
 }
 
-V dog_show(I obj)				//< choose type of action to show
+///////////////////////////////////////////////////////////////
+//< 				dog_show(I obj)							>//
+///////////////////////////////////////////////////////////////
+//<		switch statement dependent on obj to call			>//
+//<		specific function from vis/del_s.c which will		>//
+//<		direct visualization of dog_action					>//
+///////////////////////////////////////////////////////////////
+V dog_show(I obj)			
 {
 	// O("[dog_show(%s)]\n", stat_name[obj]);
 	SW(obj) {
@@ -52,7 +73,19 @@ V dog_show(I obj)				//< choose type of action to show
 	}
 }
 
-V draw(C key, I obj)			//<	change canvas or tmp.png?
+///////////////////////////////////////////////////////////////
+//< 				draw(C key, I obj)						>//
+///////////////////////////////////////////////////////////////
+//<		function to choose which .png file change is needed	>//
+//<				[tmp.png or canvas.png]						>//
+//<	dependent on key which could be 'd' (change tmp.png)	>//
+//<									's' (canvas.png sat)	>//
+//<									'i' (canvas.png int)	>//
+//<									'c' (canvas.png cle)	>//
+//< 	obj could be dog action enum number or 				>//
+//<				new value of dog param key					>//
+///////////////////////////////////////////////////////////////
+V draw(C key, I obj)	
 {
 	(key == 'd') ? dog_show(obj) : board_show(key, obj);
 }
