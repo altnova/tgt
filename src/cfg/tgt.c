@@ -1,3 +1,4 @@
+//<	main!
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -22,7 +23,6 @@ I main()
 	O("\n\t\t%sSTART%s\n\n", CWUL, CNRM);
 
 	set_start(dt, cnt, crd);
-	set_canvas();
 
 	ITER = 0;
 	MAIN_IT = 0;

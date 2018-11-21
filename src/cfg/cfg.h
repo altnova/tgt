@@ -1,3 +1,7 @@
+//<	tgt program configs
+
+
+//<				num macros 				>//
 #define MAX_CNT_LA 360000
 #define MAX_CNT_ST 43200000
 #define MAX_CNT_IN 129600000
@@ -25,10 +29,11 @@
 #define LINE_MAX_ 1000
 
 
+//<				type sysytem			>//
 #include "___.h"
 
 
-
+//<				structs 				>//
 typedef struct Cnt_tm		//< counters
 {
 	I last_act;
@@ -36,7 +41,6 @@ typedef struct Cnt_tm		//< counters
 	I intellect;
 	I cleanliness;
 } pCounter;
-
 
 typedef struct Dt 			//< dog info
 {
@@ -72,7 +76,7 @@ typedef struct Coor 		//< coordinates of objects
 } pCoor;
 
 
-/*	typedef pointers and enums	*/
+//<		typedef pointers and enums		>//
 
 typedef enum  	{	sit, 		run, 	walk, 		eat, 	read_, 	die, 	rise, 	sleep_1,  sleep_2, 	love, 	poop, return_} D_STAT;
 
@@ -89,10 +93,11 @@ ext dat dt;
 ext coor crd;
 
 
+//<			global varianles 			>//
 #include "globals.h"
 
-/*	colours		*/
 
+//<			colour system 				>//
 #ifdef __linux__
 
 #define CWHT 	"\x1b[0;0m\x1b[37m\0"
