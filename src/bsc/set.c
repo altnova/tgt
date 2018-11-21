@@ -48,8 +48,6 @@ typedef struct Coor 		//< coordinates of objects
 //<	!!!!!!!!!!!!!!!!!
 
 
-
-
 ///////////////////////////////////////////////////////////////
 //<					global dog data structs 				>//
 tm_cnt cnt;

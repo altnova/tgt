@@ -1,3 +1,4 @@
+//<	main functions for everything
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -10,7 +11,13 @@
 
 #include "../cfg/cfg.h"
 
-V arrcat(S buf, S line, I ptr)										//<	strcat for global arrays
+
+///////////////////////////////////////////////////////////////
+//<				arrcat(S buf, S line, I ptr);				>//
+///////////////////////////////////////////////////////////////
+//<			concatenates buf with line from	buf[ptr]		>//
+///////////////////////////////////////////////////////////////
+V arrcat(S buf, S line, I ptr)								
 {
 	I i, j = 0;
 
@@ -20,28 +27,55 @@ V arrcat(S buf, S line, I ptr)										//<	strcat for global arrays
 	buf[i] = 0;
 }
 
-I arrlen(S str)  													//<	global array len
+///////////////////////////////////////////////////////////////
+//<						arrlen(S str);						>//
+///////////////////////////////////////////////////////////////
+//<						len of char array 					>//
+///////////////////////////////////////////////////////////////
+//<						returns len of str 					>//
+///////////////////////////////////////////////////////////////
+I arrlen(S str)  												
 {
 	I i;
 	for (i = 0; str[i]; i++);
 	R i;
 }
 
-V carrzero(S buf, I len)											//<	char global array set all as zero
+///////////////////////////////////////////////////////////////
+//<					carrzero(S buf, I len)					>//
+///////////////////////////////////////////////////////////////
+//<		sets zero for each element less than buf[len] 		>//
+//<						of char array 						>//
+///////////////////////////////////////////////////////////////
+V carrzero(S buf, I len)				
 {
 	I i;
 	for (i = 0; i < len; i++)
 		buf[i] = 0;
 }
 
-V iarrzero(I* buf, I len)											//<	int global array det all as zero
+///////////////////////////////////////////////////////////////
+//<					iarrzero(I* buf, I len)					>//
+///////////////////////////////////////////////////////////////
+//<			sets zero for each element less than buf[lem] 	>//
+//<						of int array 						>//	
+///////////////////////////////////////////////////////////////
+V iarrzero(I* buf, I len)									
 {
 	I i;
 	for (i = 0; i < len; i++)
 		buf[i] = 0;
 }
 
-FILE* fopen_(S str1, S str2)										//<	fopen with concatenating env var path to directory
+///////////////////////////////////////////////////////////////
+//<				fopen_(S str1, S str2)						>//
+///////////////////////////////////////////////////////////////
+//<		standart fopen but str1 is concatenated with 		>//
+//<				TGT_HOME fopen mode is str2					>//
+///////////////////////////////////////////////////////////////
+//<		returns FILE pointer of concatenated TGT_HOME+str1	>//
+///////////////////////////////////////////////////////////////
+FILE* fopen_(S str1, S str2)								
 {
 	FILE *ptr;
 	I len;
@@ -58,13 +92,27 @@ FILE* fopen_(S str1, S str2)										//<	fopen with concatenating env var path 
 	R ptr;
 }
 
-C FCLR(FILE *ptr, C r)												//< close file and return r
+///////////////////////////////////////////////////////////////
+//<					FCLR(FILE *ptr, C r)					>//
+///////////////////////////////////////////////////////////////
+//<				close file pth and return 	r 				>//
+///////////////////////////////////////////////////////////////
+//<						return r 							>//
+///////////////////////////////////////////////////////////////
+C FCLR(FILE *ptr, C r)											
 {
 	fclose(ptr);
 	R r;
 }
 
-UJ szfile(FILE *ptr)												//< sizeof file
+///////////////////////////////////////////////////////////////
+//<					szfile(FILE *ptr)						>//
+///////////////////////////////////////////////////////////////
+//<					size of ptr file						>//
+///////////////////////////////////////////////////////////////
+//<					return size (UJ)						>//
+///////////////////////////////////////////////////////////////
+UJ szfile(FILE *ptr)									
 {
 	UJ cur, size;
 	if (ptr == NULL)
@@ -77,32 +125,68 @@ UJ szfile(FILE *ptr)												//< sizeof file
 	R size;
 }
 
-C case_cmp(C letter, C c)											//<	case unsensetive char compare 	
+///////////////////////////////////////////////////////////////
+//<					case_cmp(C letter, C c)					>//
+///////////////////////////////////////////////////////////////
+//<			compares letter and c and ignores case 			>//
+///////////////////////////////////////////////////////////////
+//<		return 1 if letter == c [ignores case!]	else : 0 	>//
+///////////////////////////////////////////////////////////////
+C case_cmp(C c_1, C c_2)										
 {
-	R (letter == c || (IN('A', letter, 'Z') && c == letter + ' ') || (IN('a', letter, 'z') && c == letter - ' ')) ? 1 : 0;
+	R (c_1 == c_2 	|| (IN('A', c_1, 'Z') && c_2 == c_1 + ' ') 
+					|| (IN('a', c_1, 'z') && c_2 == c_1 - ' ')) ? 1 : 0;
 }
 
-C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)				//< is obj_2 in range of obj_1?
+///////////////////////////////////////////////////////////////
+//<	in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)	>//
+///////////////////////////////////////////////////////////////
+//<		checks for if obj_2 is in 2D RANGE of obj_1 		>//
+///////////////////////////////////////////////////////////////
+//<		return 1 if obj_2 is in 2D RANGE of obj_1, else 0	>//
+///////////////////////////////////////////////////////////////
+C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)			
 {
-	R (IN(obj_1_x - RANGE, obj_2_x, obj_1_x + RANGE) && IN(obj_1_y - RANGE, obj_2_y, obj_1_y + RANGE)) ? 1 : 0;
+	R (	IN(obj_1_x - RANGE, obj_2_x, obj_1_x + RANGE) && 
+		IN(obj_1_y - RANGE, obj_2_y, obj_1_y + RANGE)) ? 1 : 0;
 }
 
-I dec_digits(UJ num)												//<	decimal digits of num
+///////////////////////////////////////////////////////////////
+//<					dec_digits(UJ num)						>//
+///////////////////////////////////////////////////////////////
+//<			calculate number of decimal digits of num		>//
+///////////////////////////////////////////////////////////////
+//<				return amount of digits						>//
+///////////////////////////////////////////////////////////////
+I dec_digits(UJ num)									
 {
 	I i;
 	X(num, {for (i = 0; num; num/= 10, i++);}, i);
 	R1;
 }
 
+///////////////////////////////////////////////////////////////
+//<					pow_(I basis, I exp_)					>//
+///////////////////////////////////////////////////////////////
+//<					my integer pow							>//
+///////////////////////////////////////////////////////////////
+//<					return basis^exp_						>//
+///////////////////////////////////////////////////////////////
 UJ pow_(I basis, I exp_) 											//<	my intteger pow_
 {
 	I i;
 	UJ result = 1;
-	X(exp_, {for (i = 0; i < exp_; i++) result *= basis;}, result);
+	X(exp_, {for (i = 0; i < exp_; i++) 
+					result *= basis;}, result);
 	R1;
 }
 
-V reverse(S s)														//< reverse string
+///////////////////////////////////////////////////////////////
+//<					reverse(S s)							>//
+///////////////////////////////////////////////////////////////
+//<		reverses s like if s == "abc\0" --> s == "cba\0"	>//
+///////////////////////////////////////////////////////////////
+V reverse(S s)														
 {
 	I i, j;
 	C c;
@@ -113,7 +197,14 @@ V reverse(S s)														//< reverse string
 	}
 }
 
-S itoa(I n)															//< integer to ascii
+///////////////////////////////////////////////////////////////
+//<						itoa(I n)							>//
+///////////////////////////////////////////////////////////////
+//<		n to acsii like n == 128 --> NUM_INT == "128\0"		>//
+///////////////////////////////////////////////////////////////
+//<					return NUM_INT							>//
+///////////////////////////////////////////////////////////////
+S itoa(I n)												
 {
 	I i, max;
 	NUM_INT[0] = n % 10 + '0';
@@ -124,7 +215,16 @@ S itoa(I n)															//< integer to ascii
 	reverse(NUM_INT);
 }
 
-S colour(S name, I col)												//< 	dir/filename --> dir/n/filename, where n is colour num
+///////////////////////////////////////////////////////////////
+//<					colour(S name, I col)					>//
+///////////////////////////////////////////////////////////////
+//<			for ex. name == "dir/file.txt" -->				>// 
+//<			-->	FILENAME == "dir/n/file.txt"				>//
+//<				where n == '0' + col 						>//
+///////////////////////////////////////////////////////////////
+//<					return FILENAME							>//
+///////////////////////////////////////////////////////////////
+S colour(S name, I col)												
 {
 	I len = arrlen(name), i;
 	I len_2 = len + 2;
@@ -132,21 +232,36 @@ S colour(S name, I col)												//< 	dir/filename --> dir/n/filename, where n
 
 	arrcat(new_name, name, 0);
 
-	OMO({i = 0;}, (name[len - i] != '/'), {new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
+	OMO({i = 0;}, 	(name[len - i] != '/' && i <= len), 
+					{new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
 
-	new_name[len_2 - i] = '0';																//< set 0 for a while
-	//<	new_name[len_2 - i] = col + '0';
+	new_name[len_2 - i] = '0';										//< set 0 for a while
+	//<	new_name[len_2 - i] = col%10 + '0';
 
 	arrcat(FILENAME, new_name, 0);
 
 	R FILENAME;
 }
 
+///////////////////////////////////////////////////////////////
+//<					p_dog_stat()							>//
+///////////////////////////////////////////////////////////////
+//<			print formatted dt && cnt structs				>//
+///////////////////////////////////////////////////////////////
 V p_dog_stat()
 {
-	O("\n\tACT: %s\t\tSAT: %d\tINT: %d\tCLE: %d\tCOL: %d\n", stat_name[dt->action], dt->satiety, dt->intellect, dt->cleanliness, dt->colour);
-	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t(max %d[%d sec]) \n\tintellect: %d   [%d s] \t(max %d[%d sec])\n", cnt->last_act, cnt->last_act/1000, MAX_CNT_LA, MAX_CNT_LA/1000, cnt->intellect, cnt->intellect/1000, MAX_CNT_IN, MAX_CNT_IN/1000);
-	O("\tcleanliness: %d   [%d s] \t(max %d[%d sec])\n\tsatiety: %d   [%d s] \t(max %d[%d sec])\n\n", cnt->cleanliness, cnt->cleanliness/1000, MAX_CNT_CL, MAX_CNT_CL/1000, cnt->satiety, cnt->satiety/1000, MAX_CNT_ST, MAX_CNT_ST/1000);
+	O("\n\tACT: %s\t\tSAT: %d\t", stat_name[dt->action], dt->satiety);
+	O("INT: %d\tCLE: %d\tCOL: %d\n", dt->intellect, dt->cleanliness, dt->colour);
+
+	O("\n\tTIMERS\n\tlast act: %d   [%d s] \t", cnt->last_act, cnt->last_act/1000);
+	O("(max %d[%d sec]) \n", MAX_CNT_LA, MAX_CNT_LA/1000);
+	O("\tintellect: %d   [%d s] \t", cnt->intellect, cnt->intellect/1000);
+	O("(max %d[%d sec])\n", MAX_CNT_IN, MAX_CNT_IN/1000);
+
+	O("\tcleanliness: %d   [%d s] \t", cnt->cleanliness, cnt->cleanliness/1000);
+	O("(max %d[%d sec])\n", MAX_CNT_CL, MAX_CNT_CL/1000);
+	O("\tsatiety: %d   [%d s] \t", cnt->satiety, cnt->satiety/1000);
+	O("(max %d[%d sec])\n\n", MAX_CNT_ST, MAX_CNT_ST/1000);
 }
 
 
