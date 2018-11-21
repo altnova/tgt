@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <limits.h>
+#include <stdio.h>
 
 #include "../cfg/cfg.h"
 
@@ -14,26 +15,46 @@
 
 #define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
 
+
+///////////////////////////////////////////////////////////////
+//<						local globals						>//
 static C DESKTOP_PATH[PATH_MAX + 1];
-static C STR[1000];
+static C STR[LINE_MAX];
 static C file[PATH_MAX + 1];
+///////////////////////////////////////////////////////////////
 
 
-S desktop_path()												//<	returns string with a path to Desktop dir 
+
+///////////////////////////////////////////////////////////////
+//<						desktop_path()						>//
+///////////////////////////////////////////////////////////////
+//<			gets path to home/Desktop into DESKTOP_PATH 	>//
+///////////////////////////////////////////////////////////////
+//<					return DESKTOP_PATH 					>//
+///////////////////////////////////////////////////////////////
+S desktop_path()												
 {
 	strcpy(DESKTOP_PATH, getenv("HOME"));
 	strcat(DESKTOP_PATH, "/Desktop/");
 	return DESKTOP_PATH;
 }
 
-S choose_name(S path, S filename)								//< unique enumerated file_name like path/to/dir/nnn_file_name
+///////////////////////////////////////////////////////////////
+//<				choose_name(S path, S filename)				>//
+///////////////////////////////////////////////////////////////
+//<		choose unque enumerated name for file like			>//
+//<			path/1234_filename or path/4_filename 			>//
+///////////////////////////////////////////////////////////////
+//<						return FILENAME 					>//
+///////////////////////////////////////////////////////////////
+S choose_name(S path, S filename)								
 {
 	I i, path_len, num_len;
 	C number[13];
 	path_len = arrlen(path);
 
 	arrcat(FILENAME, path, 0);
-	arrcat(FILENAME, filename, arrlen(FILENAME));
+	arrcat(FILENAME, filename, path_len);
 
 	for (i = 1; !(access(FILENAME, F_OK)); i++) {
 		num_len = dec_digits(i);
@@ -50,7 +71,12 @@ S choose_name(S path, S filename)								//< unique enumerated file_name like pa
 	R FILENAME;
 }
 
-V make_file(S path, S new_file, S str)							//< creates file with unique name and writes in str
+///////////////////////////////////////////////////////////////
+//<			make_file(S path, S new_file, S str)			>//
+///////////////////////////////////////////////////////////////
+//<		create path/new_file and write in str 				>//
+///////////////////////////////////////////////////////////////
+V make_file(S path, S new_file, S str)							
 {	
 	S name;														
 	FILE *ptr;
@@ -60,10 +86,16 @@ V make_file(S path, S new_file, S str)							//< creates file with unique name a
 	fclose(ptr);
 }
 
-V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
+///////////////////////////////////////////////////////////////
+//<						spit_file(S str)					>//
+///////////////////////////////////////////////////////////////
+//<		create file with unique filename with str written 	>//
+//<			str written at Desktop directory 				>//
+///////////////////////////////////////////////////////////////
+V spit_file(S str)												
 {
 	O("%s[spit_file()]%s\n", CWHT, CNRM);						//<			test mode
-	if (strlen(str) + strlen(CONST_STR) >= 1000) {
+	if (strlen(str) + strlen(CONST_STR) >= LINE_MAX) {
 		O("long lines at esfile.c/spit_file\n");
 		exit(0);
 	}
@@ -72,7 +104,12 @@ V spit_file(S str)												//<	creates file nnn_spit.txt  in Desktop dir
 	make_file(desktop_path(), "spit.txt", STR);
 }
 
-V eat_file()													//< deletes first file in Desktop dir 
+///////////////////////////////////////////////////////////////
+//<						eat_file(S str)						>//
+///////////////////////////////////////////////////////////////
+//<		delete random file from Desktop directory 			>//
+///////////////////////////////////////////////////////////////
+V eat_file()													
 {
 	O("%s[eat_file()]%s\n", CWHT, CNRM);						//<			test mode
 	/*DIR *d;
