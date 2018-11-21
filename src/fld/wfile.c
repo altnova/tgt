@@ -1,3 +1,4 @@
+//<	basic file functions
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -17,13 +18,25 @@ static S addr_needle[4] = {needle[0], needle[1], needle[2], needle[3]};
 static S* addr_main[1] = {addr_needle};
 
 
-
-C file_cont(FILE *ptr, S* string, I am)								//<	~grep		
+///////////////////////////////////////////////////////////////
+//<			file_cont(FILE *ptr, S* string, I am)			>//
+///////////////////////////////////////////////////////////////
+//<		each search for line in file ptr ignoring case		>//
+//<			am is amount of lines to search					>//
+///////////////////////////////////////////////////////////////
+//<			if any string is found: return 1				>//
+//<			if nothing found: 		return 0				>//
+//<			if ptr == NULL:			return -1				>//
+///////////////////////////////////////////////////////////////
+C file_cont(FILE *ptr, S* string, I am)								
 {
 	C buf[LINE_MAX_];
 	I i, j, a = 0, szbuf, b;
 	C c;
 	I length[100], state[100];
+
+	if (ptr == NULL)
+		R -1;
 
 	if (am > 100) {
 		O("too much strings for search; amount --> 100\n");
@@ -60,20 +73,28 @@ C file_cont(FILE *ptr, S* string, I am)								//<	~grep
 	R 0;
 }
 
-C input_type(S filename)											//<	figures out input type: 1, 2, 3, 4 or 0
+///////////////////////////////////////////////////////////////
+//<					input_type(S filename)					>//
+///////////////////////////////////////////////////////////////
+//<		opens filename and calculates filename's type		>//
+///////////////////////////////////////////////////////////////
+//<		return:												>//
+//<				0 -- file doesn't exist || size of file is 	>//
+//<						larger than 2 Mbytes || file 		>//
+//<						doesn't constain any of key words	>//
+//<				1 -- file contains food words 				>//
+//<				2 -- file contains cleaning words 			>//
+//<				3 -- file size is larger than 3 Kbytes		>//
+//<						and less than 2 Mbytes 				>//
+//<				4 -- file contains rude words				>//
+///////////////////////////////////////////////////////////////
+C input_type(S filename)									
 {
 	FILE *ptr = fopen_(filename, "r");
 	I size;
 
 	if (!ptr) 
 		R 0;
-
-	//<	0 --> input file is too large or nothing clear inside
-	//<	1 --> input file food
-	//<	2 --> input file clean
-	//<	3 --> input file reading
-	//<	4 --> input file rude
-
 
 	size = szfile(ptr);
 
@@ -84,26 +105,36 @@ C input_type(S filename)											//<	figures out input type: 1, 2, 3, 4 or 0
 	arrcat(needle[1], "bitch", 0);
 	arrcat(needle[2], "pidor", 0);
 
-	if (file_cont(ptr, addr_main[0], 3)) 
+	if (file_cont(ptr, addr_main[0], 3) == 1) 
 		R FCLR(ptr, 4);
 
 	arrcat(needle[0], "bone", 0);
 	arrcat(needle[1], "food", 0);
 
-	if (file_cont(ptr, addr_main[0], 2)) 
+	if (file_cont(ptr, addr_main[0], 2) == 1) 
 		R FCLR(ptr, 1);
 
 	arrcat(needle[0], "bath", 0);
 	arrcat(needle[1], "water", 0);
 	arrcat(needle[2], "shower", 0);
 
-	if (file_cont(ptr, addr_main[0], 3)) 
+	if (file_cont(ptr, addr_main[0], 3) == 1) 
 		R FCLR(ptr, 2);
 
 	R FCLR(ptr, 0);
 }
 
-//<	returns 0: does not exist; 1: file; -1: dir;
+///////////////////////////////////////////////////////////////
+//<				fdn(S path, S dir, I path_len)				>//
+///////////////////////////////////////////////////////////////
+//<			defines whether path+dir is file or directory	>//
+//<				path _len is length of path 				>//				
+///////////////////////////////////////////////////////////////
+//<		return:												>//
+//<			   -1 -- if directory							>//
+//<				0 -- doesn't exist 							>//
+//<				1 -- if file 				 				>//
+///////////////////////////////////////////////////////////////
 C fdn(S path, S dir, I path_len)
 {
 	C dir_name[PATH_MAX + 1];
@@ -115,22 +146,31 @@ C fdn(S path, S dir, I path_len)
 
 	d = opendir(dir_name);
 
-	if (d == NULL) {
-		if (errno == ENOTDIR) {
-			f = fopen(path, "r");
-			if (f == NULL)
-				R 0;												//< just bullshit
-			else {
-				fclose(f);
-				R 1;												//<	file
-			}
+	if (d) {
+		closedir(d);
+		return -1;
+	}
+	if (errno = ENOTDIR) {
+		f = fopen(dir_name, "r");
+		if (f) {
+			fclose(f);
+			R 1;
 		}
 	}
-	closedir(d);
-	R -1;
+	R 0;
+
 }
 
-
+///////////////////////////////////////////////////////////////
+//<				subcheck_d(S path, S sub, I len)			>//
+///////////////////////////////////////////////////////////////
+//<			specialized fdn() with the same arguments 		>//
+//<		but displays messages depending on the fdn() r val 	>//
+///////////////////////////////////////////////////////////////
+//<		return:												>//
+//<				0 -- file or doesn't exist 					>//
+//<				1 -- if directory 			 				>//
+///////////////////////////////////////////////////////////////
 C subcheck_d(S path, S sub, I len)
 {
 	C res = fdn(path, sub, len);
@@ -148,4 +188,58 @@ C subcheck_d(S path, S sub, I len)
 	R 1;
 }
 
+
+///////////////////////////////////////////////////////////////
+//<					is_tgt(S path)							>//
+///////////////////////////////////////////////////////////////
+//<			check for right subdirectories for tgt 			>//
+///////////////////////////////////////////////////////////////
+//< 		if success return 1, else 0						>//
+///////////////////////////////////////////////////////////////	
+C is_tgt(S path)
+{
+	I len = strlen(path);
+
+	if (!subcheck_d(path, "", len))
+		R 0;
+
+	if (!subcheck_d(path, "/pic/dog/0", len))					//< pic/dog check
+		R 0;
+	if (!subcheck_d(path, "/pic/dog/1", len))
+		R 0;
+	if (!subcheck_d(path, "/pic/dog/2", len))
+		R 0;
+	if (!subcheck_d(path, "/pic/dog/3", len))
+		R 0;
+	if (!subcheck_d(path, "/pic/dog/4", len))
+		R 0;
+
+	if (!subcheck_d(path, "/pic/obj", len))						//< pic/obj check
+		R 0;
+
+	if (!subcheck_d(path, "/pic/brd", len))						//<	pic/brd check
+		R 0;
+
+	R 1;
+}
+
+///////////////////////////////////////////////////////////////
+//<					is_home(S path)							>//
+///////////////////////////////////////////////////////////////
+//<			check for right subdirectories for hoe 			>//
+///////////////////////////////////////////////////////////////
+//< 		if success return 1, else 0						>//
+///////////////////////////////////////////////////////////////	
+C is_home(S path)
+{
+	I len = strlen(path);
+
+	if (!subcheck_d(path, "", len))
+		R 0;
+
+	if (!subcheck_d(path, "/Desktop", len))			//< pic/dog check
+		R 0;
+	
+	R 1;
+}
 
