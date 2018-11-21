@@ -167,7 +167,7 @@ img write_png_file(S file_name, img img_)
 ///////////////////////////////////////////////////////////////
 //<						return img_ 						>//
 ///////////////////////////////////////////////////////////////
-img read_png_file(S file_name, img img_)							//<	read png file file_name and return struct 
+img read_png_file(S file_name, img img_)							
 {
 	I i;
 	C header[8];	// 8 is the maximum size that can be checked
