@@ -10,13 +10,13 @@
 #include "../bsc/mains.h"
 
 ///////////////////////////////////////////////////////////////
-//< 			board_show(C key, C obj)					>//
+//<               board_show(C key, C obj)                  >//
 ///////////////////////////////////////////////////////////////
-//<	switch statement dependent on key to set right coors	>//
-//<			where number 'obj' will be shown				>//
-//<				's' for satiety 							>//
-//<				'i' for intellect							>//
-//<				'c' for cleanliness							>//
+//<  switch statement dependent on key to set right coors   >//
+//<	         where number 'obj' will be shown               >//
+//<             's' for satiety                             >//
+//<             'i' for intellect                           >//
+//<             'c' for cleanliness                         >//
 ///////////////////////////////////////////////////////////////
 V board_show(C key, C obj)	
 {
@@ -48,11 +48,11 @@ V board_show(C key, C obj)
 }
 
 ///////////////////////////////////////////////////////////////
-//< 				dog_show(I obj)							>//
+//<                  dog_show(I obj)                        >//
 ///////////////////////////////////////////////////////////////
-//<		switch statement dependent on obj to call			>//
-//<		specific function from vis/del_s.c which will		>//
-//<		direct visualization of dog_action					>//
+//<     switch statement dependent on obj to call           >//
+//<     specific function from vis/del_s.c which will       >//
+//<     direct visualization of dog_action                  >//
 ///////////////////////////////////////////////////////////////
 V dog_show(I obj)			
 {
@@ -74,16 +74,16 @@ V dog_show(I obj)
 }
 
 ///////////////////////////////////////////////////////////////
-//< 				draw(C key, I obj)						>//
+//<                   draw(C key, I obj)                    >//
 ///////////////////////////////////////////////////////////////
-//<		function to choose which .png file change is needed	>//
-//<				[tmp.png or canvas.png]						>//
-//<	dependent on key which could be 'd' (change tmp.png)	>//
-//<									's' (canvas.png sat)	>//
-//<									'i' (canvas.png int)	>//
-//<									'c' (canvas.png cle)	>//
-//< 	obj could be dog action enum number or 				>//
-//<				new value of dog param key					>//
+//<   function to choose which .png file change is needed   >//
+//<             [tmp.png or canvas.png]                     >//
+//< dependent on key which could be 'd' (change tmp.png)    >//
+//<                                 's' (canvas.png sat)    >//
+//<                                 'i' (canvas.png int)    >//
+//<                                 'c' (canvas.png cle)    >//
+//<     obj could be dog action enum number or              >//
+//<             new value of dog param key                  >//
 ///////////////////////////////////////////////////////////////
 V draw(C key, I obj)	
 {
