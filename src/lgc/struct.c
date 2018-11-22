@@ -17,13 +17,13 @@ I ITER = 0;
 I MAIN_IT = 0;
 
 I test_cnt[5] = {0, 0, 0, 0, 0};
-
+    
 ///////////////////////////////////////////////////////////////
-//<				cnt_upd(tm_cnt cnt_, I act)					>//
+//<              cnt_upd(tm_cnt cnt_, I act)                >//
 ///////////////////////////////////////////////////////////////
-//<		add to all cnt_ counters star_time[act]				>//
+//<         add to all cnt_ counters star_time[act]         >//
 ///////////////////////////////////////////////////////////////
-V cnt_upd(tm_cnt cnt_, I act)								
+V cnt_upd(tm_cnt cnt_, I act)	
 {
 	cnt_->last_act += stat_time[act];
 	
@@ -36,13 +36,13 @@ V cnt_upd(tm_cnt cnt_, I act)
 }
 
 ///////////////////////////////////////////////////////////////
-//<						death()								>//
+//<                       death()                           >//
 ///////////////////////////////////////////////////////////////
-//<		check conditions of dog death (finish program)		>//
+//<      check conditions of dog death (finish program)     >//
 ///////////////////////////////////////////////////////////////
-//<			on success (dog die) return 1; else 0 			>//
+//<         on success (dog die) return 1; else 0           >//
 ///////////////////////////////////////////////////////////////
-C death()															
+C death()			
 {    
 	X(!dt->satiety || dt->satiety > MAX_ST, {	
 		dt->action = die; 											//<	dog dies and program aborts if satiety == 0 || satiety > MAX_ST 
@@ -61,14 +61,14 @@ C death()
 		1);
 	R 0;
 }
-
+    
 ///////////////////////////////////////////////////////////////
-//<						cnt_check()							>//
+//<                      cnt_check()                        >//
 ///////////////////////////////////////////////////////////////
-//<		if global counter cnt value has overflow, dog dat 	>//
-//<		and board images must be updated (decremented) 		>//
+//<     if global counter cnt value has overflow, dog dat   >//
+//<     and board images must be updated (decremented)      >//
 ///////////////////////////////////////////////////////////////
-V cnt_check()														//<	conditions of modifing dt in case of appropriate cnt
+V cnt_check()													
 {
 	C state;
 	// O("[cnt_check()]\n");
@@ -96,12 +96,12 @@ V cnt_check()														//<	conditions of modifing dt in case of appropriate 
 		p_dog_stat();
 	}
 }
-
+    
 ///////////////////////////////////////////////////////////////
-//<					set_main_action()						>//
+//<                   set_main_action()                     >//
 ///////////////////////////////////////////////////////////////
-//<		sets what dog should do if there are no special 	>//
-//<		conditions; 	dependent on dog dat 				>//
+//<     sets what dog should do if there are no special     >//
+//<     conditions;     dependent on dog dat                >//
 ///////////////////////////////////////////////////////////////
 C set_main_action()												
 {
@@ -128,12 +128,12 @@ C set_main_action()
 		ITER = 0;
 	}
 }
-
+    
 ///////////////////////////////////////////////////////////////
-//<						event_check()						>//
+//<                    event_check()                        >//
 ///////////////////////////////////////////////////////////////
-//<		check for user's input and click events 			>//
-//<			dog act and dat modify in some cases 			>//
+//<        check for user's input and click events          >//
+//<         dog act and dat modify in some cases            >//
 ///////////////////////////////////////////////////////////////
 V event_check()														
 {
