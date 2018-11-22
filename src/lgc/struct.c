@@ -150,7 +150,7 @@ V event_check()
 /////////////////////////////////////////////////////////////////////////
 	arrcat(FILENAME, "123\0", 0);
 
-	if (MAIN_IT%100 == 0 || MAIN_IT%50 == 0) {
+	if (MAIN_IT%30 == 0 || MAIN_IT%50 == 0) {
 		r = rand()%5;
 		SW(r) {
 			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})			//<	0
@@ -198,10 +198,19 @@ V event_check()
 			CS(4, { 
 				test_cnt[3]++;
 				dt->action = sit;
+				dt->intellect--;
+				st = 'i';
+				draw(st, dt->intellect);
 				eat_file();})								//< 	test mode
 
 			CD:
 				test_cnt[4]++;
+				dt->satiety--;
+				dt->cleanliness--;
+				st = 's';
+				draw(st, dt->satiety);
+				st = 'c';
+				draw(st, dt->cleanliness);
 				draw(dog, poop);
 				cnt_upd(cnt, poop);
 				spit_file("\n\n\n\t\tbad boy\n\n\n\n");

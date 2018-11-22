@@ -104,7 +104,8 @@ V frame(I am, S* filename, UH* x_, UH* y_)
 V set_canvas()
 {
 	int i, j;
-	img tmp;
+	pImg some;
+	img tmp = &some;
 	png_bytep *rows;
 
 	rows = (png_bytep*) malloc(height * SZ(png_bytep));

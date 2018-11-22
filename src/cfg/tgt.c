@@ -30,6 +30,7 @@ I main()
 	dt->action = love;
 
 	for (MAIN_IT = 0; dt->action != rise && dt->action != die; MAIN_IT++) {
+		// p_dog_stat(cnt, dt);
 		set_main_action();									//< 					lgc/struct.c
 		draw(dog, dt->action);								//<	draw action 		lgc/draw.c
 		cnt_upd(cnt, dt->action);							//<	increase timers 	lgc/struct.c

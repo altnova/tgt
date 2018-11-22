@@ -234,7 +234,7 @@ V dog_rise(I pause)
 	O("%s DOG_RISE%s\n", CRED, CNRM);
 
 	DO(9, {	
-			DOG_FILE[19] = i + '1';
+			DOG_FILE[13] = i + '1';
 			col_dep_slp(DOG_FILE, dt->colour, 1, ADDR_ADDR, 
 									&crd->dog_x, &crd->dog_y, p);});
 }

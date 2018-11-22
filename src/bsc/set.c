@@ -121,6 +121,21 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 	crd_main->rad = RANGE;
 
 
+	pDat DAT = {5, 5, 5, 2, 9};
+	pCounter CNT = {0,  0, 0, 0};
+
+	dt_main->satiety = 5;
+	dt_main->intellect = 5;
+	dt_main->cleanliness = 5;
+	dt_main->colour = 2;
+	dt_main->action = 9;
+
+	cnt_main->last_act = 0;
+	cnt_main->satiety = 0;
+	cnt_main->intellect = 0;
+	cnt_main->cleanliness = 0;
+
+
 		/*	x 	*/
 	// crd_main->kennel_x 	= L_LIM/2;					//< L_LIM == WIDTH/10; R_LIM = WIDTH*9/10
 	crd_main->kennel_x 	= 30;
