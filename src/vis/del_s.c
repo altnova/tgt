@@ -10,18 +10,18 @@
 #include "../gui/win.h"
 #include "../png/canvas.h"
 
-
+    
 ///////////////////////////////////////////////////////////////
-//<	col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p)	>//
+//< col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p) >//
 ///////////////////////////////////////////////////////////////
-//<			colour() depict() and usleep()					>//
-//<			S file	-- 	file name to pass to colour()		>//
-//<			C c   	-- 	colour number to pass to colour()	>//
-//<			I am 	-- 	amount of files for depict()		>//
-//<			S* f 	--	list of files for depict()			>//
-//<			UH* x 	--	list of x coors for depict()		>//
-//<			UH* y 	--	list of y coors for depict() 		>//
-//<			I p 	--	pause for usleep					>//
+//<         colour() depict() and usleep()                  >//
+//<         S file  --  file name to pass to colour()       >//
+//<         C c     --  colour number to pass to colour()   >//
+//<         I am    --  amount of files for depict()        >//
+//<         S* f    --  list of files for depict()          >//
+//<         UH* x   --  list of x coors for depict()        >//
+//<         UH* y   --  list of y coors for depict()        >//
+//<         I p     --  pause for usleep()                  >//
 ///////////////////////////////////////////////////////////////
 V col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p)
 {
@@ -31,16 +31,16 @@ V col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p)
 }
 
 ///////////////////////////////////////////////////////////////
-//<		this_way(I pause, S file_1, S file_2, S act, I way)	>//
+//<    this_way(I pause, S file_1, S file_2, S act, I way)  >//
 ///////////////////////////////////////////////////////////////
-//<			choose which way to run 						>//
-//<			modify coordinates 								>//
-//<			S file_1 --> walk_?_1 or run_?_1 				>//
-//<			S file_2 --> walk_?_2 or run_?_2 				>//
-//<			S act 	 --> name of dog act 					>//
-//<			I way 	 --> direction [1/0]					>//	
+//<         choose which way to run                         >//
+//<         modify coordinates                              >//
+//<         S file_1 --> walk_?_1 or run_?_1                >//
+//<         S file_2 --> walk_?_2 or run_?_2                >//
+//<         S act    --> name of dog act                    >//
+//<         I way    --> direction [1/0]                    >//
 ///////////////////////////////////////////////////////////////
-V this_way(I pause, S file_1, S file_2, S act, I way)			
+V this_way(I pause, S file_1, S file_2, S act, I way)
 {
 	col_dep_slp(file_1, dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
 	crd->dir = way;
@@ -54,20 +54,20 @@ V this_way(I pause, S file_1, S file_2, S act, I way)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_sir(I pause)						>//
+//<                    dog_sit(I pause)                     >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act sit with total pause I pause		>//
+//<        depict dog act sit with total pause I pause      >//
 ///////////////////////////////////////////////////////////////
 V dog_sit(I pause)						
 {
 	col_dep_slp("pic/dog/sit_1.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
 	col_dep_slp("pic/dog/sit_2.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
 }
-
+    
 ///////////////////////////////////////////////////////////////
-//<					dog_run(I pause)						>//
+//<                    dog_run(I pause)                     >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act run with total pause I pause		>//
+//<        depict dog act run with total pause I pause      >//
 ///////////////////////////////////////////////////////////////
 V dog_run(I pause)
 {
@@ -78,11 +78,11 @@ V dog_run(I pause)
 				this_way((pause*SEC), 	"pic/dog/run_l_1.png", 
 										"pic/dog/run_l_2.png", "run", LEFT);		//< run LEFT
 }
-
+    
 ///////////////////////////////////////////////////////////////
-//<					dog_walk(I pause)						>//
+//<                    dog_walk(I pause)                    >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act walk with total pause I pause	>//
+//<        depict dog act walk with total pause I pause     >//
 ///////////////////////////////////////////////////////////////
 V dog_walk(I pause)
 {
@@ -95,10 +95,10 @@ V dog_walk(I pause)
 }
 
 ///////////////////////////////////////////////////////////////
-//<						dog_return()						>//
+//<                       dog_return()                      >//
 ///////////////////////////////////////////////////////////////
-//<			choose the way of comming back to kennel 		>//
-//<					depends on tirednes						>//
+//<         choose the way of comming back to kennel        >//
+//<                  depends on tirednes                    >//
 ///////////////////////////////////////////////////////////////
 V dog_return()
 {
@@ -124,13 +124,13 @@ V dog_return()
 		}
 	}
 }
-
+    
 ///////////////////////////////////////////////////////////////
-//<					dog_sleep_1(I pause)					>//
+//<                 dog_sleep_1(I pause)                    >//
 ///////////////////////////////////////////////////////////////
-//<		depict dog act sleep_1 with total pause I pause		>//
+//<     depict dog act sleep_1 with total pause I pause     >//
 ///////////////////////////////////////////////////////////////
-V dog_sleep_1(I pause)									//< outside [no strength to return]
+V dog_sleep_1(I pause)												//< outside [no strength to return]
 {
 	col_dep_slp("pic/dog/sleep_1_1.png", dt->colour, 1, ADDR_ADDR, 
 										&crd->dog_x, &crd->dog_y, pause/2);
@@ -139,11 +139,11 @@ V dog_sleep_1(I pause)									//< outside [no strength to return]
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_sleep_2(I pause)					>//
+//<                 dog_sleep_2(I pause)                    >//
 ///////////////////////////////////////////////////////////////
-//<		depict dog act sleep_2 with total pause I pause		>//
+//<     depict dog act sleep_2 with total pause I pause     >//
 ///////////////////////////////////////////////////////////////
-V dog_sleep_2(I pause)									//< in kennel
+V dog_sleep_2(I pause)												//< in kennel
 {
 	dog_return();
 
@@ -154,9 +154,9 @@ V dog_sleep_2(I pause)									//< in kennel
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_eat(I pause)						>//
+//<                     dog_eat(I pause)                    >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act eat with total pause I pause		>//
+//<        depict dog act eat with total pause I pause      >//
 ///////////////////////////////////////////////////////////////
 V dog_eat(I pause)
 {
@@ -181,9 +181,9 @@ V dog_eat(I pause)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_read(I pause)						>//
+//<                    dog_read(I pause)                    >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act read with total pause I pause	>//
+//<        depict dog act read with total pause I pause     >//
 ///////////////////////////////////////////////////////////////
 V dog_read(I pause)
 {
@@ -203,9 +203,9 @@ V dog_read(I pause)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_die(I pause)						>//
+//<                    dog_die(I pause)                     >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act die with total pause I pause		>//
+//<        depict dog act die with total pause I pause      >//
 ///////////////////////////////////////////////////////////////
 V dog_die(I pause)			
 {
@@ -221,9 +221,9 @@ V dog_die(I pause)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_rise(I pause)						>//
+//<                   dog_rise(I pause)                     >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act rise with total pause I pause	>//
+//<       depict dog act rise with total pause I pause      >//
 ///////////////////////////////////////////////////////////////
 V dog_rise(I pause)				
 {
@@ -240,9 +240,9 @@ V dog_rise(I pause)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_love(I pause)						>//
+//<                   dog_love(I pause)                     >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act love with total pause I pause	>//
+//<       depict dog act love with total pause I pause      >//
 ///////////////////////////////////////////////////////////////
 V dog_love(I pause)
 {
@@ -257,9 +257,9 @@ V dog_love(I pause)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dog_poop(I pause)						>//
+//<                   dog_poop(I pause)                     >//
 ///////////////////////////////////////////////////////////////
-//<			depict dog act poop with total pause I pause	>//
+//<       depict dog act poop with total pause I pause      >//
 ///////////////////////////////////////////////////////////////
 V dog_poop(I pause)
 {
