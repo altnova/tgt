@@ -20,14 +20,14 @@ static S* addr_main[1] = {addr_needle};
 
 
 ///////////////////////////////////////////////////////////////
-//<			file_cont(FILE *ptr, S* string, I am)			>//
+//<         file_cont(FILE *ptr, S* string, I am)           >//
 ///////////////////////////////////////////////////////////////
-//<		each search for line in file ptr ignoring case		>//
-//<			am is amount of lines to search					>//
+//<     each search for line in file ptr ignoring case      >//
+//<         am is amount of lines to search                 >//
 ///////////////////////////////////////////////////////////////
-//<			if any string is found: return 1				>//
-//<			if nothing found: 		return 0				>//
-//<			if ptr == NULL:			return -1				>//
+//<         if any string is found: return 1                >//
+//<         if nothing found:       return 0                >//
+//<         if ptr == NULL:         return -1               >//
 ///////////////////////////////////////////////////////////////
 C file_cont(FILE *ptr, S* string, I am)								
 {
@@ -73,21 +73,21 @@ C file_cont(FILE *ptr, S* string, I am)
 	rewind(ptr);
 	R 0;
 }
-
+    
 ///////////////////////////////////////////////////////////////
-//<					input_type(S filename)					>//
+//<                 input_type(S filename)                  >//
 ///////////////////////////////////////////////////////////////
-//<		opens filename and calculates filename's type		>//
+//<     opens filename and calculates filename's type       >//
 ///////////////////////////////////////////////////////////////
-//<		return:												>//
-//<				0 -- file doesn't exist || size of file is 	>//
-//<						larger than 2 Mbytes || file 		>//
-//<						doesn't constain any of key words	>//
-//<				1 -- file contains food words 				>//
-//<				2 -- file contains cleaning words 			>//
-//<				3 -- file size is larger than 3 Kbytes		>//
-//<						and less than 2 Mbytes 				>//
-//<				4 -- file contains rude words				>//
+//<     return:                                             >//
+//<             0 -- file doesn't exist || size of file is 	>//
+//<                     larger than 2 Mbytes || file        >//
+//<                     doesn't constain any of key words   >//
+//<             1 -- file contains food words               >//
+//<             2 -- file contains cleaning words           >//
+//<             3 -- file size is larger than 3 Kbytes      >//
+//<                     and less than 2 Mbytes              >//
+//<             4 -- file contains rude words               >//
 ///////////////////////////////////////////////////////////////
 C input_type(S filename)									
 {
@@ -126,15 +126,15 @@ C input_type(S filename)
 }
 
 ///////////////////////////////////////////////////////////////
-//<				fdn(S path, S dir, I path_len)				>//
+//<             fdn(S path, S dir, I path_len)              >//
 ///////////////////////////////////////////////////////////////
-//<			defines whether path+dir is file or directory	>//
-//<				path _len is length of path 				>//				
+//<         defines whether path+dir is file or directory   >//
+//<             path _len is length of path                 >//				
 ///////////////////////////////////////////////////////////////
-//<		return:												>//
-//<			   -1 -- if directory							>//
-//<				0 -- doesn't exist 							>//
-//<				1 -- if file 				 				>//
+//<     return:                                             >//
+//<            -1 -- if directory                           >//
+//<             0 -- doesn't exist                          >//
+//<             1 -- if file                                >//
 ///////////////////////////////////////////////////////////////
 C fdn(S path, S dir, I path_len)
 {
@@ -163,14 +163,14 @@ C fdn(S path, S dir, I path_len)
 }
 
 ///////////////////////////////////////////////////////////////
-//<				subcheck_d(S path, S sub, I len)			>//
+//<             subcheck_d(S path, S sub, I len)            >//
 ///////////////////////////////////////////////////////////////
-//<			specialized fdn() with the same arguments 		>//
-//<		but displays messages depending on the fdn() r val 	>//
+//<         specialized fdn() with the same arguments       >//
+//<     but displays messages depending on the fdn() r val  >//
 ///////////////////////////////////////////////////////////////
-//<		return:												>//
-//<				0 -- file or doesn't exist 					>//
-//<				1 -- if directory 			 				>//
+//<     return:                                             >//
+//<             0 -- file or doesn't exist                  >//
+//<             1 -- if directory                           >//
 ///////////////////////////////////////////////////////////////
 C subcheck_d(S path, S sub, I len)
 {
@@ -191,11 +191,11 @@ C subcheck_d(S path, S sub, I len)
 
 
 ///////////////////////////////////////////////////////////////
-//<					is_tgt(S path)							>//
+//<                 is_tgt(S path)                          >//
 ///////////////////////////////////////////////////////////////
-//<			check for right subdirectories for tgt 			>//
+//<         check for right subdirectories for tgt          >//
 ///////////////////////////////////////////////////////////////
-//< 		if success return 1, else 0						>//
+//<         if success return 1, else 0                     >//
 ///////////////////////////////////////////////////////////////	
 C is_tgt(S path)
 {
@@ -225,11 +225,11 @@ C is_tgt(S path)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					is_home(S path)							>//
+//<                 is_home(S path)                         >//
 ///////////////////////////////////////////////////////////////
-//<			check for right subdirectories for hoe 			>//
+//<         check for right subdirectories for home         >//
 ///////////////////////////////////////////////////////////////
-//< 		if success return 1, else 0						>//
+//<         if success return 1, else 0                     >//
 ///////////////////////////////////////////////////////////////	
 C is_home(S path)
 {

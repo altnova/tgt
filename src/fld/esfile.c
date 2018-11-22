@@ -17,7 +17,7 @@
 
 
 ///////////////////////////////////////////////////////////////
-//<						local globals						>//
+//<                     local globals                       >//
 static C DESKTOP_PATH[PATH_MAX + 1];
 static C STR[LINE_MAX];
 static C file[PATH_MAX + 1];
@@ -26,13 +26,13 @@ static C file[PATH_MAX + 1];
 
 
 ///////////////////////////////////////////////////////////////
-//<						desktop_path()						>//
+//<                     desktop_path()                      >//
 ///////////////////////////////////////////////////////////////
-//<			gets path to home/Desktop into DESKTOP_PATH 	>//
+//<       gets path to home/Desktop into DESKTOP_PATH       >//
 ///////////////////////////////////////////////////////////////
-//<					return DESKTOP_PATH 					>//
+//<                   return DESKTOP_PATH                   >//
 ///////////////////////////////////////////////////////////////
-S desktop_path()												
+S desktop_path()		
 {
 	strcpy(DESKTOP_PATH, getenv("HOME"));
 	strcat(DESKTOP_PATH, "/Desktop/");
@@ -40,12 +40,12 @@ S desktop_path()
 }
 
 ///////////////////////////////////////////////////////////////
-//<				choose_name(S path, S filename)				>//
+//<             choose_name(S path, S filename)             >//
 ///////////////////////////////////////////////////////////////
-//<		choose unque enumerated name for file like			>//
-//<			path/1234_filename or path/4_filename 			>//
+//<     choose unque enumerated name for file like          >//
+//<         path/1234_filename or path/4_filename           >//
 ///////////////////////////////////////////////////////////////
-//<						return FILENAME 					>//
+//<                   return FILENAME                       >//
 ///////////////////////////////////////////////////////////////
 S choose_name(S path, S filename)								
 {
@@ -72,9 +72,9 @@ S choose_name(S path, S filename)
 }
 
 ///////////////////////////////////////////////////////////////
-//<			make_file(S path, S new_file, S str)			>//
+//<          make_file(S path, S new_file, S str)           >//
 ///////////////////////////////////////////////////////////////
-//<		create path/new_file and write in str 				>//
+//<         create path/new_file and write in str           >//
 ///////////////////////////////////////////////////////////////
 V make_file(S path, S new_file, S str)							
 {	
@@ -87,10 +87,10 @@ V make_file(S path, S new_file, S str)
 }
 
 ///////////////////////////////////////////////////////////////
-//<						spit_file(S str)					>//
+//<                     spit_file(S str                     >//
 ///////////////////////////////////////////////////////////////
-//<		create file with unique filename with str written 	>//
-//<			str written at Desktop directory 				>//
+//<         create file with unique filename with str       >//
+//<               written at Desktop directory              >//
 ///////////////////////////////////////////////////////////////
 V spit_file(S str)												
 {
@@ -105,9 +105,9 @@ V spit_file(S str)
 }
 
 ///////////////////////////////////////////////////////////////
-//<						eat_file(S str)						>//
+//<                     eat_file(S str)                     >//
 ///////////////////////////////////////////////////////////////
-//<		delete random file from Desktop directory 			>//
+//<        delete random file from Desktop directory        >//
 ///////////////////////////////////////////////////////////////
 V eat_file()													
 {
