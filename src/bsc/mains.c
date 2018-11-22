@@ -13,26 +13,26 @@
 
 
 ///////////////////////////////////////////////////////////////
-//<				arrcat(S buf, S line, I ptr);				>//
+//<             arrcat(S buf, S line, I ptr)                >//
 ///////////////////////////////////////////////////////////////
-//<			concatenates buf with line from	buf[ptr]		>//
+//<         concatenates buf with line from	buf[ptr]        >//
 ///////////////////////////////////////////////////////////////
-V arrcat(S buf, S line, I ptr)								
+V arrcat(S buf, S line, I ptr)			
 {
 	I i, j = 0;
 
-	for (i = ptr; line[j]; i++){
+	for (i = ptr; line[j]; i++) {
 		buf[i] = line[j++];
 	}
 	buf[i] = 0;
 }
 
 ///////////////////////////////////////////////////////////////
-//<						arrlen(S str);						>//
+//<                      arrlen(S str)                      >//
 ///////////////////////////////////////////////////////////////
-//<						len of char array 					>//
+//<                     len of char array                   >//
 ///////////////////////////////////////////////////////////////
-//<						returns len of str 					>//
+//<                     returns len of str                  >//
 ///////////////////////////////////////////////////////////////
 I arrlen(S str)  												
 {
@@ -42,10 +42,10 @@ I arrlen(S str)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					carrzero(S buf, I len)					>//
+//<                 carrzero(S buf, I len)                  >//
 ///////////////////////////////////////////////////////////////
-//<		sets zero for each element less than buf[len] 		>//
-//<						of char array 						>//
+//<     sets zero for each element less than buf[len]       >//
+//<                     of char array                       >//
 ///////////////////////////////////////////////////////////////
 V carrzero(S buf, I len)				
 {
@@ -68,12 +68,12 @@ V iarrzero(I* buf, I len)
 }
 
 ///////////////////////////////////////////////////////////////
-//<				fopen_(S str1, S str2)						>//
+//<               fopen_(S str1, S str2)                    >//
 ///////////////////////////////////////////////////////////////
-//<		standart fopen but str1 is concatenated with 		>//
-//<				TGT_HOME fopen mode is str2					>//
+//<     standart fopen but str1 is concatenated with        >//
+//<             TGT_HOME fopen mode is str2                 >//
 ///////////////////////////////////////////////////////////////
-//<		returns FILE pointer of concatenated TGT_HOME+str1	>//
+//<     returns FILE pointer of concatenated TGT_HOME+str1  >//
 ///////////////////////////////////////////////////////////////
 FILE* fopen_(S str1, S str2)								
 {
@@ -93,11 +93,11 @@ FILE* fopen_(S str1, S str2)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					FCLR(FILE *ptr, C r)					>//
+//<                 FCLR(FILE *ptr, C r)                    >//
 ///////////////////////////////////////////////////////////////
-//<				close file pth and return 	r 				>//
+//<             close file pth and return   r               >//
 ///////////////////////////////////////////////////////////////
-//<						return r 							>//
+//<                     return r                            >//
 ///////////////////////////////////////////////////////////////
 C FCLR(FILE *ptr, C r)											
 {
@@ -106,13 +106,13 @@ C FCLR(FILE *ptr, C r)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					szfile(FILE *ptr)						>//
+//<                 szfile(FILE *ptr)                       >//
 ///////////////////////////////////////////////////////////////
-//<					size of ptr file						>//
+//<                 size of ptr file                        >//
 ///////////////////////////////////////////////////////////////
-//<					return size (UJ)						>//
+//<                 return size (UJ)                        >//
 ///////////////////////////////////////////////////////////////
-UJ szfile(FILE *ptr)									
+UJ szfile(FILE *ptr)	
 {
 	UJ cur, size;
 	if (ptr == NULL)
@@ -126,24 +126,24 @@ UJ szfile(FILE *ptr)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					case_cmp(C letter, C c)					>//
+//<                 case_cmp(C letter, C c)                 >//
 ///////////////////////////////////////////////////////////////
-//<			compares letter and c and ignores case 			>//
+//<         compares letter and c and ignores case          >//
 ///////////////////////////////////////////////////////////////
-//<		return 1 if letter == c [ignores case!]	else : 0 	>//
+//<     return 1 if letter == c [ignores case!] else : 0    >//
 ///////////////////////////////////////////////////////////////
-C case_cmp(C c_1, C c_2)										
+C case_cmp(C c_1, C c_2)		
 {
 	R (c_1 == c_2 	|| (IN('A', c_1, 'Z') && c_2 == c_1 + ' ') 
 					|| (IN('a', c_1, 'z') && c_2 == c_1 - ' ')) ? 1 : 0;
 }
 
 ///////////////////////////////////////////////////////////////
-//<	in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)	>//
+//< in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)    >//
 ///////////////////////////////////////////////////////////////
-//<		checks for if obj_2 is in 2D RANGE of obj_1 		>//
+//<     checks for if obj_2 is in 2D RANGE of obj_1         >//
 ///////////////////////////////////////////////////////////////
-//<		return 1 if obj_2 is in 2D RANGE of obj_1, else 0	>//
+//<     return 1 if obj_2 is in 2D RANGE of obj_1, else 0   >//
 ///////////////////////////////////////////////////////////////
 C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)			
 {
@@ -152,11 +152,11 @@ C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					dec_digits(UJ num)						>//
+//<                dec_digits(UJ num)                       >//
 ///////////////////////////////////////////////////////////////
-//<			calculate number of decimal digits of num		>//
+//<         calculate number of decimal digits of num       >//
 ///////////////////////////////////////////////////////////////
-//<				return amount of digits						>//
+//<             return amount of digits                     >//
 ///////////////////////////////////////////////////////////////
 I dec_digits(UJ num)									
 {
@@ -166,13 +166,13 @@ I dec_digits(UJ num)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					pow_(I basis, I exp_)					>//
+//<                 pow_(I basis, I exp_)                   >//
 ///////////////////////////////////////////////////////////////
-//<					my integer pow							>//
+//<                 my integer pow                          >//
 ///////////////////////////////////////////////////////////////
-//<					return basis^exp_						>//
+//<                 return basis^exp_                       >//
 ///////////////////////////////////////////////////////////////
-UJ pow_(I basis, I exp_) 											//<	my intteger pow_
+UJ pow_(I basis, I exp_) 											//<	my integer pow_
 {
 	I i;
 	UJ result = 1;
@@ -182,9 +182,9 @@ UJ pow_(I basis, I exp_) 											//<	my intteger pow_
 }
 
 ///////////////////////////////////////////////////////////////
-//<					reverse(S s)							>//
+//<                     reverse(S s)                        >//
 ///////////////////////////////////////////////////////////////
-//<		reverses s like if s == "abc\0" --> s == "cba\0"	>//
+//<     reverses s like if s == "abc\0" --> s == "cba\0"    >//
 ///////////////////////////////////////////////////////////////
 V reverse(S s)														
 {
@@ -198,13 +198,13 @@ V reverse(S s)
 }
 
 ///////////////////////////////////////////////////////////////
-//<						itoa(I n)							>//
+//<                      itoa(I n)                          >//
 ///////////////////////////////////////////////////////////////
-//<		n to acsii like n == 128 --> NUM_INT == "128\0"		>//
+//<     n to acsii like n == 128 --> NUM_INT == "128\0"     >//
 ///////////////////////////////////////////////////////////////
-//<					return NUM_INT							>//
+//<                      return NUM_INT                     >//
 ///////////////////////////////////////////////////////////////
-S itoa(I n)												
+S itoa(I n)		
 {
 	I i, max;
 	NUM_INT[0] = n % 10 + '0';
@@ -216,15 +216,15 @@ S itoa(I n)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					colour(S name, I col)					>//
+//<                 colour(S name, I col)                   >//
 ///////////////////////////////////////////////////////////////
-//<			for ex. name == "dir/file.txt" -->				>// 
-//<			-->	FILENAME == "dir/n/file.txt"				>//
-//<				where n == '0' + col 						>//
+//<         for ex. name == "dir/file.txt" -->              >//
+//<         -->	FILENAME == "dir/n/file.txt"                >//
+//<                where n == '0' + col                     >//
 ///////////////////////////////////////////////////////////////
-//<					return FILENAME							>//
+//<                    return FILENAME                      >//
 ///////////////////////////////////////////////////////////////
-S colour(S name, I col)												
+S colour(S name, I col)	
 {
 	I len = arrlen(name), i;
 	I len_2 = len + 2;
@@ -244,9 +244,9 @@ S colour(S name, I col)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					p_dog_stat()							>//
+//<                    p_dog_stat()                         >//
 ///////////////////////////////////////////////////////////////
-//<			print formatted dt && cnt structs				>//
+//<           print formatted dt && cnt structs             >//
 ///////////////////////////////////////////////////////////////
 V p_dog_stat()
 {
