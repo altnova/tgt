@@ -23,9 +23,9 @@ static png_infop info_ptr;
 
 
 ///////////////////////////////////////////////////////////////
-//<				abort_(const char * s, ...)					>//
+//<             abort_(const char * s, ...)                 >//
 ///////////////////////////////////////////////////////////////
-//<		abort for canvas.c which prints list of args s 		>//
+//<      abort for canvas.c which prints list of args s     >//
 ///////////////////////////////////////////////////////////////
 V abort_(const char * s, ...)
 {
@@ -38,20 +38,20 @@ V abort_(const char * s, ...)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					info_out(img img_)						>//
+//<                  info_out(img img_)                     >//
 ///////////////////////////////////////////////////////////////
-//<			print img_ struct information					>//
+//<             print img_ struct information               >//
 ///////////////////////////////////////////////////////////////
-V info_out(img img_)											
+V info_out(img img_)		
 {
 	O("IMG:\th --> %d; w --> %d;\n", img_->h, img_->w);
 	O("\tdep --> %d;\t col --> %d;\n\n", , img_->b_depth, img_->col);
 }
 
 ///////////////////////////////////////////////////////////////
-//<			copy_byte(png_byte *a, png_byte *b, I j)		>//
+//<         copy_byte(png_byte *a, png_byte *b, I j)        >//
 ///////////////////////////////////////////////////////////////
-//<		copy j elements from b png_byte array into a array	>//
+//<     copy j elements from b png_byte array into a array  >//
 ///////////////////////////////////////////////////////////////
 V copy_byte(png_byte *a, png_byte *b, I j)					
 {
@@ -60,11 +60,11 @@ V copy_byte(png_byte *a, png_byte *b, I j)
 }
 
 ///////////////////////////////////////////////////////////////
-//<					free_img(img img_)						>//
+//<                 free_img(img img_)                      >//
 ///////////////////////////////////////////////////////////////
-//<				free img_->row_pointers						>//
+//<               free img_->row_pointers                   >//
 ///////////////////////////////////////////////////////////////
-V free_img(img img_)										
+V free_img(img img_)					
 {
 	for (I i = 0; i < img_->h; i++)
 		free(img_->row_pointers[i]);
@@ -72,15 +72,15 @@ V free_img(img img_)
 }
 
 ///////////////////////////////////////////////////////////////
-//<				copy_img(img a, img b)						>//
+//<               copy_img(img a, img b)                    >//
 ///////////////////////////////////////////////////////////////
-//<		copy all data from img b into img a including 		>//
-//<	including new allocation of row_pointers and copying	>//
-//< 	whole b's idat chunk into a->row_pointers 			>//
+//<     copy all data from img b into img a including       >//
+//< including new allocation of row_pointers and copying    >//
+//<     whole b's idat chunk into a->row_pointers           >//
 ///////////////////////////////////////////////////////////////
-//<				return updated img a 						>//
+//<                 return updated img a                    >//
 ///////////////////////////////////////////////////////////////
-img copy_img(img a, img b)								
+img copy_img(img a, img b)		
 {
 	I i, j;
 	png_bytep *rows;
@@ -101,13 +101,13 @@ img copy_img(img a, img b)
 }
 
 ///////////////////////////////////////////////////////////////
-//<			write_png_file(S file_name, img img_)			>//
+//<         write_png_file(S file_name, img img_)           >//
 ///////////////////////////////////////////////////////////////
-//<		write file_name png image with dat from img_ 		>//
-//<	!!!	don't forget to free img_->row_pointers if you 	!!!	>//
-//<	!!!			won't need img_ anymore 				!!!	>//
+//<     write file_name png image with dat from img_        >//
+//< !!! don't forget to free img_->row_pointers if you  !!! >//
+//< !!!         won't need img_ anymore                 !!! >//
 ///////////////////////////////////////////////////////////////
-//<						return img_ 						>//
+//<                     return img_                         >//
 ///////////////////////////////////////////////////////////////
 img write_png_file(S file_name, img img_)			
 {
@@ -158,16 +158,16 @@ img write_png_file(S file_name, img img_)
 }
 
 ///////////////////////////////////////////////////////////////
-//<			read_png_file(S file_name, img img_)			>//
+//<         read_png_file(S file_name, img img_)            >//
 ///////////////////////////////////////////////////////////////
-//<			get info from png file_name into img_ 			>//
-//<	!!!	don't forget to free img_->row_pointers if you 	!!!	>//
-//<	!!!			won't need img_ anymore 				!!!	>//
-//<	!!!	it allocates memory for img_->row_pointers 		!!!	>//
+//<         get info from png file_name into img_           >//
+//< !!! don't forget to free img_->row_pointers if you  !!! >//
+//< !!!         won't need img_ anymore                 !!! >//
+//< !!! it allocates memory for img_->row_pointers      !!! >//
 ///////////////////////////////////////////////////////////////
-//<						return img_ 						>//
+//<                      return img_                        >//
 ///////////////////////////////////////////////////////////////
-img read_png_file(S file_name, img img_)							
+img read_png_file(S file_name, img img_)
 {
 	I i;
 	C header[8];	// 8 is the maximum size that can be checked
