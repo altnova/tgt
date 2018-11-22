@@ -45,7 +45,7 @@ V abort_(const char * s, ...)
 V info_out(img img_)		
 {
 	O("IMG:\th --> %d; w --> %d;\n", img_->h, img_->w);
-	O("\tdep --> %d;\t col --> %d;\n\n", , img_->b_depth, img_->col);
+	O("\tdep --> %d;\t col --> %d;\n\n", img_->b_depth, img_->col);
 }
 
 ///////////////////////////////////////////////////////////////
