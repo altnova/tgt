@@ -13,7 +13,7 @@
 //<               board_show(C key, C obj)                  >//
 //<     *   *  *             * * *             *  *   *     >//
 //<  switch statement dependent on key to set right coors   >//
-//<	         where number 'obj' will be shown               >//
+//<          where number 'obj' will be shown               >//
 //<             's' for satiety                             >//
 //<             'i' for intellect                           >//
 //<             'c' for cleanliness                         >//
