@@ -1,11 +1,11 @@
 //<	set gui
 
 ///////////////////////////////////////////////////////////////
-//< 		depict(I am, S *filename, UH *x_, UH *y_)		>//
+//<        depict(I am, S *filename, UH *x_, UH *y_)        >//
 ///////////////////////////////////////////////////////////////
-//<			send call to some c++ functions to set  		>//
-//<	 	each filename[i] image at x_[i] y_[i] in tmp.png	>//
-//<		and show it in the window; am is amount of images 	>//
+//<         send call to some c++ functions to set          >//
+//<      each filename[i] image at x_[i] y_[i] in tmp.png   >//
+//<     and show it in the window; am is amount of images   >//
 ///////////////////////////////////////////////////////////////
 ext V depict(I am, S *filename, UH *x, UH *y);								
 
@@ -13,19 +13,19 @@ ext V depict(I am, S *filename, UH *x, UH *y);
 ext V set_win();
 
 ///////////////////////////////////////////////////////////////
-//< 					height_()							>//
+//<                      height_()                          >//
 ///////////////////////////////////////////////////////////////
-//<		get screen height and keep it in global var height 	>//
+//<    get screen height and keep it in global var height   >//
 ///////////////////////////////////////////////////////////////
-//<					return screen height 					>//
+//<                 return screen height                    >//
 ///////////////////////////////////////////////////////////////
 ext I height_();
 
 ///////////////////////////////////////////////////////////////
-//< 					width_()							>//
+//<                      width_()                           >//
 ///////////////////////////////////////////////////////////////
-//<		get screen width and keep it in global var width 	>//
+//<    get screen width and keep it in global var width     >//
 ///////////////////////////////////////////////////////////////
-//<					return screen width 					>//
+//<                 return screen width                     >//
 ///////////////////////////////////////////////////////////////
 ext I width_();
