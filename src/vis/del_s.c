@@ -11,9 +11,9 @@
 #include "../png/canvas.h"
 
     
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //< col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p) >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         colour() depict() and usleep()                  >//
 //<         S file  --  file name to pass to colour()       >//
 //<         C c     --  colour number to pass to colour()   >//
@@ -22,7 +22,7 @@
 //<         UH* x   --  list of x coors for depict()        >//
 //<         UH* y   --  list of y coors for depict()        >//
 //<         I p     --  pause for usleep()                  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p)
 {
 	colour(file, c);
@@ -30,16 +30,16 @@ V col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p)
 	usleep(p * SEC);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<    this_way(I pause, S file_1, S file_2, S act, I way)  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         choose which way to run                         >//
 //<         modify coordinates                              >//
 //<         S file_1 --> walk_?_1 or run_?_1                >//
 //<         S file_2 --> walk_?_2 or run_?_2                >//
 //<         S act    --> name of dog act                    >//
 //<         I way    --> direction [1/0]                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V this_way(I pause, S file_1, S file_2, S act, I way)
 {
 	col_dep_slp(file_1, dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
@@ -53,22 +53,22 @@ V this_way(I pause, S file_1, S file_2, S act, I way)
 	col_dep_slp(file_2, dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                    dog_sit(I pause)                     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<        depict dog act sit with total pause I pause      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_sit(I pause)						
 {
 	col_dep_slp("pic/dog/sit_1.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
 	col_dep_slp("pic/dog/sit_2.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
 }
     
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                    dog_run(I pause)                     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<        depict dog act run with total pause I pause      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_run(I pause)
 {
 	(crd->dog_x <= L_LIM || (crd->dog_x < R_LIM && crd->dir)) 	?						
@@ -79,11 +79,11 @@ V dog_run(I pause)
 										"pic/dog/run_l_2.png", "run", LEFT);		//< run LEFT
 }
     
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                    dog_walk(I pause)                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<        depict dog act walk with total pause I pause     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_walk(I pause)
 {
 	(crd->dog_x <= L_LIM || (crd->dog_x < R_LIM && crd->dir)) 	?
@@ -94,12 +94,12 @@ V dog_walk(I pause)
 										"pic/dog/walk_l_2.png", "walk", LEFT);	//<	walk LEFT
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                       dog_return()                      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         choose the way of comming back to kennel        >//
 //<                  depends on tirednes                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_return()
 {
 	// (dt->satiety > STLIM && dt->cleanliness > CLLIM) 	? dog_run_back() :  dog_walk_back();
@@ -125,11 +125,11 @@ V dog_return()
 	}
 }
     
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                 dog_sleep_1(I pause)                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     depict dog act sleep_1 with total pause I pause     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_sleep_1(I pause)												//< outside [no strength to return]
 {
 	col_dep_slp("pic/dog/sleep_1_1.png", dt->colour, 1, ADDR_ADDR, 
@@ -138,11 +138,11 @@ V dog_sleep_1(I pause)												//< outside [no strength to return]
 										&crd->dog_x, &crd->dog_y, pause/2);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                 dog_sleep_2(I pause)                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     depict dog act sleep_2 with total pause I pause     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_sleep_2(I pause)												//< in kennel
 {
 	dog_return();
@@ -153,11 +153,11 @@ V dog_sleep_2(I pause)												//< in kennel
 										&crd->dog_x, &crd->dog_y, pause/2);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                     dog_eat(I pause)                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<        depict dog act eat with total pause I pause      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_eat(I pause)
 {
 	I i, p = pause/7;
@@ -180,11 +180,11 @@ V dog_eat(I pause)
 	set_canvas();
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                    dog_read(I pause)                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<        depict dog act read with total pause I pause     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_read(I pause)
 {
 	I i, p = pause/12;
@@ -202,11 +202,11 @@ V dog_read(I pause)
 												&crd->dog_x, &crd->dog_y, p);});
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                    dog_die(I pause)                     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<        depict dog act die with total pause I pause      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_die(I pause)			
 {
 	I i, p = pause/9, len;
@@ -220,11 +220,11 @@ V dog_die(I pause)
 									&crd->dog_x, &crd->dog_y, p);});			
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                   dog_rise(I pause)                     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<       depict dog act rise with total pause I pause      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_rise(I pause)				
 {
 	I i, p = pause/9;
@@ -239,11 +239,11 @@ V dog_rise(I pause)
 									&crd->dog_x, &crd->dog_y, p);});
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                   dog_love(I pause)                     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<       depict dog act love with total pause I pause      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_love(I pause)
 {
 	I i, p = pause/6;
@@ -256,11 +256,11 @@ V dog_love(I pause)
 											&crd->dog_x, &crd->dog_y, p);});
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                   dog_poop(I pause)                     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<       depict dog act poop with total pause I pause      >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_poop(I pause)
 {
 	O("%s DOG_UNPLEASED%s\n", CRED, CNRM);

@@ -27,22 +27,22 @@ static UH y_c[2];
 
 
 //< for a while
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 static C FNM[2][LINE_MAX_];
 static S addr_fnm_[4] = {FNM[0], FNM[1]};
 static S* addr_fnm = addr_fnm_;
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 
     
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<  dep_at_xy(I am, img a, img b, S* file, UH* x_, UH* y_) >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     get idat chunk from img a, mount in file[i] at      >//
 //<         x_[i] y_[i] and save it into img b              >//
 //<                am is number of files                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                    return img b                         >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 img dep_at_xy(I am, img a, img b, S* file, UH* x_, UH* y_)
 {
 	I i, j, k;
@@ -68,14 +68,14 @@ img dep_at_xy(I am, img a, img b, S* file, UH* x_, UH* y_)
 	R b;
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     add_to_canvas(I am, S* filename, UH* x_, UH* y_)    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     update CANVAS and canvas.png                        >//
 //<     mount into canvas.png and CANVAS filename[i] at     >//
 //<                 x_[i] and y_[i]                         >//
 //<             am is number of filenames                   >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V add_to_canvas(I am, S* filename, UH* x_, UH* y_)
 {
 	img a = dep_at_xy(am, CANVAS, TMP, filename, x_, y_);
@@ -83,24 +83,24 @@ V add_to_canvas(I am, S* filename, UH* x_, UH* y_)
 	free_img(a);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         frame(I am, S* filename, UH* x_, UH* y_)        >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<   create pic/tmp.png which is canvas.png with mounted   >//
 //<            filename[i] pic at x_[i] y_[i]               >//
 //<               am is amount of filename                  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V frame(I am, S* filename, UH* x_, UH* y_)							
 {
 	free_img(write_png_file ("pic/tmp.png", dep_at_xy(am, CANVAS, TMP, filename, x_, y_)));						//< save it 
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                      set_canvas()                       >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     set canvas as CANVAS with basic elements            >//
 //<     pic/canvas.png created for insurance                >//
-///////////////////////////////////////////////////////////////	
+//<     *   *  *             * * *             *  *   *     >//	
 V set_canvas()
 {
 	int i, j;
@@ -134,11 +134,11 @@ V set_canvas()
 	write_png_file("pic/canvas.png", CANVAS);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                      end_canvas()                       >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     free al allocated memory used to produce png img    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V end_canvas()
 {
 	free_img(CANVAS);

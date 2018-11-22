@@ -19,16 +19,16 @@ static S addr_needle[4] = {needle[0], needle[1], needle[2], needle[3]};
 static S* addr_main[1] = {addr_needle};
 
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         file_cont(FILE *ptr, S* string, I am)           >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     each search for line in file ptr ignoring case      >//
 //<         am is amount of lines to search                 >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         if any string is found: return 1                >//
 //<         if nothing found:       return 0                >//
 //<         if ptr == NULL:         return -1               >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 C file_cont(FILE *ptr, S* string, I am)								
 {
 	C buf[LINE_MAX_];
@@ -74,11 +74,11 @@ C file_cont(FILE *ptr, S* string, I am)
 	R 0;
 }
     
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                 input_type(S filename)                  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     opens filename and calculates filename's type       >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     return:                                             >//
 //<             0 -- file doesn't exist || size of file is 	>//
 //<                     larger than 2 Mbytes || file        >//
@@ -88,7 +88,7 @@ C file_cont(FILE *ptr, S* string, I am)
 //<             3 -- file size is larger than 3 Kbytes      >//
 //<                     and less than 2 Mbytes              >//
 //<             4 -- file contains rude words               >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 C input_type(S filename)									
 {
 	FILE *ptr = fopen_(filename, "r");
@@ -125,17 +125,17 @@ C input_type(S filename)
 	R FCLR(ptr, 0);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<             fdn(S path, S dir, I path_len)              >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         defines whether path+dir is file or directory   >//
 //<             path _len is length of path                 >//				
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     return:                                             >//
 //<            -1 -- if directory                           >//
 //<             0 -- doesn't exist                          >//
 //<             1 -- if file                                >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 C fdn(S path, S dir, I path_len)
 {
 	C dir_name[PATH_MAX + 1];
@@ -162,16 +162,16 @@ C fdn(S path, S dir, I path_len)
 
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<             subcheck_d(S path, S sub, I len)            >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         specialized fdn() with the same arguments       >//
 //<     but displays messages depending on the fdn() r val  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     return:                                             >//
 //<             0 -- file or doesn't exist                  >//
 //<             1 -- if directory                           >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 C subcheck_d(S path, S sub, I len)
 {
 	C res = fdn(path, sub, len);
@@ -190,13 +190,13 @@ C subcheck_d(S path, S sub, I len)
 }
 
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                 is_tgt(S path)                          >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         check for right subdirectories for tgt          >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         if success return 1, else 0                     >//
-///////////////////////////////////////////////////////////////	
+//<     *   *  *             * * *             *  *   *     >//	
 C is_tgt(S path)
 {
 	I len = strlen(path);
@@ -224,13 +224,13 @@ C is_tgt(S path)
 	R 1;
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                 is_home(S path)                         >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         check for right subdirectories for home         >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         if success return 1, else 0                     >//
-///////////////////////////////////////////////////////////////	
+//<     *   *  *             * * *             *  *   *     >//	
 C is_home(S path)
 {
 	I len = strlen(path);

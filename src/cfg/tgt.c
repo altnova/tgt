@@ -25,8 +25,7 @@ I main()
 	set_start(dt, cnt, crd);
 
 	ITER = 0;
-	MAIN_IT = 0;
-
+	
 	dt->action = love;
 
 	for (MAIN_IT = 0; dt->action != rise && dt->action != die; MAIN_IT++) {

@@ -1,6 +1,6 @@
 //<	global variables
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                        buffers                          >//
 ext C NUM_INT[12];
 ext C DOG_FILE[LINE_MAX_];
@@ -15,5 +15,5 @@ ext S stat_name[12];
 //<               screen height and width                   >//
 ext I height;
 ext I width;
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 

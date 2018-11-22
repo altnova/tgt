@@ -9,15 +9,15 @@
 #include "../png/canvas.h"
 #include "../bsc/mains.h"
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<               board_show(C key, C obj)                  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<  switch statement dependent on key to set right coors   >//
 //<	         where number 'obj' will be shown               >//
 //<             's' for satiety                             >//
 //<             'i' for intellect                           >//
 //<             'c' for cleanliness                         >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V board_show(C key, C obj)	
 {
 	UH x, y;
@@ -47,13 +47,13 @@ V board_show(C key, C obj)
 	add_to_canvas(1, ADDR_ADDR, &x, &y);
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                  dog_show(I obj)                        >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     switch statement dependent on obj to call           >//
 //<     specific function from vis/del_s.c which will       >//
 //<     direct visualization of dog_action                  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V dog_show(I obj)			
 {
 	// O("[dog_show(%s)]\n", stat_name[obj]);
@@ -73,9 +73,9 @@ V dog_show(I obj)
 	}
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                   draw(C key, I obj)                    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<   function to choose which .png file change is needed   >//
 //<             [tmp.png or canvas.png]                     >//
 //< dependent on key which could be 'd' (change tmp.png)    >//
@@ -84,7 +84,7 @@ V dog_show(I obj)
 //<                                 'c' (canvas.png cle)    >//
 //<     obj could be dog action enum number or              >//
 //<             new value of dog param key                  >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V draw(C key, I obj)	
 {
 	(key == 'd') ? dog_show(obj) : board_show(key, obj);

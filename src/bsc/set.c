@@ -48,13 +48,13 @@ typedef struct Coor 		//< coordinates of objects
 //<	!!!!!!!!!!!!!!!!!
 
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                  global dog data structs                >//
 tm_cnt cnt;
 dat dt;
 coor crd;
 
-//< stat_time contains all intervals for each dog action    >//
+//<  stat_time contains all intervals for each dog action   >//
 I stat_time[12] = {	1000, 1000, 1000, 3000, 4000, 7000, 
 					7000, 1000, 1000, 1000, 3000, 0 };		//< /1000 --> get am in seconds 
 S stat_name[12] = {	"sit", "run", "walk", "eat", "read_", 
@@ -79,7 +79,7 @@ pDat DAT = {5, 5, 5, 2, 9};
 pCounter CNT = {0,  0, 0, 0};
 pCoor COR;
 //<                                                         >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 
 /*
 Cnt:		//< counters
@@ -101,12 +101,12 @@ Dt:			//< dog info
 */
 
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //< set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)   >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     set global variables    for ex:                     >//
 //<     width, height, all coordinates, struct pointers     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 {
 	height = height_();
@@ -167,12 +167,12 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 }
 
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                     set_window()                        >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<         send call to some c++ functions to set          >//
 //<     fullscreen transparent and click-through window     >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V set_window()			
 {
 
@@ -180,11 +180,11 @@ V set_window()
 
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<                    check_env()                          >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     check for TGT_HOME and HOME env var existence       >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V check_env()
 {
 	S tgt_home = getenv("TGT_HOME"), home = getenv("HOME");
@@ -205,11 +205,11 @@ V check_env()
 	}
 }
 
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     set_start(tm_cnt cnt_, dat dt_, coor crd_)          >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 //<     main checks and set data into cnt_, dt_ and crd_    >//
-///////////////////////////////////////////////////////////////
+//<     *   *  *             * * *             *  *   *     >//
 V set_start(tm_cnt cnt_, dat dt_, coor crd_)
 {
 	check_env();
