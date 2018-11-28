@@ -45,7 +45,7 @@ C file_cont(FILE *ptr, S* string, I am)
 	}
 
 	for (i = 0; i < am; i++) {
-		length[i] = arrlen(string[i]);
+		length[i] = scnt(string[i]);
 		a = MAX(a, length[i]);
 	}
 	a++;
@@ -102,22 +102,22 @@ C input_type(S filename)
 	X(size>3000, 	{fclose(ptr); O("3\n");},3);				
 	X(size>2000000, {fclose(ptr); O("0\n");},0);
 
-	arrcat(needle[0], "asshole", 0);
-	arrcat(needle[1], "bitch", 0);
-	arrcat(needle[2], "pidor", 0);
+	arrcat(needle[0], "asshole", 0, PATH_MAX/2);
+	arrcat(needle[1], "bitch", 0, PATH_MAX/2);
+	arrcat(needle[2], "pidor", 0, PATH_MAX/2);
 
 	if (file_cont(ptr, addr_main[0], 3) == 1) 
 		R FCLR(ptr, 4);
 
-	arrcat(needle[0], "bone", 0);
-	arrcat(needle[1], "food", 0);
+	arrcat(needle[0], "bone", 0, PATH_MAX/2);
+	arrcat(needle[1], "food", 0, PATH_MAX/2);
 
 	if (file_cont(ptr, addr_main[0], 2) == 1) 
 		R FCLR(ptr, 1);
 
-	arrcat(needle[0], "bath", 0);
-	arrcat(needle[1], "water", 0);
-	arrcat(needle[2], "shower", 0);
+	arrcat(needle[0], "bath", 0, PATH_MAX/2);
+	arrcat(needle[1], "water", 0, PATH_MAX/2);
+	arrcat(needle[2], "shower", 0, PATH_MAX/2);
 
 	if (file_cont(ptr, addr_main[0], 3) == 1) 
 		R FCLR(ptr, 2);
@@ -142,8 +142,8 @@ C fdn(S path, S dir, I path_len)
 	DIR *d;
 	FILE *f;
 
-	arrcat(dir_name, path, 0);
-	arrcat(dir_name, dir, path_len);
+	arrcat(dir_name, path, 0, PATH_MAX + 1);
+	arrcat(dir_name, dir, path_len, PATH_MAX + 1);
 
 	d = opendir(dir_name);
 

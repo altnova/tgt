@@ -1,6 +1,7 @@
 //<	depict board params or dog stat
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #include "../cfg/cfg.h"
 
@@ -21,7 +22,7 @@
 V board_show(C key, C obj)	
 {
 	UH x, y;
-	arrcat(FILENAME, "pic/brd/nom_0.png\0", 0);
+	arrcat(FILENAME, "pic/brd/nom_0.png\0", 0, PATH_MAX + 1);
 
 	O("\n%s[board_show()]%s\t", CWHT, CNRM);
 	if (obj > 9)

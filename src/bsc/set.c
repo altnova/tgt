@@ -81,6 +81,7 @@ pCoor COR;
 //<                                                         >//
 //<     *   *  *             * * *             *  *   *     >//
 
+
 /*
 Cnt:		//< counters
 {
@@ -164,6 +165,11 @@ V set_data(dat dt_main, tm_cnt cnt_main, coor crd_main)
 	crd = crd_main;
 	dt = dt_main;
 	cnt = cnt_main;
+
+	carrzero(NUM_INT, 12);
+	carrzero(DOG_FILE, LINE_MAX_);
+	carrzero(FILENAME, LINE_MAX_);
+
 }
 
 

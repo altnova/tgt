@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <limits.h>
 
 #include "../cfg/cfg.h"
 
@@ -163,7 +164,7 @@ V dog_eat(I pause)
 	I i, p = pause/7;
 	UH x[2], y[2];
 
-	arrcat(FILENAME, "pic/obj/bowl_full.png", 0);
+	arrcat(FILENAME, "pic/obj/bowl_full.png", 0, PATH_MAX + 1);
 	add_to_canvas(1, ADDR_ADDR, &crd->kennel_x, &crd->kennel_y);
 
 	O("%s DOG_RETURN%s && %sDOG_EAT%s\n", CBLU, CNRM, CRED, CNRM);
@@ -211,7 +212,7 @@ V dog_die(I pause)
 {
 	I i, p = pause/9, len;
 
-	arrcat(DOG_FILE, "pic/dog/die_n.png", 0);
+	arrcat(DOG_FILE, "pic/dog/die_n.png", 0, PATH_MAX + 1);
 	O("%s DOG_DIE%s\n", CRED, CNRM);
 
 	DO(9, { 
@@ -229,7 +230,7 @@ V dog_rise(I pause)
 {
 	I i, p = pause/9;
 
-	arrcat(DOG_FILE, "pic/dog/rise_n.png", 0);
+	arrcat(DOG_FILE, "pic/dog/rise_n.png", 0, PATH_MAX + 1);
 
 	O("%s DOG_RISE%s\n", CRED, CNRM);
 

@@ -13,7 +13,7 @@
 
 #include "../bsc/mains.h"
 
-#define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n"
+#define CONST_STR "\n\n\n\t\t .:::.   .:::.\n\t\t:::::::.::: '::\n\t\t:::::::::::::::\n\t\t':::::::::::::'\n\t\t  ':::::::::'\n\t\t    ':::::'\n\t\t      ':'\n\n\n\n\n\n\n"
 
 
 //<     *   *  *             * * *             *  *   *     >//
@@ -51,21 +51,20 @@ S choose_name(S path, S filename)
 {
 	I i, path_len, num_len;
 	C number[13];
-	path_len = arrlen(path);
+	path_len = scnt(path);
 
-	arrcat(FILENAME, path, 0);
-	arrcat(FILENAME, filename, path_len);
+	arrcat(FILENAME, path, 0, LINE_MAX_);
+	arrcat(FILENAME, filename, path_len, LINE_MAX_);
 
 	for (i = 1; !(access(FILENAME, F_OK)); i++) {
 		num_len = dec_digits(i);
 		itoa(i);
-		arrcat(number, NUM_INT, 0);
+		arrcat(number, NUM_INT, 0, 13);
 		number[num_len] = '_';
 		number[num_len + 1] = 0;
 
-		FILENAME[path_len] = 0;
-		strcat(FILENAME, number);
-		strcat(FILENAME, filename);
+		arrcat(FILENAME, number, path_len, PATH_MAX);
+		arrcat(FILENAME, filename, path_len + scnt(number), PATH_MAX);
 	}
 
 	R FILENAME;
@@ -99,8 +98,8 @@ V spit_file(S str)
 		O("long lines at esfile.c/spit_file\n");
 		exit(0);
 	}
-	arrcat(STR, str, 0);
-	arrcat(STR, CONST_STR, arrlen(STR));
+	arrcat(STR, str, 0, LINE_MAX_);
+	arrcat(STR, CONST_STR, scnt(STR), LINE_MAX_);
 	make_file(desktop_path(), "spit.txt", STR);
 }
 

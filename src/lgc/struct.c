@@ -148,17 +148,17 @@ V event_check()
 //<	that user dragged to kennel coordinates IF MACOS
 //< and will get filename from console, check existance etc. IF LINUX
 //<     *   *  *             * * *             *  *   *     >////////////
-	arrcat(FILENAME, "123\0", 0);
+	arrcat(FILENAME, "123\0", 0, PATH_MAX+1);
 
 	if (MAIN_IT%30 == 0 || MAIN_IT%50 == 0) {
 		r = rand()%5;
 		SW(r) {
-			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0);})			//<	0
-			CS(2, {arrcat(FILENAME, "txt/bath.txt", 0);})			//<	1
-			CS(3, {arrcat(FILENAME, "txt/big.txt", 0);})			//<	2
-			CS(4, {arrcat(FILENAME, "txt/rude.txt", 0);})			//<	3
+			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0, PATH_MAX + 1);})			//<	0
+			CS(2, {arrcat(FILENAME, "txt/bath.txt", 0, PATH_MAX + 1);})			//<	1
+			CS(3, {arrcat(FILENAME, "txt/big.txt", 0, PATH_MAX + 1);})			//<	2
+			CS(4, {arrcat(FILENAME, "txt/rude.txt", 0, PATH_MAX + 1);})			//<	3
 			CD:
-				arrcat(FILENAME, "txt/mess.txt", 0);				//<	4
+				arrcat(FILENAME, "txt/mess.txt", 0, PATH_MAX + 1);				//<	4
 		}
 
 		p_dog_stat();
@@ -213,7 +213,7 @@ V event_check()
 				draw(st, dt->cleanliness);
 				draw(dog, poop);
 				cnt_upd(cnt, poop);
-				spit_file("\n\n\n\t\tbad boy\n\n\n\n");
+				spit_file("\n\n\n\t\t    bad boy\n\n\n\n");
 		}
 	}
 

@@ -113,8 +113,8 @@ V set_canvas()
 	for (i = 0; i < height; i++) 
 		rows[i] = (png_byte*) calloc(width * 4, SZ(png_byte));
 
-	arrcat(FNM[0], "pic/obj/kennel.png", 0);
-	arrcat(FNM[1], "pic/obj/board.png", 0);
+	arrcat(FNM[0], "pic/obj/kennel.png", 0, LINE_MAX_);
+	arrcat(FNM[1], "pic/obj/board.png", 0, LINE_MAX_);
 
 	CANVAS->h = height;
 	CANVAS->w = width;

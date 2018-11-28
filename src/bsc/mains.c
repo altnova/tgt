@@ -12,32 +12,14 @@
 #include "../cfg/cfg.h"
 
 //<     *   *  *             * * *             *  *   *     >//
-//<             arrcat(S buf, S line, I ptr)                >//
+//<        arrcat(S buf, S line, I ptr, I buf_sz)           >//
 //<     *   *  *             * * *             *  *   *     >//
 //<         concatenates buf with line from	buf[ptr]        >//
+//<             buf_sz is allocated buf size                >//
 //<     *   *  *             * * *             *  *   *     >//
-V arrcat(S buf, S line, I ptr)			
+V arrcat(S buf, S line, I ptr, I buf_sz)			
 {
-	I i, j = 0;
-
-	for (i = ptr; line[j]; i++) {
-		buf[i] = line[j++];
-	}
-	buf[i] = 0;
-}
-
-//<     *   *  *             * * *             *  *   *     >//
-//<                      arrlen(S str)                      >//
-//<     *   *  *             * * *             *  *   *     >//
-//<                     len of char array                   >//
-//<     *   *  *             * * *             *  *   *     >//
-//<                     returns len of str                  >//
-//<     *   *  *             * * *             *  *   *     >//
-I arrlen(S str)  												
-{
-	I i;
-	for (i = 0; str[i]; i++);
-	R i;
+	scpy(buf + (ptr * SZ(C)), line, buf_sz - (ptr * SZ(C)));
 }
 
 //<     *   *  *             * * *             *  *   *     >//
@@ -94,7 +76,7 @@ FILE* fopen_(S str1, S str2)
 //<     *   *  *             * * *             *  *   *     >//
 //<                 FCLR(FILE *ptr, C r)                    >//
 //<     *   *  *             * * *             *  *   *     >//
-//<             close file pth and return   r               >//
+//<             close file ptr and return   r               >//
 //<     *   *  *             * * *             *  *   *     >//
 //<                     return r                            >//
 //<     *   *  *             * * *             *  *   *     >//
@@ -189,7 +171,7 @@ V reverse(S s)
 {
 	I i, j;
 	C c;
-	for (i = 0, j = arrlen(s) - 1; i < j; i++, j--) {
+	for (i = 0, j = scnt(s) - 1; i < j; i++, j--) {
 		c = s[i];
 		s[i] = s[j];
 		s[j] = c;
@@ -205,7 +187,7 @@ V reverse(S s)
 //<     *   *  *             * * *             *  *   *     >//
 S itoa(I n)		
 {
-	I i, max;
+	I i;
 	NUM_INT[0] = n % 10 + '0';
 	for(i = 1;(n/=10) > 0;i++) 
 		NUM_INT[i] = n % 10 + '0';
@@ -225,11 +207,11 @@ S itoa(I n)
 //<     *   *  *             * * *             *  *   *     >//
 S colour(S name, I col)	
 {
-	I len = arrlen(name), i;
+	I len = scnt(name), i;
 	I len_2 = len + 2;
 	C new_name[PATH_MAX + 1];
 
-	arrcat(new_name, name, 0);
+	arrcat(new_name, name, 0, PATH_MAX+1);
 
 	OMO({i = 0;}, 	(name[len - i] != '/' && i <= len), 
 					{new_name[len_2 - i] = name[len - i];i++;});  	//<	must be /abc/s/some.png
@@ -237,7 +219,7 @@ S colour(S name, I col)
 	new_name[len_2 - i] = '0';										//< set 0 for a while
 	//<	new_name[len_2 - i] = col%10 + '0';
 
-	arrcat(FILENAME, new_name, 0);
+	arrcat(FILENAME, new_name, 0, LINE_MAX_);
 
 	R FILENAME;
 }

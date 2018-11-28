@@ -19,20 +19,20 @@ ext C case_cmp(C letter, C c);
 ext C FCLR(FILE *ptr, C r);
 
 //<     *   *  *             * * *             *  *   *     >//
-//<             arrcat(S buf, S line, I ptr)                >//
+//<        arrcat(S buf, S line, I ptr, I buf_sz)           >//
 //<     *   *  *             * * *             *  *   *     >//
 //<         concatenates buf with line from	buf[ptr]        >//
+//<             buf_sz is allocated buf size                >//
 //<     *   *  *             * * *             *  *   *     >//
-ext V arrcat(S buf, S line, I ptr);
+V arrcat(S buf, S line, I ptr, I buf_sz);
 
 //<     *   *  *             * * *             *  *   *     >//
-//<                      arrlen(S str)                      >//
+//<                 carrzero(S buf, I len)                  >//
 //<     *   *  *             * * *             *  *   *     >//
-//<                     len of char array                   >//
+//<     sets zero for each element less than buf[len]       >//
+//<                     of char array                       >//
 //<     *   *  *             * * *             *  *   *     >//
-//<                     returns len of str                  >//
-//<     *   *  *             * * *             *  *   *     >//
-ext I arrlen(S str);
+ext V carrzero(S buf, I len);
 
 //<     *   *  *             * * *             *  *   *     >//
 //<					iarrzero(I* buf, I len)					>//
