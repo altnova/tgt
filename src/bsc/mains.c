@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <errno.h>
+#include <ctype.h>
 
 #include <pwd.h>
 #include <sys/types.h>
@@ -19,7 +20,8 @@
 //<     *   *  *             * * *             *  *   *     >//
 V arrcat(S buf, S line, I ptr, I buf_sz)			
 {
-	scpy(buf + (ptr * SZ(C)), line, buf_sz - (ptr * SZ(C)));
+	I pt = ptr * SZ(C);
+	scpy(buf + pt, line, buf_sz - pt);
 }
 
 //<     *   *  *             * * *             *  *   *     >//
@@ -115,8 +117,8 @@ UJ szfile(FILE *ptr)
 //<     *   *  *             * * *             *  *   *     >//
 C case_cmp(C c_1, C c_2)		
 {
-	R (c_1 == c_2 	|| (IN('A', c_1, 'Z') && c_2 == c_1 + ' ') 
-					|| (IN('a', c_1, 'z') && c_2 == c_1 - ' ')) ? 1 : 0;
+	R (c_1 == c_2 	|| (isupper(c_1) && c_2 == c_1 + ' ') 
+					|| (islower(c_1) && c_2 == c_1 - ' ')) ? 1 : 0;
 }
 
 //<     *   *  *             * * *             *  *   *     >//
