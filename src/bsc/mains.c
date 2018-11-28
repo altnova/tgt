@@ -117,8 +117,8 @@ UJ szfile(FILE *ptr)
 //<     *   *  *             * * *             *  *   *     >//
 C case_cmp(C c_1, C c_2)		
 {
-	R (c_1 == c_2 	|| (isupper(c_1) && c_2 == c_1 + ' ') 
-					|| (islower(c_1) && c_2 == c_1 - ' ')) ? 1 : 0;
+	R (c_1 == c_2 	|| (isupper(c_1) && c_2 == tolower(c_1)) 
+					|| (islower(c_1) && c_2 == toupper(c_1))) ? 1 : 0;
 }
 
 //<     *   *  *             * * *             *  *   *     >//
@@ -144,7 +144,7 @@ C in_range(I obj_1_x, I obj_1_y, I obj_2_x, I obj_2_y)
 I dec_digits(UJ num)									
 {
 	I i;
-	X(num, {for (i = 0; num; num/= 10, i++);}, i);
+	X(num, {for (i = 0; num; num/=10, i++);}, i);
 	R1;
 }
 
