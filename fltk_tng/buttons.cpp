@@ -1,4 +1,5 @@
 // Image demo
+#include <iostream>
 
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
@@ -6,31 +7,57 @@
 #include <FL/Fl_Box.H>
 #include <FL/Fl_JPEG_Image.H>
 #include <FL/Fl_PNG_Image.H>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xmd.h>
+#include <X11/Xatom.h>
+
+#include <FL/x.H>
 
 // Global pointers for the GUI objects
 Fl_Window *mywindow;
-Fl_Button *spiderbutton;
-Fl_Button *dogbutton;
+Fl_Button *button;
+// Fl_Button *dogbutton;
 Fl_Box *mypicturebox;
 Fl_JPEG_Image *startimg;
 Fl_PNG_Image *dog_1;
 Fl_PNG_Image *dog_2;
 
+extern Display *fl_display;
+extern Window fl_window;
+extern GC fl_gc;
+extern int fl_screen;
+extern XVisualInfo *fl_visual;
+extern Colormap fl_colormap;
 
-void mybutton_cb(Fl_Widget * w, long int data)
+Display* fl_display;
+bool is_transparent = 1;
+
+uint alpha = 0;
+
+bool pic = 0;
+
+
+
+void mybutton_cb(Fl_Widget * w)
 {
+	Atom atom = XInternAtom(fl_display, "_NET_WM_WINDOW_OPACITY", False); 
+	uint opacity = 0xC0000000; 
+
+	// XChangeProperty(fl_display, fl_xid(mywindow), 
+                // atom, XA_CARDINAL, 32, PropModeReplace, 
+                // (unsigned char*)&opacity, 1L); 
+
+	printf("x: %d\ty: %d\n", Fl::event_x(), Fl::event_y());
+
+	mywindow->end();
+	mywindow->show();
+
 	mypicturebox->hide();
 	mypicturebox->redraw();
 
-
-	if (data == 8) {
-		mypicturebox->image(dog_1);
-	}
-	if (data == 4) {
-		mypicturebox->image(dog_2);
-	}
-
-	mypicturebox->redraw();
+	mypicturebox->image(pic ? dog_1 : dog_2);
+	pic = (pic) ? 0 : 1;
 
 	mypicturebox->set_visible();
 	mypicturebox->redraw();
@@ -39,16 +66,15 @@ void mybutton_cb(Fl_Widget * w, long int data)
 
 int main()
 {
+	int height = Fl::h();
+	int width = Fl::w();
+
 	// The main window
-	mywindow = new Fl_Window(300, 220, "FLTK image demo");
+	mywindow = new Fl_Window(0, height - 200, width, 200);
 
 	// Two buttons, sharing one callback
-	spiderbutton = new Fl_Button(50, 50, 50, 30, "Spider");
-	dogbutton = new Fl_Button(200, 50, 50, 30, "Dog");
-
-	 
-	spiderbutton->callback(mybutton_cb, 8);
-	dogbutton->callback(mybutton_cb, 4);
+	button = new Fl_Button(0, 0, width, 200);
+	button->callback(mybutton_cb);
 
 	// Load some images to use later
 	startimg = new Fl_JPEG_Image("startimg.jpg");
@@ -56,7 +82,7 @@ int main()
 	dog_2 = new Fl_PNG_Image("love_1.png");
 
 	// A box for the image
-	mypicturebox = new Fl_Box(100, 100, 100, 100);
+	mypicturebox = new Fl_Box(width/2 - 50, 50, 100, 100);
 
 	// Give it some initial contents
 	mypicturebox->image(startimg);
