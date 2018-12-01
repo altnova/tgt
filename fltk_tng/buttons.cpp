@@ -41,9 +41,10 @@ bool pic = 0;
 
 void mybutton_cb(Fl_Widget * w)
 {
-	
+	mywindow->show();
+	mywindow->wait_for_expose();
 	Atom atom = XInternAtom(fl_display, "_NET_WM_WINDOW_OPACITY", False); 
-	uint32_t opacity = (is_transparent) ? (uint32_t)(0xFFFFFFFF * alpha) : (uint32_t)(0xC0000000 * alpha);
+	uint32_t opacity = (is_transparent) ? (uint32_t)(0xFFFFFFFF * alpha) : (uint32_t)(0x90000000 * alpha);
 	is_transparent = (is_transparent) ? 0 : 1;
 
 	XChangeProperty(fl_display, fl_xid(mywindow), 
@@ -52,8 +53,8 @@ void mybutton_cb(Fl_Widget * w)
 
 	printf("x: %d\ty: %d\n", Fl::event_x(), Fl::event_y());
 
-	mywindow->end();
-	mywindow->show();
+	// mywindow->end();
+	// mywindow->show();
 
 	mypicturebox->hide();
 	mypicturebox->redraw();
