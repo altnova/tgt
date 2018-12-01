@@ -33,7 +33,7 @@ extern Colormap fl_colormap;
 Display* fl_display;
 bool is_transparent = 1;
 
-uint alpha = 0;
+double alpha = 0.8;
 
 bool pic = 0;
 
@@ -41,12 +41,14 @@ bool pic = 0;
 
 void mybutton_cb(Fl_Widget * w)
 {
+	
 	Atom atom = XInternAtom(fl_display, "_NET_WM_WINDOW_OPACITY", False); 
-	uint opacity = 0xC0000000; 
+	uint32_t opacity = (is_transparent) ? (uint32_t)(0xFFFFFFFF * alpha) : (uint32_t)(0xC0000000 * alpha);
+	is_transparent = (is_transparent) ? 0 : 1;
 
-	// XChangeProperty(fl_display, fl_xid(mywindow), 
-                // atom, XA_CARDINAL, 32, PropModeReplace, 
-                // (unsigned char*)&opacity, 1L); 
+	XChangeProperty(fl_display, fl_xid(mywindow), 
+                atom, XA_CARDINAL, 32, PropModeReplace, 
+                (unsigned char*)&opacity, 1L); 
 
 	printf("x: %d\ty: %d\n", Fl::event_x(), Fl::event_y());
 
@@ -59,9 +61,11 @@ void mybutton_cb(Fl_Widget * w)
 	mypicturebox->image(pic ? dog_1 : dog_2);
 	pic = (pic) ? 0 : 1;
 
+
 	mypicturebox->set_visible();
 	mypicturebox->redraw();
 }
+
 
 
 int main()
@@ -71,10 +75,14 @@ int main()
 
 	// The main window
 	mywindow = new Fl_Window(0, height - 200, width, 200);
+	mywindow->border(0);
 
-	// Two buttons, sharing one callback
-	button = new Fl_Button(0, 0, width, 200);
+	button = new Fl_Button(0, 0, width, 50);
 	button->callback(mybutton_cb);
+
+	// Fl::handle(Fl::event_y(), mywindow);
+
+	printf("%d height; %d width\n", Fl::h(), Fl::w());
 
 	// Load some images to use later
 	startimg = new Fl_JPEG_Image("startimg.jpg");
