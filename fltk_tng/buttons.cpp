@@ -7,6 +7,7 @@
 #include <FL/Fl_Box.H>
 #include <FL/Fl_JPEG_Image.H>
 #include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_Image.H>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xmd.h>
@@ -14,14 +15,25 @@
 
 #include <FL/x.H>
 
+#include <png.h>
+
+png_bytep* row_pointers;
+int w;
+int h;
+
 // Global pointers for the GUI objects
 Fl_Window *mywindow;
 Fl_Button *button;
 // Fl_Button *dogbutton;
 Fl_Box *mypicturebox;
-Fl_JPEG_Image *startimg;
+// Fl_JPEG_Image *startimg;
+// Fl_PNG_Image *dog_1;
+// Fl_PNG_Image *dog_2;
+
+// Fl_RGB_Image rgb_img;
+
 Fl_PNG_Image *dog_1;
-Fl_PNG_Image *dog_2;
+
 
 extern Display *fl_display;
 extern Window fl_window;
@@ -33,11 +45,7 @@ extern Colormap fl_colormap;
 Display* fl_display;
 bool is_transparent = 1;
 
-// double alpha = 0.8;
-
 bool pic = 0;
-
-/*char dog = 'd';*/
 
 
 /*
@@ -60,7 +68,7 @@ int my_run()
 void mybutton_cb(Fl_Widget * w)
 {
 	mywindow->show();
-	Atom atom = XInternAtom(fl_display, "_NET_WM_WINDOW_OPACITY", False); 
+	Atom atom = XInternAtom(fl_display, "_NET_WM_WINDOW_OPACITY", false); 
 	// uint32_t opacity = (is_transparent) ? (uint32_t)(0xFFFFFFFF * alpha) : (uint32_t)(0x90000000 * alpha);
 	uint32_t opacity = (is_transparent) ? 0xFFFFFFFF : 0x90000000;
 	is_transparent = (is_transparent) ? 0 : 1;
@@ -83,7 +91,11 @@ void mybutton_cb(Fl_Widget * w)
 
 	mypicturebox->hide();
 
-	mypicturebox->image(pic ? dog_1 : dog_2);
+
+	dog_1 = new Fl_PNG_Image(pic ? "die_1.png" : "love_1.png");
+	mypicturebox->image(dog_1);
+
+	// mypicturebox->image(pic ? dog_1 : dog_2);
 	pic = (pic) ? 0 : 1;
 
 	mypicturebox->set_visible();
@@ -111,15 +123,19 @@ int main()
 	printf("%d height; %d width\n", Fl::h(), Fl::w());
 
 	// Load some images to use later
-	startimg = new Fl_JPEG_Image("startimg.jpg");
+	// startimg = new Fl_JPEG_Image("startimg.jpg");
+
 	dog_1 = new Fl_PNG_Image("die_1.png");
-	dog_2 = new Fl_PNG_Image("love_1.png");
+
+	read_png_file("die_1.png", row_pointers, &w, &h);
+	rgb_img = new Fl_RGB_Image(row_pointers, w, h, 4, w * h * 4);
+	mywindow->shape(rgb_img);
 
 	// A box for the image
 	mypicturebox = new Fl_Box(width/2 - 50, 50, 100, 100);
 
 	// Give it some initial contents
-	mypicturebox->image(startimg);
+	mypicturebox->image(dog_1);
 
 	// Make the window visible and start processing events
 	// mywindow->end();
