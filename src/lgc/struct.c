@@ -81,7 +81,8 @@ V cnt_check()
 
 	if (cnt->intellect >= MAX_CNT_IN) {								//<	check for intellect
 		cnt->intellect = 0;
-		dt->intellect = dt->intellect ? --dt->intellect : dt->intellect;
+		dt->intellect = dt->intellect ? --dt->intellect : 
+										dt->intellect;
 		state = 'i';
 		draw(state, dt->intellect);
 		p_dog_stat();
@@ -89,7 +90,8 @@ V cnt_check()
 
 	if (cnt->cleanliness >= MAX_CNT_CL) {							//< check for cleanliness 
 		cnt->cleanliness = 0;
-		dt->cleanliness = dt->cleanliness ? --dt->cleanliness : dt->cleanliness;
+		dt->cleanliness = dt->cleanliness ? --dt->cleanliness : 
+											dt->cleanliness;
 		state = 'c';
 		draw(state, dt->cleanliness);
 		dt->colour = dt->cleanliness/2;
@@ -127,20 +129,23 @@ C set_main_action()
 		p_dog_stat();
 		ITER = 0;
 	}
+	R 1;
 }
-    
+
+
 //<     *   *  *             * * *             *  *   *     >//
-//<                    event_check()                        >//
+//<                     file_check()                        >//
 //<     *   *  *             * * *             *  *   *     >//
-//<        check for user's input and click events          >//
+//<                 check for user's input                  >//
 //<         dog act and dat modify in some cases            >//
+//<			   return 1 if imgbox_upd needed 				>//
 //<     *   *  *             * * *             *  *   *     >//
-V event_check()														
-{
+C file_check()
+{	
 	/* GET FILE */
 
 	I type;
-	C r, dog = 'd', st;
+	C r, dog = 'd';
 	// O("[event_check()]\n");
 
 
@@ -150,7 +155,7 @@ V event_check()
 //<     *   *  *             * * *             *  *   *     >////////////
 	arrcat(FILENAME, "123\0", 0, PATH_MAX+1);
 
-	if (MAIN_IT%30 == 0 || MAIN_IT%50 == 0) {
+	if (MAIN_IT%13 == 0 || MAIN_IT%27 == 0) {
 		r = rand()%5;
 		SW(r) {
 			CS(1, {arrcat(FILENAME, "txt/FOOD.txt", 0, PATH_MAX + 1);})			//<	0
@@ -175,53 +180,50 @@ V event_check()
 			CS(1, { 
 				draw(dog, eat);
 				cnt_upd(cnt, eat);
-				dt->satiety++;
 				cnt->satiety = 0; 
 				test_cnt[0]++;
-				st = 's';
-				draw(st, dt->satiety);})
+				draw('s', ++dt->satiety);})
 			CS(2, { 
-				dt->cleanliness++;
 				cnt->cleanliness = 0;
 				test_cnt[1]++;
-				dt->colour = dt->cleanliness/2;
-				st = 'c';
-				draw(st, dt->cleanliness);})
+				dt->colour = (++dt->cleanliness)/2;
+				draw('c', dt->cleanliness);})
 			CS(3, {
 				draw(dog, read_);
 				cnt_upd(cnt, read_);
-				dt->intellect++;
 				cnt->intellect = 0;
 				test_cnt[2]++;
-				st = 'i';
-				draw(st, dt->intellect);})
+				draw('i', ++dt->intellect);})
 			CS(4, { 
 				test_cnt[3]++;
 				dt->action = sit;
-				dt->intellect--;
-				st = 'i';
-				draw(st, dt->intellect);
+				draw('i', --dt->intellect);
 				eat_file();})								//< 	test mode
 
 			CD:
 				test_cnt[4]++;
-				dt->satiety--;
-				dt->cleanliness--;
-				st = 's';
-				draw(st, dt->satiety);
-				st = 'c';
-				draw(st, dt->cleanliness);
+				draw('s', --dt->satiety);
+				draw('c', --dt->cleanliness);
 				draw(dog, poop);
 				cnt_upd(cnt, poop);
 				spit_file("\n\n\n\t\t    bad boy\n\n\n\n");
 		}
+		R 1;
 	}
+	R 0;
+}
 
-	//<	delte_file(FILENAME);
-	
-
+//<     *   *  *             * * *             *  *   *     >//
+//<                    click_check()                        >//
+//<     *   *  *             * * *             *  *   *     >//
+//<            check for user's click events                >//
+//<         dog act and dat modify in some cases            >//
+//<           return 1 if imgbox_upd needed                 >//
+//<     *   *  *             * * *             *  *   *     >//
+C click_check()
+{
 //<	in future this part will get click-event coordinates
-//< if it's a dog coors --> act = love
+//< if it's dog coors --> act = love
 //<     *   *  *             * * *             *  *   *     >///////////
 	/*GET CLICK EVENT*/
 	
@@ -236,9 +238,13 @@ V event_check()
 			if (kennel_click)
 				draw(dog, return_);
 		}
-	
+		R 1;
 	}
+
+	R 0;
 	*/
 //<     *   *  *             * * *             *  *   *     >///////////
 
+	R 1;
 }
+ 

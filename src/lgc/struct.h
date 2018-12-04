@@ -29,12 +29,22 @@ ext V cnt_check();
 ext C death();											
 
 //<     *   *  *             * * *             *  *   *     >//
-//<                    event_check()                        >//
+//<                    click_check()                        >//
 //<     *   *  *             * * *             *  *   *     >//
-//<        check for user's input and click events          >//
+//<            check for user's click events                >//
 //<         dog act and dat modify in some cases            >//
+//<           return 1 if imgbox_upd needed                 >//
 //<     *   *  *             * * *             *  *   *     >//
-ext V event_check();									
+ext C click_check();	
+
+//<     *   *  *             * * *             *  *   *     >//
+//<                     file_check()                        >//
+//<     *   *  *             * * *             *  *   *     >//
+//<                 check for user's input                  >//
+//<         dog act and dat modify in some cases            >//
+//<			   return 1 if imgbox_upd needed 				>//
+//<     *   *  *             * * *             *  *   *     >//
+ext C file_check();				
 
 //<     *   *  *             * * *             *  *   *     >//
 //<                   set_main_action()                     >//
