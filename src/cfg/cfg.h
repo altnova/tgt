@@ -110,7 +110,7 @@ ext coor crd;
 #ifdef __APPLE__
 
 #define CWHT 	"\033[37m\0"
-#define CWUL	"\033[37;4\0"
+#define CWUL	"\033[37;4m\0"
 
 #define CBLU 	"\033[34m\0"
 
