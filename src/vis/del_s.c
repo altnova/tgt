@@ -43,7 +43,8 @@ V col_dep_slp(S file, C c, I am, S* f, UH* x, UH* y, I p)
 //<     *   *  *             * * *             *  *   *     >//
 V this_way(I pause, S file_1, S file_2, S act, I way)
 {
-	col_dep_slp(file_1, dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
+	col_dep_slp(file_1, dt->colour, 1, ADDR_ADDR, 
+									&crd->dog_x, &crd->dog_y, pause/2);
 	crd->dir = way;
 
 	if (way)
@@ -51,7 +52,8 @@ V this_way(I pause, S file_1, S file_2, S act, I way)
 	else 
 		crd->dog_x -= (act[0] == 'r') ? DIFRUN : DIFWALK;
 
-	col_dep_slp(file_2, dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
+	col_dep_slp(file_2, dt->colour, 1, ADDR_ADDR, 
+									&crd->dog_x, &crd->dog_y, pause/2);
 }
 
 //<     *   *  *             * * *             *  *   *     >//
@@ -61,8 +63,10 @@ V this_way(I pause, S file_1, S file_2, S act, I way)
 //<     *   *  *             * * *             *  *   *     >//
 V dog_sit(I pause)						
 {
-	col_dep_slp("pic/dog/sit_1.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
-	col_dep_slp("pic/dog/sit_2.png", dt->colour, 1, ADDR_ADDR, &crd->dog_x, &crd->dog_y, pause/2);
+	col_dep_slp("pic/dog/sit_1.png", dt->colour, 1, ADDR_ADDR, 
+									&crd->dog_x, &crd->dog_y, pause/2);
+	col_dep_slp("pic/dog/sit_2.png", dt->colour, 1, ADDR_ADDR, 
+									&crd->dog_x, &crd->dog_y, pause/2);
 }
     
 //<     *   *  *             * * *             *  *   *     >//
