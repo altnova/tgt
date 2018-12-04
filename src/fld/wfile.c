@@ -10,6 +10,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 
+#include <time.h>
+
 #include "../cfg/cfg.h"
 
 #include "../bsc/mains.h"
@@ -29,12 +31,15 @@ static S* addr_main[1] = {addr_needle};
 //<         if nothing found:       return 0                >//
 //<         if ptr == NULL:         return -1               >//
 //<     *   *  *             * * *             *  *   *     >//
-C file_cont(FILE *ptr, S* string, I am)								
+C file_cont(S filename, FILE *ptr, S* string, I am)								
 {
 	C buf[LINE_MAX_];
 	I i, j, a = 0, szbuf, b;
 	C c;
 	I length[100], state[100];
+
+	clock_t set_m_s,	set_m_p, 	set_m_a;
+
 
 	if (ptr == NULL)
 		R -1;
@@ -58,6 +63,8 @@ C file_cont(FILE *ptr, S* string, I am)
 
 	iarrzero(state, 100);
 
+	set_m_s = clock();
+
 	W (b == szbuf) {
 		b = fread(buf, SZ(C), szbuf, ptr);
 		for (i = 0; i < b; i++) {									//<	for each char from buf
@@ -69,6 +76,12 @@ C file_cont(FILE *ptr, S* string, I am)
 			}
 		}
 	}
+	set_m_p = clock();
+
+	set_m_a = set_m_p - set_m_s; 
+
+
+	O("\t%sfile_cont('%s') takes %s%f%s s%s\n", CWHT, filename, CRED, (float)set_m_a / (float)CLOCKS_PER_SEC, CWHT, CNRM);
 
 	rewind(ptr);
 	R 0;
@@ -106,20 +119,20 @@ C input_type(S filename)
 	arrcat(needle[1], "bitch", 0, PATH_MAX/2);
 	arrcat(needle[2], "pidor", 0, PATH_MAX/2);
 
-	if (file_cont(ptr, addr_main[0], 3) == 1) 
+	if (file_cont(filename, ptr, addr_main[0], 3) == 1) 
 		R FCLR(ptr, 4);
 
 	arrcat(needle[0], "bone", 0, PATH_MAX/2);
 	arrcat(needle[1], "food", 0, PATH_MAX/2);
 
-	if (file_cont(ptr, addr_main[0], 2) == 1) 
+	if (file_cont(filename, ptr, addr_main[0], 2) == 1) 
 		R FCLR(ptr, 1);
 
 	arrcat(needle[0], "bath", 0, PATH_MAX/2);
 	arrcat(needle[1], "water", 0, PATH_MAX/2);
 	arrcat(needle[2], "shower", 0, PATH_MAX/2);
 
-	if (file_cont(ptr, addr_main[0], 3) == 1) 
+	if (file_cont(filename, ptr, addr_main[0], 3) == 1) 
 		R FCLR(ptr, 2);
 
 	R FCLR(ptr, 0);
