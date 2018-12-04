@@ -92,7 +92,8 @@ V add_to_canvas(I am, S* filename, UH* x_, UH* y_)
 //<     *   *  *             * * *             *  *   *     >//
 V frame(I am, S* filename, UH* x_, UH* y_)							
 {
-	free_img(write_png_file ("pic/tmp.png", dep_at_xy(am, CANVAS, TMP, filename, x_, y_)));						//< save it 
+	free_img(write_png_file ("pic/tmp.png", 						//<	save it
+			dep_at_xy(am, CANVAS, TMP, filename, x_, y_)));			
 }
 
 //<     *   *  *             * * *             *  *   *     >//
