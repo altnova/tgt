@@ -109,12 +109,12 @@ ext coor crd;
 #endif
 #ifdef __APPLE__
 
-#define CWHT 	"\033[0;0m\033[37m\0"
-#define CWUL	"\033[0;0m\033[37;4\0"
+#define CWHT 	"\033[37m\0"
+#define CWUL	"\033[37;4\0"
 
-#define CBLU 	"\033[0;0m\033[34m\0"
+#define CBLU 	"\033[34m\0"
 
-#define CRED 	"\033[0;0m\033[31m\0"
+#define CRED 	"\033[31m\0"
 #define CNRM 	"\033[0;0m\0"
 
 #endif
