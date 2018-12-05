@@ -164,7 +164,7 @@ C fdn(S path, S dir, I path_len)
 		closedir(d);
 		return -1;
 	}
-	if (errno = ENOTDIR) {
+	if (errno == ENOTDIR) {
 		f = fopen(dir_name, "r");
 		if (f) {
 			fclose(f);
