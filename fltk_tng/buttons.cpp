@@ -3,23 +3,36 @@
 
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
+#include <FL/Fl_Widget.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_JPEG_Image.H>
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Image.H>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xmd.h>
-#include <X11/Xatom.h>
 
+// #include <FL/Fl_Shared_Image.H>
+
+#include <FL/Fl_RGB_Image.H>
+// #include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Image.H>
+// #include <FL/Fl_Tiled_Image.H>
+// #include <FL/Fl_Image_Surface.H>
+
+// #include <X11/Xlib.h>
+// #include <X11/Xutil.h>
+// #include <X11/Xmd.h>
+// #include <X11/Xatom.h>
+// #include <dlfcn.h>
 #include <FL/x.H>
 
-#include <png.h>
+// #include <png.h>
 
-png_bytep* row_pointers;
-int w;
-int h;
+// typedef Bool (*XShapeQueryExtension_type)(Display*, int*, int*);
+// typedef void (*XShapeCombineMask_type)(Display*, int, int, int, int, Pixmap, int);
+
+// png_bytep* row_pointers;
+// int w;
+// int h;
 
 // Global pointers for the GUI objects
 Fl_Window *mywindow;
@@ -34,16 +47,18 @@ Fl_Box *mypicturebox;
 
 Fl_PNG_Image *dog_1;
 
+// Fl_Shared_Image *shared_img;
 
-extern Display *fl_display;
-extern Window fl_window;
-extern GC fl_gc;
-extern int fl_screen;
-extern XVisualInfo *fl_visual;
-extern Colormap fl_colormap;
 
-Display* fl_display;
-bool is_transparent = 1;
+// extern Display *fl_display;
+// extern Window fl_window;
+// extern GC fl_gc;
+// extern int fl_screen;
+// extern XVisualInfo *fl_visual;
+// extern Colormap fl_colormap;
+
+// Display* fl_display;
+// bool is_transparent = 1;
 
 bool pic = 0;
 
@@ -67,15 +82,15 @@ int my_run()
 
 void mybutton_cb(Fl_Widget * w)
 {
-	mywindow->show();
-	Atom atom = XInternAtom(fl_display, "_NET_WM_WINDOW_OPACITY", false); 
+	// mywindow->show();
+	// Atom atom = XInternAtom(fl_display, "_NET_WM_WINDOW_OPACITY", false); 
 	// uint32_t opacity = (is_transparent) ? (uint32_t)(0xFFFFFFFF * alpha) : (uint32_t)(0x90000000 * alpha);
-	uint32_t opacity = (is_transparent) ? 0xFFFFFFFF : 0x90000000;
-	is_transparent = (is_transparent) ? 0 : 1;
+	// uint32_t opacity = (is_transparent) ? 0xFFFFFFFF : 0x90000000;
+	// is_transparent = (is_transparent) ? 0 : 1;
 
-	XChangeProperty(fl_display, fl_xid(mywindow), 
-                atom, XA_CARDINAL, 32, PropModeReplace, 
-                (unsigned char*)&opacity, 1L); 
+	// XChangeProperty(fl_display, fl_xid(mywindow), 
+                // atom, XA_CARDINAL, 32, PropModeReplace, 
+                // (unsigned char*)&opacity, 1L); 
 
 	printf("x: %d\ty: %d\n", Fl::event_x(), Fl::event_y());
 
@@ -115,6 +130,8 @@ int main()
 	mywindow = new Fl_Window(0, height - 200, width, 200);
 	mywindow->border(0);
 
+	
+
 	button = new Fl_Button(0, 0, width, 50);
 	button->callback(mybutton_cb);
 
@@ -127,18 +144,31 @@ int main()
 
 	dog_1 = new Fl_PNG_Image("die_1.png");
 
-	read_png_file("die_1.png", row_pointers, &w, &h);
-	rgb_img = new Fl_RGB_Image(row_pointers, w, h, 4, w * h * 4);
-	mywindow->shape(rgb_img);
+	// read_png_file("die_1.png", row_pointers, &w, &h);
+	// rgb_img = new Fl_RGB_Image(row_pointers, w, h, 4, w * h * 4);
+	// mywindow->shape(dog_1);
 
 	// A box for the image
 	mypicturebox = new Fl_Box(width/2 - 50, 50, 100, 100);
+  /*  
+    // Checking if XShapeCombineMask function is available
+    void *handle = dlopen(NULL, RTLD_LAZY); // search symbols in executable
+    XShapeQueryExtension_type XShapeQueryExtension_f = (XShapeQueryExtension_type)dlsym(handle, "XShapeQueryExtension");
+    XShapeCombineMask_type XShapeCombineMask_f = (XShapeCombineMask_type)dlsym(handle, "XShapeCombineMask");
+    
+    // make sure that the X server has the SHAPE extension
+    int error_base, shapeEventBase;
+    if ( !( XShapeQueryExtension_f && XShapeCombineMask_f &&
+	   XShapeQueryExtension_f(fl_display, &shapeEventBase, &error_base) ) ) XShapeCombineMask_f = NULL;
+    printf("mask function pointer: %llx\n", XShapeCombineMask_f);
+	printf("x error code: %d\nx event code: %d\n", error_base, shapeEventBase);
+	*/
 
 	// Give it some initial contents
 	mypicturebox->image(dog_1);
 
 	// Make the window visible and start processing events
-	// mywindow->end();
+	mywindow->end();
 	mywindow->show();
 	return Fl::run();
 }
